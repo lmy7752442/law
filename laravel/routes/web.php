@@ -12,4 +12,5 @@
 */
 
 Route::get('/', 'IndexController@index');
+Route::get('law_knowledge', 'IndexController@law_knowledge');
 

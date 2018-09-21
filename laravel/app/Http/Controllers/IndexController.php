@@ -9,7 +9,10 @@ class IndexController extends Controller
     public $APPID="wxf50dc03dd5f160a7";
     public $APPSECRET="2077c45807dae09d4915b53ccbe723bc";
     public function index(Request $request){
-        $this->createmenu();
+        $this -> createmenu();
+    }
+    public function law_knowledge(){
+        return view('law_knowledge');
     }
     //拼接参数，带着access_token请求创建菜单的接口
     public function createmenu(){
@@ -26,12 +29,12 @@ class IndexController extends Controller
             {
                "type":"view",
                 "name":"找律师",
-                "url":"http://m.hao123.com/a/tianqi"
+                "url":"https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxf50dc03dd5f160a7&redirect_uri=http://yuan.jinxiaofei.xyz/law_knowledge&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect"
             },
             {
                "type":"view",
                 "name":"法律常识",
-                "url":"http://m.hao123.com/a/tianqi"
+                "url":"https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxf50dc03dd5f160a7&redirect_uri=http://yuan.jinxiaofei.xyz/law_knowledge&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect"
             } ]
        },
        {
