@@ -4,8 +4,8 @@
     <meta charset="gbk" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <title>仿找法网触屏手机wap法律网站模板-【shenghuofuwu/chaxun/】</title>
-    <meta name="keywords" content="法律咨询，律师，法律咨询电话" /><meta name="description" content="找法网手机版为您提供法律咨询、找律师、查询法律法规，各地区律师电话咨询服务" />	<link type="text/css" href="law_css/law_touch.css" rel="stylesheet" />
-    <script type="text/javascript" src="law_css/mobi.min.js" charset="gbk"></script>
+    <meta name="keywords" content="法律咨询，律师，法律咨询电话" /><meta name="description" content="找法网手机版为您提供法律咨询、找律师、查询法律法规，各地区律师电话咨询服务" />	<link type="text/css" href="css/law_touch.css" rel="stylesheet" />
+    <script type="text/javascript" src="css/mobi.min.js" charset="gbk"></script>
 
 </head>
 <body>
@@ -17,8 +17,8 @@
     </div>
 </header>	<nav class="pt20">
     <ul>
-        <li><a class="ask" href="ask">发咨询</a></li>
-        <li><a class="findlawyers" href="lawyer">找律师</a></li>
+        <li><a class="ask" href="ask/ask.html">发咨询</a></li>
+        <li><a class="findlawyers" href="lawyer.html">找律师</a></li>
         <li><a class="fagui" href="fagui.html">查法规</a></li>
     </ul>
 </nav>
@@ -77,7 +77,7 @@
     </div>
     <div class="footer_nav">
         <a href="default.htm">首页</a>
-        <a href="ask">发咨询</a>
+        <a href="ask/ask.php">发咨询</a>
         <a href="lawyer">找律师</a>
         <a href="fagui">查法规</a>
     </div>

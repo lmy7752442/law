@@ -13,4 +13,6 @@
 
 Route::get('/', 'IndexController@index');
 Route::get('law_knowledge', 'IndexController@law_knowledge');
+Route::get('lawyer', 'LawyerController@lawyer');
+Route::get('ask', 'AskController@ask');
 
