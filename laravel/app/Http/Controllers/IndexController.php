@@ -8,12 +8,16 @@ class IndexController extends Controller
 {
     public $APPID="wxf50dc03dd5f160a7";
     public $APPSECRET="2077c45807dae09d4915b53ccbe723bc";
+
     public function index(Request $request){
         
     }
+
+    /** 首页 */
     public function law_knowledge(){
         return view('law_knowledge');
     }
+
     //拼接参数，带着access_token请求创建菜单的接口
     public function createmenu(){
         $data='{
@@ -54,6 +58,7 @@ class IndexController extends Controller
         $result=$this->postcurl($url,$data);
         var_dump($result);
     }
+
     function postcurl($url,$data = null){
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL, $url);

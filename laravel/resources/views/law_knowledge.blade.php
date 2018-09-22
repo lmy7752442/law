@@ -19,7 +19,7 @@
     <ul>
         <li><a class="ask" href="ask">发咨询</a></li>
         <li><a class="findlawyers" href="lawyer">找律师</a></li>
-        <li><a class="fagui" href="fagui.html">查法规</a></li>
+        <li><a class="fagui" href="/tougao">律师投稿</a></li>
     </ul>
 </nav>
 <div class="new_ask">
@@ -79,7 +79,7 @@
         <a href="default.htm">首页</a>
         <a href="ask">发咨询</a>
         <a href="lawyer">找律师</a>
-        <a href="fagui">查法规</a>
+        <a href="/tougao">律师投稿</a>
     </div>
     <p class="copyright">Copyright@2003-2014　版权所有 找法网（Findlaw.cn）- 中国最大的法律服务平台</p>
 </footer>
