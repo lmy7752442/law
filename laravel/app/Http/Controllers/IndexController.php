@@ -11,8 +11,21 @@ class IndexController extends Controller
     public function index(Request $request){
         
     }
-    public function law_knowledge(){
+    public function law_knowledge(Request $request){
         return view('law_knowledge');
+    }
+    public function getUrl($url){
+        $ch = curl_init();
+        $params[CURLOPT_URL] = $url;
+        $params[CURLOPT_HEADER] = false; //是否返回响应头信息
+        $params[CURLOPT_RETURNTRANSFER] = true; //是否将结果返回
+        $params[CURLOPT_FOLLOWLOCATION] = true; //是否重定向
+        $params[CURLOPT_SSL_VERIFYPEER] = false;//禁用证书校验
+        $params[CURLOPT_SSL_VERIFYHOST] = false;
+        curl_setopt_array($ch, $params); //传入curl参数
+        $content = curl_exec($ch); //执行
+        curl_close($ch); //关闭连接
+        return $content;
     }
     //拼接参数，带着access_token请求创建菜单的接口
     public function createmenu(){
