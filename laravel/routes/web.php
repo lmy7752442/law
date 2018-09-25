@@ -17,5 +17,5 @@ Route::get('ask', 'AskController@ask');
 Route::get('lawyer', 'IndexController@lawyer');
 
 
-Route::get('user_add','CommonController@user_add');
-Route::get('as','CommonController@as');
+Route::get('user_add','IndexController@user_add');
+Route::get('as','IndexController@as');

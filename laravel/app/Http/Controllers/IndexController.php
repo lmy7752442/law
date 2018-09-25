@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Symfony\Component\HttpFoundation\Session\Session;
 class IndexController extends Controller
 {
     public $APPID="wxf50dc03dd5f160a7";
@@ -15,6 +16,7 @@ class IndexController extends Controller
     public function law_knowledge(Request $request){
         $arr = $_GET;
         $code = $arr['code'];
+        $state = $arr['state'];
         $data = file_get_contents('https://api.weixin.qq.com/sns/oauth2/access_token?appid=wxf50dc03dd5f160a7&secret=2077c45807dae09d4915b53ccbe723bc&code='.$code .'&grant_type=authorization_code');
         $data = json_decode($data,true);
 //        $openid = $data['openid'];
@@ -23,7 +25,7 @@ class IndexController extends Controller
         $session->set("openid",$data['openid']);
 //        $openid = $session->get('openid');
         $session ->set('token',$data['access_token']);
-        $session->set("state",$data['state']);
+        $session->set("state",$state);
         //  单选框页面  选择律师或公众用户
         header('refresh:0;url=as');
     }
