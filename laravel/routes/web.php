@@ -15,9 +15,13 @@ Route::get('/', 'IndexController@index');
 //首页
 Route::get('law_knowledge', 'IndexController@law_knowledge');
 
+
 Route::get('lawyer', 'LawyerController@lawyer');
 
+
 Route::get('ask', 'AskController@ask');
+Route::get('lawyer', 'IndexController@lawyer');
+
 
 ########## LawyerController控制器 ##########
 
@@ -31,4 +35,9 @@ Route::get('/pc_tougao','LawyerController@pc_tougao');
 Route::get('/pc_gaozi_add','LawyerController@pc_gaozi_add');
 //
 Route::get('/pc','LawyerController@pc');
+
+
+
+Route::get('user_add','IndexController@user_add');
+Route::get('as','IndexController@as');
 
