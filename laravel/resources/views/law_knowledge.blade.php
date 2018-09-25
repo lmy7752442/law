@@ -19,9 +19,19 @@
     <ul>
         <li><a class="ask" href="ask">发咨询</a></li>
         <li><a class="findlawyers" href="lawyer">找律师</a></li>
-        <li><a class="fagui" href="/tougao">律师投稿</a></li>
+        <li><a class="fagui" id="tougao">律师投稿</a></li>
     </ul>
 </nav>
+<script>
+    $('#tougao').on('click',function(){
+        var r = confirm('是否输入方便，如果方便，您即将进入到投稿页面;如果输入不方便可以选择投稿栏目');
+        if (r==true){
+            location.href="/tougao";
+        }else{
+            location.href="law_knowledge";
+        }
+    })
+</script>
 <div class="new_ask">
     <h2 class="hd"><a href="ask">最新法律咨询</a></h2>
     <div class="bd f17">
@@ -79,8 +89,13 @@
         <a href="default.htm">首页</a>
         <a href="ask">发咨询</a>
         <a href="lawyer">找律师</a>
-        <a href="/tougao">律师投稿</a>
+        <a id="pc_tougao">律师投稿(使用电脑输入)</a>
     </div>
+    <script>
+        $('#pc_tougao').on('click',function(){
+            alert('http://ruirui.jinxiaofei.xyz/pc_tougao');
+        })
+    </script>
     <p class="copyright">Copyright@2003-2014　版权所有 找法网（Findlaw.cn）- 中国最大的法律服务平台</p>
 </footer>
 </body>
