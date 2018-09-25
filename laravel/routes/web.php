@@ -13,10 +13,9 @@
 
 Route::get('/', 'IndexController@index');
 Route::get('law_knowledge', 'IndexController@law_knowledge');
-
 Route::get('ask', 'AskController@ask');
+Route::get('lawyer', 'IndexController@lawyer');
 
-       ########  CommonController   #############
-Route::get('lawyer', 'CommonController@lawyer');
+
 Route::get('user_add','CommonController@user_add');
 Route::get('as','CommonController@as');
