@@ -10,6 +10,7 @@
 <body>
 <form action="user_add" method="get">
     <input type="hidden" value="{{$data}}" name="data">
+    <input type="hidden" value="{{$state}}" name="state">
     <input type="hidden" value="{{$openid}}" name="openid">
     <input type="radio" name="name" value="律师">律师
     <input type="radio" name="name" value="公众用户">公众用户
