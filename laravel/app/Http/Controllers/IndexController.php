@@ -29,7 +29,7 @@ class IndexController extends Controller
             {
                "type":"view",
                 "name":"找律师",
-                "url":"https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxf50dc03dd5f160a7&redirect_uri=http://yuan.jinxiaofei.xyz/law_knowledge&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect"
+                "url":"https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxf50dc03dd5f160a7&redirect_uri=http://yuan.jinxiaofei.xyz/select_do&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect"
             },
             {
                "type":"view",
@@ -40,9 +40,9 @@ class IndexController extends Controller
        {
                "type":"view",
                "name":"个人中心",
-               "url":"https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxf50dc03dd5f160a7&redirect_uri=http://luo.luomengyaun.club/login_weixin&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect"
+               "url":"https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxf50dc03dd5f160a7&redirect_uri=http://http://yuan.jinxiaofei.xyz/select_do&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect"
       }
-       ]
+       ] 
  }';
 
         $link = mysqli_connect('127.0.0.1','root','root','shop');
