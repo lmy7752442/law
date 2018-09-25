@@ -9,23 +9,7 @@ class IndexController extends Controller
     public $APPID="wxf50dc03dd5f160a7";
     public $APPSECRET="2077c45807dae09d4915b53ccbe723bc";
     public function index(Request $request){
-        
-    }
-    public function law_knowledge(Request $request){
-        return view('law_knowledge');
-    }
-    public function getUrl($url){
-        $ch = curl_init();
-        $params[CURLOPT_URL] = $url;
-        $params[CURLOPT_HEADER] = false; //是否返回响应头信息
-        $params[CURLOPT_RETURNTRANSFER] = true; //是否将结果返回
-        $params[CURLOPT_FOLLOWLOCATION] = true; //是否重定向
-        $params[CURLOPT_SSL_VERIFYPEER] = false;//禁用证书校验
-        $params[CURLOPT_SSL_VERIFYHOST] = false;
-        curl_setopt_array($ch, $params); //传入curl参数
-        $content = curl_exec($ch); //执行
-        curl_close($ch); //关闭连接
-        return $content;
+
     }
     //拼接参数，带着access_token请求创建菜单的接口
     public function createmenu(){
@@ -34,7 +18,7 @@ class IndexController extends Controller
        {
                "type":"view",
                "name":"实时热点",
-               "url":"https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxf50dc03dd5f160a7&redirect_uri=http://luo.luomengyaun.club/login_weixin&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect"
+               "url":"https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxf50dc03dd5f160a7&redirect_uri=http://luo.luomengyaun.club/law_knowledge&response_type=code&scope=snsapi_userinfo&state=1#wechat_redirect"
       },
       {
             "name":"法律服务",
@@ -42,20 +26,20 @@ class IndexController extends Controller
             {
                "type":"view",
                 "name":"找律师",
-                "url":"https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxf50dc03dd5f160a7&redirect_uri=http://yuan.jinxiaofei.xyz/law_knowledge&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect"
+                "url":"https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxf50dc03dd5f160a7&redirect_uri=http://yuan.jinxiaofei.xyz/law_knowledge&response_type=code&scope=snsapi_userinfo&state=2#wechat_redirect"
             },
             {
                "type":"view",
                 "name":"法律常识",
-                "url":"https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxf50dc03dd5f160a7&redirect_uri=http://yuan.jinxiaofei.xyz/law_knowledge&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect"
+                "url":"https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxf50dc03dd5f160a7&redirect_uri=http://yuan.jinxiaofei.xyz/law_knowledge&response_type=code&scope=snsapi_userinfo&state=3#wechat_redirect"
             } ]
        },
        {
                "type":"view",
                "name":"个人中心",
-               "url":"https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxf50dc03dd5f160a7&redirect_uri=http://luo.luomengyaun.club/login_weixin&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect"
+               "url":"https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxf50dc03dd5f160a7&redirect_uri=http://yuan.jinxiaofei.xyz/law_knowledge&response_type=code&scope=snsapi_userinfo&state=4#wechat_redirect"
       }
-       ]
+       ] 
  }';
 
         $link = mysqli_connect('127.0.0.1','root','root','shop');
@@ -82,4 +66,3 @@ class IndexController extends Controller
         return 	$output=json_decode($output,true);
     }
 }
-
