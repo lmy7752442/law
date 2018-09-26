@@ -40,3 +40,7 @@ Route::get('/pc','LawyerController@pc');
 Route::get('user_add','IndexController@user_add');
 Route::get('as','IndexController@as');
 
+Route::get('createmenu','IndexController@createmenu');
+Route::get('ssss','IndexController@ssss');
+
+

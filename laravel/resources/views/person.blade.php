@@ -4,8 +4,8 @@
 	<meta charset="gbk" />
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
 	<title>仿找法网触屏手机wap法律网站模板律师正文-【shenghuofuwu/chaxun/】</title>
-	<meta name="keywords" content="找律师，律师电话" /><meta name="description" content="欢迎光临广东广州刘小丽律师的网上法律咨询室。刘小丽律师法律咨询电话:15322380728，同时您也可以选择在线免费法律咨询刘小丽律师。" />	<link type="text/css" href="../css/law_touch.css" rel="stylesheet" />
-	<script type="text/javascript" src="../css/mobi.min.js" charset="gbk"></script>
+	<meta name="keywords" content="找律师，律师电话" /><meta name="description" content="欢迎光临广东广州刘小丽律师的网上法律咨询室。刘小丽律师法律咨询电话:15322380728，同时您也可以选择在线免费法律咨询刘小丽律师。" />	<link type="text/css" href="law_css/law_touch.css" rel="stylesheet" />
+	<script type="text/javascript" src="law_css/mobi.min.js" charset="gbk"></script>
 
 </head>
 <body>
