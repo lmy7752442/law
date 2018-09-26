@@ -12,14 +12,13 @@
 */
 
 Route::get('/', 'IndexController@index');
-//首页
-Route::get('law_knowledge', 'IndexController@law_knowledge');
 
+Route::get('law_knowledge', 'IndexController@law_knowledge');
 
 Route::get('lawyer', 'LawyerController@lawyer');
 
-
 Route::get('ask', 'AskController@ask');
+
 Route::get('lawyer', 'IndexController@lawyer');
 
 

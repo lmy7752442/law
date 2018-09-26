@@ -29,6 +29,9 @@ class IndexController extends Controller
         //  单选框页面  选择律师或公众用户
         header('refresh:0;url=as');
     }
+<<<<<<< HEAD
+
+=======
     public function ssss(Request $request){
         session_start();
         $session_id = session_id();
@@ -52,6 +55,7 @@ class IndexController extends Controller
         }
 
     }
+>>>>>>> 5baa52195d91648a740e80639935b6e866817d78
     public function as(Request $request){
         session_start();
         $session_id = session_id();
@@ -176,4 +180,12 @@ class IndexController extends Controller
         curl_close($ch);
         return 	$output=json_decode($output,true);
     }
+<<<<<<< HEAD
 }
+=======
+}
+<<<<<<< HEAD
+=======
+
+>>>>>>> 5baa52195d91648a740e80639935b6e866817d78
+>>>>>>> 654eef0c89b010f992865f2d0b4e7a57b2ddd8ed
