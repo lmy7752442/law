@@ -23,7 +23,7 @@
 		<p class="hs_link"><img alt="刘小丽" src="http://d03.findlawimg.com/my/photo/20101223140623.jpg" /></p>
 		<p><span class="ly_name">刘小丽</span>广东 - 广州</p>
 		{{--<p><a href="tel_3A15322380728" class="ly_mp_num">15322380728</a></p>--}}
-		<p>账户余额：</p>
+		<p>账户余额：{{$money}}</p>
 		<div style="margin-left: 70px"><button>充值</button>  <button>提现</button></div>
 	</div>
 
