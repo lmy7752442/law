@@ -106,15 +106,21 @@ class IndexController extends Controller
                 'status'=>1
             ];
         }
-        DB::table('user')->insert($res);
-        // $state  1 = 热点列表   2,3= 首页 找律师    4 = 个人中心
-        if($state == '1' ){
-            return view('hotspot_list');
-        }else if($state == '2'){
-            return view('law_knowledge');
-        }else if($state == '3'){
-            return view('person');
+        $res = DB::table('user')->where(['openid'=>$openid])->first();
+        if(empty($res)){
+            DB::table('user')->insert($res);
+        }else{
+            // $state  1 = 热点列表   2,3= 首页 找律师    4 = 个人中心
+            if($state == '1' ){
+                return view('hotspot_list');
+            }else if($state == '2'){
+                return view('law_knowledge');
+            }else if($state == '3'){
+                return view('person');
+            }
         }
+
+
     }
     //拼接参数，带着access_token请求创建菜单的接口
     public function createmenu(){
@@ -171,4 +177,3 @@ class IndexController extends Controller
         return 	$output=json_decode($output,true);
     }
 }
-
