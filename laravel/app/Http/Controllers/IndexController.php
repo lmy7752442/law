@@ -1,3 +1,5 @@
+<<<<<<< HEAD
+=======
 <?php
 
 namespace App\Http\Controllers;
@@ -170,3 +172,4 @@ class IndexController extends Controller
         return 	$output=json_decode($output,true);
     }
 }
+>>>>>>> 66f6520912c13dbe3238697da2280edb853e4013
