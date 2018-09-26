@@ -23,9 +23,9 @@ class IndexController extends Controller
         session_start();
         $session_id = session_id();
         $session = new Session;
-        $session->set($session_id."openid",$data['openid']);
+        $session->set("openid",$data['openid']);
 //        $openid = $session->get('openid');
-        $session ->set($session_id.'token',$data['access_token']);
+        $session ->set('token',$data['access_token']);
         //  单选框页面  选择律师或公众用户
         header('refresh:0;url=as');
     }
@@ -34,7 +34,7 @@ class IndexController extends Controller
         $session_id = session_id();
         $id = $request->get('id');
         $session = new Session;
-        $session->set($session_id."state",$id);
+        $session->set("state",$id);
         $redis = new \Redis();
         $redis->connect('127.0.0.1','6379');
         $openid = $redis->get($session_id);
@@ -56,9 +56,9 @@ class IndexController extends Controller
         session_start();
         $session_id = session_id();
         $session = new Session;
-        $openid = $session->get($session_id.'openid');
-        $token = $session->get($session_id.'token');
-        $state = $session->get($session_id.'state');
+        $openid = $session->get('openid');
+        $token = $session->get('token');
+        $state = $session->get('state');
         $user_data =  DB::table('user')->where(['openid'=>$openid])->first();
         $redis = new \Redis();
         $redis->connect('127.0.0.1','6379');
