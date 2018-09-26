@@ -40,9 +40,8 @@ Route::get('/pc','LawyerController@pc');
 
 Route::get('user_add','IndexController@user_add');
 Route::get('as','IndexController@as');
-<<<<<<< HEAD
+
 Route::get('createmenu','IndexController@createmenu');
 Route::get('ssss','IndexController@ssss');
-=======
 
->>>>>>> 2ba8b997b5a3415699713028611db34f2caaf746
+

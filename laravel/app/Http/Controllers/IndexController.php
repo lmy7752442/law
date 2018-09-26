@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
@@ -21,11 +20,12 @@ class IndexController extends Controller
         $data = json_decode($data,true);
 //        $openid = $data['openid'];
 //        $token =  $data['access_token'];
+        session_start();
+        $session_id = session_id();
         $session = new Session;
-        $session->set("openid",$data['openid']);
+        $session->set($session_id."openid",$data['openid']);
 //        $openid = $session->get('openid');
-        $session ->set('token',$data['access_token']);
-        $session->set("state",$state);
+        $session ->set($session_id.'token',$data['access_token']);
         //  单选框页面  选择律师或公众用户
         header('refresh:0;url=as');
     }
@@ -33,7 +33,8 @@ class IndexController extends Controller
         session_start();
         $session_id = session_id();
         $id = $request->get('id');
-        file_put_contents('aa.txt',1232);
+        $session = new Session;
+        $session->set($session_id."state",$id);
         $redis = new \Redis();
         $redis->connect('127.0.0.1','6379');
         $openid = $redis->get($session_id);
@@ -47,7 +48,7 @@ class IndexController extends Controller
             }
 
         }else{
-            header('refresh:0;url=as');
+            header('refresh:0;url=http://yuan.jinxiaofei.xyz/as');
         }
 
     }
@@ -55,9 +56,9 @@ class IndexController extends Controller
         session_start();
         $session_id = session_id();
         $session = new Session;
-        $openid = $session->get('openid');
-        $token = $session->get('token');
-        $state = $session->get('state');
+        $openid = $session->get($session_id.'openid');
+        $token = $session->get($session_id.'token');
+        $state = $session->get($session_id.'state');
         $user_data =  DB::table('user')->where(['openid'=>$openid])->first();
         $redis = new \Redis();
         $redis->connect('127.0.0.1','6379');
@@ -105,15 +106,21 @@ class IndexController extends Controller
                 'status'=>1
             ];
         }
-        DB::table('user')->insert($res);
-        // $state  1 = 热点列表   2,3= 首页 找律师    4 = 个人中心
-        if($state == '1' ){
-            return view('hotspot_list');
-        }else if($state == '2'){
-            return view('law_knowledge');
-        }else if($state == '3'){
-            return view('person');
+        $res = DB::table('user')->where(['openid'=>$openid])->first();
+        if(empty($res)){
+            DB::table('user')->insert($res);
+        }else{
+            // $state  1 = 热点列表   2,3= 首页 找律师    4 = 个人中心
+            if($state == '1' ){
+                return view('hotspot_list');
+            }else if($state == '2'){
+                return view('law_knowledge');
+            }else if($state == '3'){
+                return view('person');
+            }
         }
+
+
     }
     //拼接参数，带着access_token请求创建菜单的接口
     public function createmenu(){
