@@ -48,7 +48,6 @@ class IndexController extends Controller
             } else{
                 header('refresh:0;url=https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxf50dc03dd5f160a7&redirect_uri=http://yuan.jinxiaofei.xyz/law_knowledge&response_type=code&scope=snsapi_userinfo&state=3#wechat_redirect');
             }
-
         }else{
             header('refresh:0;url=http://yuan.jinxiaofei.xyz/as');
         }
@@ -64,7 +63,7 @@ class IndexController extends Controller
         $user_data =  DB::table('user')->where(['openid'=>$openid])->first();
         $redis = new \Redis();
         $redis->connect('127.0.0.1','6379');
-        $redis->set($session_id,$openid,30);
+        $redis->set($session_id,$openid,30*60);
         if(empty($user_data)){
             $user_arr = file_get_contents('https://api.weixin.qq.com/sns/userinfo?access_token='. $token .'&openid='. $openid .'&lang=zh_CN');
             return view('radio')->with('data',$user_arr)->with('openid',$openid)->with('state',$state);
@@ -75,7 +74,7 @@ class IndexController extends Controller
             }else if($state == '2' ){
                 return view('law_knowledge');
             }else if($state == '3'){
-                return view('person');
+                header('refresh:0;url=person');
             }
         }
     }
@@ -108,21 +107,18 @@ class IndexController extends Controller
                 'status'=>1
             ];
         }
-        $res = DB::table('user')->where(['openid'=>$openid])->first();
-        if(empty($res)){
+        $res2 = DB::table('user')->where(['openid'=>$openid])->first();
+        if(empty($res2)){
             DB::table('user')->insert($res);
-        }else{
-            // $state  1 = 热点列表   2,3= 首页 找律师    4 = 个人中心
-            if($state == '1' ){
-                return view('hotspot_list');
-            }else if($state == '2'){
-                return view('law_knowledge');
-            }else if($state == '3'){
-                return view('person');
-            }
         }
-
-
+        // $state  1 = 热点列表   2,3= 首页 找律师    4 = 个人中心
+        if($state == '1' ){
+            return view('hotspot_list');
+        }else if($state == '2'){
+            return view('law_knowledge');
+        }else if($state == '3'){
+            header('refresh:0;url=person');
+        }
     }
     //拼接参数，带着access_token请求创建菜单的接口
     public function createmenu(){
