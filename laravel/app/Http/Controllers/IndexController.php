@@ -16,16 +16,18 @@ class IndexController extends Controller
         $arr = $_GET;
         $code = $arr['code'];
         $state = $arr['state'];
-        $data = file_get_contents('https://api.weixin.qq.com/sns/oauth2/access_token?appid=wxf50dc03dd5f160a7&secret=2077c45807dae09d4915b53ccbe723bc&code='.$code .'&grant_type=authorization_code');
-        $data = json_decode($data,true);
-//        $openid = $data['openid'];
-//        $token =  $data['access_token'];
         session_start();
         $session_id = session_id();
-        $session = new Session;
-        $session->set("openid",$data['openid']);
-//        $openid = $session->get('openid');
-        $session ->set('token',$data['access_token']);
+        $redis = new \Redis();
+        $redis->connect('127.0.0.1','6379');
+        $openid = $redis->get($session_id);
+        if(empty($openid)){
+            $data = file_get_contents('https://api.weixin.qq.com/sns/oauth2/access_token?appid=wxf50dc03dd5f160a7&secret=2077c45807dae09d4915b53ccbe723bc&code='.$code .'&grant_type=authorization_code');
+            $data = json_decode($data,true);
+            $session = new Session;
+            $session->set("openid",$data['openid']);
+            $session ->set('token',$data['access_token']);
+        }
         //  单选框页面  选择律师或公众用户
         header('refresh:0;url=as');
     }
