@@ -1,5 +1,3 @@
-<<<<<<< HEAD
-=======
 <?php
 
 namespace App\Http\Controllers;
@@ -31,6 +29,7 @@ class IndexController extends Controller
         //  单选框页面  选择律师或公众用户
         header('refresh:0;url=as');
     }
+
     public function as(Request $request){
         $session = new Session;
         $openid = $session->get('openid');
@@ -145,4 +144,3 @@ class IndexController extends Controller
         return 	$output=json_decode($output,true);
     }
 }
->>>>>>> 66f6520912c13dbe3238697da2280edb853e4013
