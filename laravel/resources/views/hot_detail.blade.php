@@ -11,7 +11,7 @@
 <body>
 <header class="sub_header">
     <a href="law_knowledge" class="b_link">首页</a>
-    <h1 class="sub_title">律师投稿</h1>
+    <h1 class="sub_title">时事热点展示</h1>
 </header>
 <style>
     #text{
@@ -34,65 +34,21 @@
 <div style="border:solid red 1px;width:1300px;height:1700px;" id="text">
     {{--<div style=" overflow:scroll; width:400px; height:400px;”>  overflow-y:auto; overflow-x:auto; --}}
     <table>
+        <input type="hidden" name="h_id" valu="{{$data->h_id}}">
         <tr>
             <td>
-                <input type="text" name="title" style="border:solid yellow 1px;width:1200px;height:70px;" id="title" placeholder="请输入稿子标题">
+                <input type="text" name="title" style="border:solid yellow 1px;width:50%;height:20px;" id="title" value="{{$data->h_title}}">
             </td>
         </tr>
         <tr>
             <td>
-                <textarea name="content" style="border:solid blue 1px;width:1200px;height:1400px;" id="content">
+                <textarea name="content" style="border:solid blue 1px;width:70px;height:70px;" id="content">
+                    {{$data->h_content}}
                 </textarea>
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <a style="margin-left:45px;margin-top: 10px;">稿子类型</a>&nbsp;&nbsp;
-                <select name="cate_id" style="margin-top: 10px;">
-                    @foreach($cate_data as $k=>$v)
-                        <li>
-                            <option value="{{$v->cate_id}}" id="cate_id">{{$v->catename}}</option>
-                        </li>
-                    @endforeach
-                </select>
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <input type="button" value="提交稿子" id="submit">
             </td>
         </tr>
     </table>
 </div>
-<script>
-    $("#submit").click(function() {
-        //获取稿子标题
-        var title = $("[name=title]").val();
-//        console.log(title);
-        //获取稿子内容
-        var content = $("[name=content]").val();
-//        console.log(content);
-        //获取稿子类型
-        var cate_id = $("#cate_id").val();
-//        console.log(cate_id);
-        $.ajax({
-            url:"/gaozi_add",
-            type:'get',
-            data:{title:title,content:content,cate_id:cate_id},
-            dataType:'json',
-            success:function(res){
-                console.log(res);
-                if(res.msg == '投稿成功') {
-                    alert('投稿成功');
-                    window.location.href="tiaozhuan";
-                }else{
-                    alert('投稿失败');
-                    window.location.href="/tougao";
-                }
-            }
-        });
-    })
-</script>
 <a class="tips_box" href="../tel_3A400-676-8333"><div class="tips_inbox"><span class="tips_tel">400-676-8333</span><span class="tips_inbox-text">点击免费咨询律师</span></div></a>
 <footer class="f16 tc c666">
     <div class="footer_bar">
