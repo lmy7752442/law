@@ -6,11 +6,11 @@ use Illuminate\Support\Facades\DB;
 use Symfony\Component\HttpFoundation\Session\Session;
 class IndexController extends Controller
 {
-//    public $APPID="wxf50dc03dd5f160a7";
-//    public $APPSECRET="2077c45807dae09d4915b53ccbe723bc";
+    public $APPID="wxf50dc03dd5f160a7";
+    public $APPSECRET="2077c45807dae09d4915b53ccbe723bc";
 
-    public $APPID="wx8dace98e9b799000";
-    public $APPSECRET="40b9d8949a8ae965637316fbb888a50e";
+//    public $APPID="wx8dace98e9b799000";
+//    public $APPSECRET="40b9d8949a8ae965637316fbb888a50e";
     public function index(Request $request){
 
     }
@@ -19,7 +19,7 @@ class IndexController extends Controller
         $arr = $_GET;
         $code = $arr['code'];
         $state = $arr['state'];
-        $data = file_get_contents('https://api.weixin.qq.com/sns/oauth2/access_token?appid=wx8dace98e9b799000&secret=40b9d8949a8ae965637316fbb888a50e&code='.$code .'&grant_type=authorization_code');
+        $data = file_get_contents('https://api.weixin.qq.com/sns/oauth2/access_token?appid=wxf50dc03dd5f160a7&secret=2077c45807dae09d4915b53ccbe723bc&code='.$code .'&grant_type=authorization_code');
         $data = json_decode($data,true);
 //        $openid = $data['openid'];
 //        $token =  $data['access_token'];
@@ -44,15 +44,15 @@ class IndexController extends Controller
         $openid = $redis->get($session_id);
         if(empty($openid)){
             if($id == '1'){
-                header('refresh:0;url=https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx8dace98e9b799000&redirect_uri=http://ruirui.jinxiaofei.xyz/law_knowledge&response_type=code&scope=snsapi_userinfo&state=1#wechat_redirect');
+                header('refresh:0;url=https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxf50dc03dd5f160a7&redirect_uri=http://yuan.jinxiaofei.xyz/law_knowledge&response_type=code&scope=snsapi_userinfo&state=1#wechat_redirect');
             }elseif ($id == '2'){
-                header('refresh:0;url=https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx8dace98e9b799000&redirect_uri=http://ruirui.jinxiaofei.xyz/law_knowledge&response_type=code&scope=snsapi_userinfo&state=2#wechat_redirect');
+                header('refresh:0;url=https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxf50dc03dd5f160a7&redirect_uri=http://yuan.jinxiaofei.xyz/law_knowledge&response_type=code&scope=snsapi_userinfo&state=2#wechat_redirect');
             } else{
-                header('refresh:0;url=https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx8dace98e9b799000&redirect_uri=http://ruirui.jinxiaofei.xyz/law_knowledge&response_type=code&scope=snsapi_userinfo&state=3#wechat_redirect');
+                header('refresh:0;url=https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxf50dc03dd5f160a7&redirect_uri=http://yuan.jinxiaofei.xyz/law_knowledge&response_type=code&scope=snsapi_userinfo&state=3#wechat_redirect');
             }
 
         }else{
-            header('refresh:0;url=http://ruirui.jinxiaofei.xyz/as');
+            header('refresh:0;url=http://yuan.jinxiaofei.xyz/as');
         }
 
     }
@@ -134,7 +134,7 @@ class IndexController extends Controller
        {
                "type":"view",
                "name":"实时热点",
-               "url":"http://ruirui.jinxiaofei.xyz/ssss?id=1"
+               "url":"http://yuan.jinxiaofei.xyz/ssss?id=1"
       },
       {
             "name":"法律服务",
@@ -142,18 +142,18 @@ class IndexController extends Controller
             {
                "type":"view",
                 "name":"找律师",
-                "url":"http://ruirui.jinxiaofei.xyz/ssss?id=2"
+                "url":"http://yuan.jinxiaofei.xyz/ssss?id=2"
             },
             {
                "type":"view",
                 "name":"法律常识",
-                "url":"http://ruirui.jinxiaofei.xyz/ssss?id=2"
+                "url":"http://yuan.jinxiaofei.xyz/ssss?id=2"
             } ]
        },
        {
                "type":"view",
                "name":"个人中心",
-               "url":"http://ruirui.jinxiaofei.xyz/ssss?id=3"
+               "url":"http://yuan.jinxiaofei.xyz/ssss?id=3"
       }
        ] 
  }';

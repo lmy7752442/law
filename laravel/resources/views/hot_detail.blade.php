@@ -34,14 +34,15 @@
 <div style="border:solid red 1px;width:1300px;height:1700px;" id="text">
     {{--<div style=" overflow:scroll; width:400px; height:400px;”>  overflow-y:auto; overflow-x:auto; --}}
     <table>
+        <input type="hidden" name="h_id" valu="{{$data->h_id}}">
         <tr>
             <td>
-                <input type="text" name="title" style="border:solid yellow 1px;width:1200px;height:70px;" id="title" value="{{$data->h_title}}">
+                <input type="text" name="title" style="border:solid yellow 1px;width:50%;height:20px;" id="title" value="{{$data->h_title}}">
             </td>
         </tr>
         <tr>
             <td>
-                <textarea name="content" style="border:solid blue 1px;width:1200px;height:1400px;" id="content">
+                <textarea name="content" style="border:solid blue 1px;width:70px;height:70px;" id="content">
                     {{$data->h_content}}
                 </textarea>
             </td>
