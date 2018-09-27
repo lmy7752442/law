@@ -16,14 +16,15 @@
 		<li><a href="../lawyer/lawyer.html">找律师</a></li>
 		<li><a href="../fagui/fagui.html">查法规</a></li>
 	</ul>
-	<h1 class="sub_title">律师介绍</h1>
+	<h1 class="sub_title">个人中心</h1>
 </header>
 <div class="f16">
 	<div class="ly_info f17">
 		<p class="hs_link"><img alt="刘小丽" src="http://d03.findlawimg.com/my/photo/20101223140623.jpg" /></p>
 		<p><span class="ly_name">刘小丽</span>广东 - 广州</p>
-		<p><a href="tel_3A15322380728" class="ly_mp_num">15322380728</a></p>
-		<p class="mt5 f14 cf60">欢迎直接电话咨询律师</p>
+		{{--<p><a href="tel_3A15322380728" class="ly_mp_num">15322380728</a></p>--}}
+		<p>账户余额：{{$money}}</p>
+		<div style="margin-left: 70px"><button>充值</button>  <button>提现</button></div>
 	</div>
 
 

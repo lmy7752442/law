@@ -57,5 +57,6 @@ Route::get('as','IndexController@as');
 
 Route::get('createmenu','IndexController@createmenu');
 Route::get('ssss','IndexController@ssss');
+Route::get('person','PersonController@index');
 
 
