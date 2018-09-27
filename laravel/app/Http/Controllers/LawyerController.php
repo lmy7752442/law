@@ -14,9 +14,9 @@ class LawyerController extends Controller
     /** 律师投稿 */
     public function tougao(){
         //查询分类表数据
-        $cate_data = (array)DB::table('category')->get();
+        $cate_data = DB::table('category')->get();
 //        print_r($cate_data);exit;
-        return view('tougao');
+        return view('tougao')->with('cate_data',$cate_data);
     }
 
     /** 添加稿子 */
@@ -29,6 +29,7 @@ class LawyerController extends Controller
             'content' => $data['content'],
             'ctime' => time(),
             'utime' => time(),
+            'cate_id' => $data['cate_id'],
         ];
 //        print_r($insert_data);exit;
         $res = DB::table('article')->insert($insert_data);
@@ -39,6 +40,15 @@ class LawyerController extends Controller
             return ['msg'=>'投稿失败' , 'code'=>'2' , 'status'=>'false'];
         }
     }
+
+    /** 跳转页面 */
+    public function tiaozhuan(){
+        # 查询稿子表数据
+        $gaozi_data = DB::table('article')->where(['status'=>1])->orderBy('ctime','desc')->get();
+
+        return view('law_knowledge')->with('gaozi_data',$gaozi_data);
+    }
+
 
     /** 律师电脑投稿 */
     public function pc_tougao(){
@@ -68,6 +78,31 @@ class LawyerController extends Controller
         }else{
             echo "<script>alert('此用户不存在')</script>";
         }
+    }
+
+    /** 稿子详情 */
+    public function gaozi_detail(){
+        $art_id = $_GET['art_id'];
+//        print_r($art_id);exit;
+        # 根据稿子id查询数据库表数据
+        $gaozi_data = DB::table('article')->where(['art_id'=>$art_id,'status'=>1])->first();
+//        print_r($gaozi_data);exit;
+        # 擦寻分类表数据
+        $cate_data = DB::table('category')->get();
+//        print_r($cate_data);exit;
+        return view('gaozi_detail')->with('gaozi_data',$gaozi_data)->with('cate_data',$cate_data);
+    }
+
+    /** 稿子修改 */
+    public function gaozi_update(){
+        $art_id = $_GET['art_id'];
+        print_r($art_id);exit;
+    }
+
+    /** 稿子删除 */
+    public function gaozi_delete(){
+        $art_id = $_GET['art_id'];
+        print_r($art_id);exit;
     }
 
     /**  */
@@ -100,5 +135,6 @@ class LawyerController extends Controller
 //        echo json_encode($data,JSON_UNESCAPED_UNICODE);
 ////        return $data;
 //    }
+
 
 }

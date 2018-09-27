@@ -28,13 +28,28 @@ Route::get('lawyer', 'IndexController@lawyer');
 Route::get('/tougao','LawyerController@tougao');
 //添加稿子
 Route::get('/gaozi_add','LawyerController@gaozi_add');
+//跳转
+Route::get('/tiaozhuan','LawyerController@tiaozhuan');
 //律师电脑投稿
 Route::get('/pc_tougao','LawyerController@pc_tougao');
 //扫二维码投稿
 Route::get('/pc_gaozi_add','LawyerController@pc_gaozi_add');
 //
 Route::get('/pc','LawyerController@pc');
+//稿子详情
+Route::get('/gaozi_detail','LawyerController@gaozi_detail');
+//稿子修改
+Route::get('/gaozi_update','LawyerController@gaozi_update');
+//稿子删除
+Route::get('/gaozi_delete','LawyerController@gaozi_delete');
 
+########## HotController控制器 ##########
+//热点后台展示
+Route::get('/hot_list','HotController@hot_list');
+//后台决定是否展示
+Route::get('/is_show','HotController@is_show');
+//热点详情
+Route::get('/hot_detail','HotController@hot_detail');
 
 
 Route::get('user_add','IndexController@user_add');
