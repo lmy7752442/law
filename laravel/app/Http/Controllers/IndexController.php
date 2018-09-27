@@ -34,10 +34,6 @@ class IndexController extends Controller
         //  单选框页面  选择律师或公众用户
         header('refresh:0;url=as');
     }
-<<<<<<< HEAD
-
-=======
->>>>>>> ee92f52990d6297764bc06036553e831b98db46f
     public function ssss(Request $request){
         session_start();
         $session_id = session_id();
@@ -60,10 +56,6 @@ class IndexController extends Controller
         }
 
     }
-<<<<<<< HEAD
-
-=======
->>>>>>> ee92f52990d6297764bc06036553e831b98db46f
     public function as(Request $request){
         session_start();
         $session_id = session_id();
@@ -74,17 +66,13 @@ class IndexController extends Controller
         $user_data =  DB::table('user')->where(['openid'=>$openid])->first();
         $redis = new \Redis();
         $redis->connect('127.0.0.1','6379');
-<<<<<<< HEAD
         $redis->set($session_id,$openid,30);
 
         # 查询稿子表数据
         $gaozi_data = DB::table('article')->where(['status'=>1])->orderBy('ctime','desc')->get();
         # 查询热点表数据
         $hot_data = DB::table('hot')->where(['is_show'=>2])->orderBy('ctime','desc')->get();
-
-=======
         $redis->set($session_id,$openid,30*60);
->>>>>>> ee92f52990d6297764bc06036553e831b98db46f
         if(empty($user_data)){
             $user_arr = file_get_contents('https://api.weixin.qq.com/sns/userinfo?access_token='. $token .'&openid='. $openid .'&lang=zh_CN');
             return view('radio')->with('data',$user_arr)->with('openid',$openid)->with('state',$state);
@@ -259,7 +247,3 @@ class IndexController extends Controller
         }
     }
 }
-<<<<<<< HEAD
-
-=======
->>>>>>> ee92f52990d6297764bc06036553e831b98db46f
