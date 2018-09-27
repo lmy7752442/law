@@ -174,4 +174,67 @@ class IndexController extends Controller
         curl_close($ch);
         return 	$output=json_decode($output,true);
     }
+    // 热点评论
+    public function comment(Request $request){
+//        echo 123;exit;
+        //  热点id
+        $id = $request->get('id');
+        // 评论内容
+        $content = $request->get('content');
+        session_start();
+        $session_id = session_id();
+        $redis = new \Redis();
+        $redis->connect('127.0.0.1','6379');
+        $openid = $redis->get($session_id);
+        $data = (array)DB::table('user')->where(['openid'=>$openid])->first();
+        // 用户 id
+        $u_id = $data['id'];
+        $arr = [
+            'h_id'=>$id,
+            'uid'=>$u_id,
+            'content'=>$content,
+            'ctime'=>time(),
+            'status'=>1
+        ];
+        $res = DB::table('comment')->insert($arr);
+        if($res){
+            return 1;
+        }else{
+            return 2;
+        }
+    }
+    // 评论 后 评论
+    public  function comment_do(Request $request){
+        //  上级评论 id
+        $pid = $request->get('pid');
+        $data = DB::table('comment')->where(['pid'=>$pid])->first();
+        return view('comment')->with('data',$data);
+    }
+    public function comment_do_do(Request $request){
+        $id = $request->get('id');// pid
+        $hid = $request->get('hid');// 热点 id
+        $area =  $request->get('area'); // 评论内容
+        session_start();
+        $session_id = session_id();
+        $redis = new \Redis();
+        $redis->connect('127.0.0.1','6379');
+        $openid = $redis->get($session_id);
+        $data = (array)DB::table('user')->where(['openid'=>$openid])->first();
+        // 用户 id
+        $u_id = $data['id'];
+        $arr = [
+            'h_id'=>$hid,
+            'uid'=>$u_id,
+            'content'=>$area,
+            'ctime'=>time(),
+            'status'=>1,
+            'pid'=>$id
+        ];
+        $res = DB::table('comment')->insert($arr);
+        if($res){
+            return 1;
+        }else{
+            return 2;
+        }
+    }
 }
