@@ -23,15 +23,6 @@ class IndexController extends Controller
         $session = new Session;
         $session->set("openid",$data['openid']);
         $session ->set('token',$data['access_token']);
-        $openid = $session->get('openid');
-        if(empty($openid)){
-            $data = file_get_contents('https://api.weixin.qq.com/sns/oauth2/access_token?appid=wxf50dc03dd5f160a7&secret=2077c45807dae09d4915b53ccbe723bc&code='.$code .'&grant_type=authorization_code');
-            $data = json_decode($data,true);
-            $session = new Session;
-            $session->set("openid",$data['openid']);
-            $session ->set('token',$data['access_token']);
-        }
-
         //  单选框页面  选择律师或公众用户
         header('refresh:0;url=as');
     }
@@ -72,7 +63,7 @@ class IndexController extends Controller
         }else{
             // $state  1 = 热点列表   2,3= 首页 找律师    4 = 个人中心
             if($state == '1' ){
-                header('refresh:0;url=hot_detail');
+                header('refresh:0;url=person');
             }else if($state == '2' ){
                 return view('law_knowledge')->with('gaozi_data',$gaozi_data)->with('hot_data',$hot_data);
             }else if($state == '3'){
