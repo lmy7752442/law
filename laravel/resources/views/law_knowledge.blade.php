@@ -28,7 +28,7 @@
         if (r==true){
             location.href="/tougao";
         }else{
-            location.href="law_knowledge";
+            location.href="tiaozhuan";
         }
     })
 </script>

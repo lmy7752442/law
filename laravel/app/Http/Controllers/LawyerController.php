@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use App\Http\Controllers\QR_CodeController;
 class LawyerController extends Controller
 {
     /** 用户找律师 */
@@ -45,40 +46,63 @@ class LawyerController extends Controller
     public function tiaozhuan(){
         # 查询稿子表数据
         $gaozi_data = DB::table('article')->where(['status'=>1])->orderBy('ctime','desc')->get();
+        # 查询热点表数据
+        $hot_data = DB::table('hot')->where(['is_show'=>2])->orderBy('ctime','desc')->get();
 
-        return view('law_knowledge')->with('gaozi_data',$gaozi_data);
+        return view('law_knowledge')->with('gaozi_data',$gaozi_data)->with('hot_data',$hot_data);
     }
 
-
-    /** 律师电脑投稿 */
+    /** 律师电脑投稿 直接生成二维码 */
     public function pc_tougao(){
-        return view('pc_tougao');
+        $qrcode=new QR_CodeController();
+        $data=json_decode($qrcode->send(),true);
+//        print_r($data);exit;
+        //echo '<pre/>';
+        //print_r($data);
+        $ticket=$data['ticket'];
+        $url='https://mp.weixin.qq.com/cgi-bin/showqrcode?ticket='.$ticket;
+//        echo $url;die;
+//        return view('qrcode')->with('url',$url);
+        return view('pc_tougao')->with('url',$url);
+
+//        return view('pc_tougao');
     }
 
     /** 扫二维码投稿 */
     public function pc_gaozi_add(){
-        $data = $_GET;
-//        print_r($data);exit;
-        $sessionid = $data['session_id'];
+        session_start();
+        $sessionid = session_id();
 //        print_r($sessionid);exit;
+
         # 根据sessionid查询数据库此用户是否存在
         $res = (array)DB::table('session_openid')->where(['sessionid'=>$sessionid])->first();
-//        print_r($res);
+//        print_r($res);exit;
+        $data = [];
         # 用户存在
         if($res){
             # 根据openid查询用户表 用户的角色
             $openid = $res['openid'];
             $user = (array)DB::table('user')->where(['openid'=>$openid])->first();
 //            print_r($user);exit;
-            if($user['role_type'] == 2){
-                  header("location:http://ruirui.jinxiaofei.xyz/tougao");
+            if(empty($user)) {
+                return $data = ['msg'=>'此用户不存在','code'=>2];
             }else{
-                echo "<script>alert('此用户不是律师')</script>";
+                if($user['role_type'] == 2){
+//                    header("location:http://ruirui.jinxiaofei.xyz/tougao");
+                    return $data = ['msg'=>'进入律师投稿页面','code'=>1];
+                }else{
+//                    echo "<script>alert('此用户不是律师')</script>";
+                    return $data=['msg'=>'此用户不是律师','code'=>2];
+                }
             }
         }else{
-            echo "<script>alert('此用户不存在')</script>";
+//            echo "<script>alert('此用户不存在')</script>";
+                return $data=['msg'=>'未扫码','code'=>2];
+            exit;
         }
+        echo json_encode($data,JSON_UNESCAPED_UNICODE);
     }
+
 
     /** 稿子详情 */
     public function gaozi_detail(){
@@ -93,17 +117,6 @@ class LawyerController extends Controller
         return view('gaozi_detail')->with('gaozi_data',$gaozi_data)->with('cate_data',$cate_data);
     }
 
-    /** 稿子修改 */
-    public function gaozi_update(){
-        $art_id = $_GET['art_id'];
-        print_r($art_id);exit;
-    }
-
-    /** 稿子删除 */
-    public function gaozi_delete(){
-        $art_id = $_GET['art_id'];
-        print_r($art_id);exit;
-    }
 
     /**  */
 //    public function pc(Request $request){
@@ -135,6 +148,34 @@ class LawyerController extends Controller
 //        echo json_encode($data,JSON_UNESCAPED_UNICODE);
 ////        return $data;
 //    }
+
+    /** 微信直接生成二维码 */
+    public function qrcode(){
+//        $qrcode=new QR_CodeController();
+//        $data=json_decode($qrcode->send(),true);
+////        print_r($data);exit;
+//        //echo '<pre/>';
+//        //print_r($data);
+//        $ticket=$data['ticket'];
+//        $url='https://mp.weixin.qq.com/cgi-bin/showqrcode?ticket='.$ticket;
+//        //echo $url;die;
+////        return view('qrcode')->with('url',$url);
+//        return view('pc_tougao')->with('url',$url);
+    }
+
+    /** 微信获取access_token 入数据库 */
+    public function access_token(){
+        //获取微信access_token
+        $url='https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=wx8dace98e9b799000&secret=40b9d8949a8ae965637316fbb888a50e';
+        $data= file_get_contents($url);
+        $arr = json_decode($data,true);
+        //存入数据库shop_access_token
+        $add=[
+            'access_token'=>$arr['access_token'],
+            'ctime'=>time()
+        ];
+        $add_id=DB::table('access_token')->insertGetId($add);
+    }
 
 
 }

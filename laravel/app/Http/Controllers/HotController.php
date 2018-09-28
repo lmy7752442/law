@@ -40,10 +40,12 @@ class HotController extends Controller{
 
     /** 跳 */
     public function tiao(){
+        # 查询稿子表数据
+        $gaozi_data = DB::table('article')->where(['status'=>1])->orderBy('ctime','desc')->get();
         # 查询热点表数据
         $hot_data = DB::table('hot')->where(['is_show'=>2])->orderBy('ctime','desc')->get();
-//        print_r($hot_data);exit;
-        return view('law_knowledge')->with('hot_data',$hot_data);
+
+        return view('law_knowledge')->with('gaozi_data',$gaozi_data)->with('hot_data',$hot_data);
     }
 
     /** 热点详情 */

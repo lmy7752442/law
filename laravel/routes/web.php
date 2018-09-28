@@ -38,10 +38,10 @@ Route::get('/pc_gaozi_add','LawyerController@pc_gaozi_add');
 Route::get('/pc','LawyerController@pc');
 //稿子详情
 Route::get('/gaozi_detail','LawyerController@gaozi_detail');
-//稿子修改
-Route::get('/gaozi_update','LawyerController@gaozi_update');
-//稿子删除
-Route::get('/gaozi_delete','LawyerController@gaozi_delete');
+//微信直接生成二维码
+Route::get('/qrcode','LawyerController@qrcode');
+//微信获取access_token 入数据库
+Route::get('/access_token','LawyerController@access_token');
 
 ########## HotController控制器 ##########
 //热点后台展示
