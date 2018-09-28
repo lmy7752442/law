@@ -42,6 +42,14 @@ Route::get('as','IndexController@as');
 
 Route::get('createmenu','IndexController@createmenu');
 Route::get('ssss','IndexController@ssss');
+
+########## PersonController控制器 ##########
 Route::get('person','PersonController@index');
+Route::get('chongzhi','PersonController@chongzhi');
+Route::get('chongzhi_do','PersonController@chongzhi_do');
+Route::any('notify','PersonController@notify');
+Route::any('chongzhi_status','PersonController@chongzhi_status');
+Route::any('tixian','PersonController@tixian');
+Route::any('tixian_do','PersonController@tixian_do');
 
 

@@ -20,8 +20,6 @@ class IndexController extends Controller
         $data = json_decode($data,true);
 //        $openid = $data['openid'];
 //        $token =  $data['access_token'];
-        session_start();
-        $session_id = session_id();
         $session = new Session;
         $session->set("openid",$data['openid']);
 //        $openid = $session->get('openid');
@@ -30,14 +28,10 @@ class IndexController extends Controller
         header('refresh:0;url=as');
     }
     public function ssss(Request $request){
-        session_start();
-        $session_id = session_id();
         $id = $request->get('id');
         $session = new Session;
         $session->set("state",$id);
-        $redis = new \Redis();
-        $redis->connect('127.0.0.1','6379');
-        $openid = $redis->get($session_id);
+        $openid = $session->get('openid');
         if(empty($openid)){
             if($id == '1'){
                 header('refresh:0;url=https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxf50dc03dd5f160a7&redirect_uri=http://yuan.jinxiaofei.xyz/law_knowledge&response_type=code&scope=snsapi_userinfo&state=1#wechat_redirect');
