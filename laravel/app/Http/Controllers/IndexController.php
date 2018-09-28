@@ -18,6 +18,7 @@ class IndexController extends Controller
     public function law_knowledge(Request $request){
         $arr = $_GET;
         $code = $arr['code'];
+<<<<<<< HEAD
         $state = $arr['state'];
         session_start();
         $session_id = session_id();
@@ -31,19 +32,26 @@ class IndexController extends Controller
             $session->set("openid",$data['openid']);
             $session ->set('token',$data['access_token']);
         }
+=======
+        $data = file_get_contents('https://api.weixin.qq.com/sns/oauth2/access_token?appid=wxf50dc03dd5f160a7&secret=2077c45807dae09d4915b53ccbe723bc&code='.$code .'&grant_type=authorization_code');
+        $data = json_decode($data,true);
+        $session = new Session;
+        $session->set("openid",$data['openid']);
+        $session ->set('token',$data['access_token']);
+>>>>>>> 57b861dadf84e0c533eaf7095a5188827511bfd5
         //  单选框页面  选择律师或公众用户
         header('refresh:0;url=as');
     }
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> 57b861dadf84e0c533eaf7095a5188827511bfd5
     public function ssss(Request $request){
-        session_start();
-        $session_id = session_id();
         $id = $request->get('id');
         $session = new Session;
         $session->set("state",$id);
-        $redis = new \Redis();
-        $redis->connect('127.0.0.1','6379');
-        $openid = $redis->get($session_id);
+        $openid = $session->get('openid');
         if(empty($openid)){
             if($id == '1'){
                 header('refresh:0;url=https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx8dace98e9b799000&redirect_uri=http://ruirui.jinxiaofei.xyz/law_knowledge&response_type=code&scope=snsapi_userinfo&state=1#wechat_redirect');
@@ -53,28 +61,34 @@ class IndexController extends Controller
                 header('refresh:0;url=https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx8dace98e9b799000&redirect_uri=http://ruirui.jinxiaofei.xyz/law_knowledge&response_type=code&scope=snsapi_userinfo&state=3#wechat_redirect');
             }
         }else{
+<<<<<<< HEAD
             header('refresh:0;url=http://ruirui.jinxiaofei.xyz/as');
 
+=======
+            header('refresh:0;url=http://yuan.jinxiaofei.xyz/as');
+>>>>>>> 57b861dadf84e0c533eaf7095a5188827511bfd5
         }
 
     }
 
     public function as(Request $request){
-        session_start();
-        $session_id = session_id();
         $session = new Session;
         $openid = $session->get('openid');
         $token = $session->get('token');
         $state = $session->get('state');
         $user_data =  DB::table('user')->where(['openid'=>$openid])->first();
+<<<<<<< HEAD
         $redis = new \Redis();
         $redis->connect('127.0.0.1','6379');
 
         $redis->set($session_id,$openid,30);
 
+=======
+>>>>>>> 57b861dadf84e0c533eaf7095a5188827511bfd5
         # 查询稿子表数据
         $gaozi_data = DB::table('article')->where(['status'=>1])->orderBy('ctime','desc')->limit(5)->get();
         # 查询热点表数据
+<<<<<<< HEAD
         $hot_data = DB::table('hot')->where(['is_show'=>2])->orderBy('ctime','desc')->limit(5)->get();
 
         
@@ -83,13 +97,16 @@ class IndexController extends Controller
 
         $redis->set($session_id,$openid,30*60);
 
+=======
+        $hot_data = DB::table('hot')->where(['is_show'=>2])->orderBy('ctime','desc')->get();
+>>>>>>> 57b861dadf84e0c533eaf7095a5188827511bfd5
         if(empty($user_data)){
             $user_arr = file_get_contents('https://api.weixin.qq.com/sns/userinfo?access_token='. $token .'&openid='. $openid .'&lang=zh_CN');
             return view('radio')->with('data',$user_arr)->with('openid',$openid)->with('state',$state);
         }else{
             // $state  1 = 热点列表   2,3= 首页 找律师    4 = 个人中心
             if($state == '1' ){
-                return view('hotspot_list');
+                header('refresh:0;url=person');
             }else if($state == '2' ){
                 return view('law_knowledge')->with('gaozi_data',$gaozi_data)->with('hot_data',$hot_data);
             }else if($state == '3'){
@@ -194,7 +211,10 @@ class IndexController extends Controller
         return 	$output=json_decode($output,true);
     }
 
+<<<<<<< HEAD
 //}
+=======
+>>>>>>> 57b861dadf84e0c533eaf7095a5188827511bfd5
 
     // 热点评论
     public function comment(Request $request){
