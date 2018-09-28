@@ -8,6 +8,9 @@ class IndexController extends Controller
 {
     public $APPID="wxf50dc03dd5f160a7";
     public $APPSECRET="2077c45807dae09d4915b53ccbe723bc";
+
+
+
     public function index(Request $request){
 
     }
@@ -15,18 +18,25 @@ class IndexController extends Controller
     public function law_knowledge(Request $request){
         $arr = $_GET;
         $code = $arr['code'];
-        $state = $arr['state'];
         $data = file_get_contents('https://api.weixin.qq.com/sns/oauth2/access_token?appid=wxf50dc03dd5f160a7&secret=2077c45807dae09d4915b53ccbe723bc&code='.$code .'&grant_type=authorization_code');
         $data = json_decode($data,true);
-//        $openid = $data['openid'];
-//        $token =  $data['access_token'];
         $session = new Session;
         $session->set("openid",$data['openid']);
-//        $openid = $session->get('openid');
         $session ->set('token',$data['access_token']);
+        $openid = $session->get('openid');
+        if(empty($openid)){
+            $data = file_get_contents('https://api.weixin.qq.com/sns/oauth2/access_token?appid=wxf50dc03dd5f160a7&secret=2077c45807dae09d4915b53ccbe723bc&code='.$code .'&grant_type=authorization_code');
+            $data = json_decode($data,true);
+            $session = new Session;
+            $session->set("openid",$data['openid']);
+            $session ->set('token',$data['access_token']);
+        }
+
         //  单选框页面  选择律师或公众用户
         header('refresh:0;url=as');
     }
+
+
     public function ssss(Request $request){
         $id = $request->get('id');
         $session = new Session;
@@ -45,26 +55,26 @@ class IndexController extends Controller
         }
 
     }
+
     public function as(Request $request){
-        session_start();
-        $session_id = session_id();
         $session = new Session;
         $openid = $session->get('openid');
         $token = $session->get('token');
         $state = $session->get('state');
         $user_data =  DB::table('user')->where(['openid'=>$openid])->first();
-        $redis = new \Redis();
-        $redis->connect('127.0.0.1','6379');
-        $redis->set($session_id,$openid,30*60);
+        # 查询稿子表数据
+        $gaozi_data = DB::table('article')->where(['status'=>1])->orderBy('ctime','desc')->get();
+        # 查询热点表数据
+        $hot_data = DB::table('hot')->where(['is_show'=>2])->orderBy('ctime','desc')->get();
         if(empty($user_data)){
             $user_arr = file_get_contents('https://api.weixin.qq.com/sns/userinfo?access_token='. $token .'&openid='. $openid .'&lang=zh_CN');
             return view('radio')->with('data',$user_arr)->with('openid',$openid)->with('state',$state);
         }else{
             // $state  1 = 热点列表   2,3= 首页 找律师    4 = 个人中心
             if($state == '1' ){
-                return view('hotspot_list');
+                header('refresh:0;url=hot_detail');
             }else if($state == '2' ){
-                return view('law_knowledge');
+                return view('law_knowledge')->with('gaozi_data',$gaozi_data)->with('hot_data',$hot_data);
             }else if($state == '3'){
                 header('refresh:0;url=person');
             }
@@ -166,4 +176,70 @@ class IndexController extends Controller
         curl_close($ch);
         return 	$output=json_decode($output,true);
     }
+
+
+    // 热点评论
+    public function comment(Request $request){
+//        echo 123;exit;
+        //  热点id
+        $id = $request->get('id');
+        // 评论内容
+        $content = $request->get('content');
+        session_start();
+        $session_id = session_id();
+        $redis = new \Redis();
+        $redis->connect('127.0.0.1','6379');
+        $openid = $redis->get($session_id);
+        $data = (array)DB::table('user')->where(['openid'=>$openid])->first();
+        // 用户 id
+        $u_id = $data['id'];
+        $arr = [
+            'h_id'=>$id,
+            'uid'=>$u_id,
+            'content'=>$content,
+            'ctime'=>time(),
+            'status'=>1
+        ];
+        $res = DB::table('comment')->insert($arr);
+        if($res){
+            return 1;
+        }else{
+            return 2;
+        }
+    }
+    // 评论 后 评论
+    public  function comment_do(Request $request){
+        //  上级评论 id
+        $pid = $request->get('pid');
+        $data = DB::table('comment')->where(['pid'=>$pid])->first();
+        return view('comment')->with('data',$data);
+    }
+    public function comment_do_do(Request $request){
+        $id = $request->get('id');// pid
+        $hid = $request->get('hid');// 热点 id
+        $area =  $request->get('area'); // 评论内容
+        session_start();
+        $session_id = session_id();
+        $redis = new \Redis();
+        $redis->connect('127.0.0.1','6379');
+        $openid = $redis->get($session_id);
+        $data = (array)DB::table('user')->where(['openid'=>$openid])->first();
+        // 用户 id
+        $u_id = $data['id'];
+        $arr = [
+            'h_id'=>$hid,
+            'uid'=>$u_id,
+            'content'=>$area,
+            'ctime'=>time(),
+            'status'=>1,
+            'pid'=>$id
+        ];
+        $res = DB::table('comment')->insert($arr);
+        if($res){
+            return 1;
+        }else{
+            return 2;
+        }
+    }
 }
+

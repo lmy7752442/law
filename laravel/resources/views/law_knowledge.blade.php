@@ -28,7 +28,7 @@
         if (r==true){
             location.href="/tougao";
         }else{
-            location.href="law_knowledge";
+            location.href="tiaozhuan";
         }
     })
 </script>
@@ -36,12 +36,50 @@
     <h2 class="hd"><a href="ask">最新法律咨询</a></h2>
     <div class="bd f17">
         <ul class="fl_list">
-            <li><a href="ask/question_26648000.html">劳动法退休赔偿<span>回复数: 0</span></a></li><li><a href="ask/question_26647996.html">因工受伤不解除劳动关系的应<span>回复数: 0</span></a></li><li><a href="ask/question_26647995.html">我家前面盖的是点式楼低层9<span>回复数: 0</span></a></li><li><a href="ask/question_26648002.html">淘宝兼职刷信誉维权<span>回复数: 0</span></a></li><li><a href="ask/question_26647992.html">您好，我想咨询下抢劫几千元<span>回复数: 0</span></a></li>        </ul>
+            <li><a href="ask/question_26648000.html">劳动法退休赔偿<span>回复数: 0</span></a></li>
+            <li><a href="ask/question_26647996.html">因工受伤不解除劳动关系的应<span>回复数: 0</span></a></li>
+            <li><a href="ask/question_26647995.html">我家前面盖的是点式楼低层9<span>回复数: 0</span></a></li>
+            <li><a href="ask/question_26648002.html">淘宝兼职刷信誉维权<span>回复数: 0</span></a></li>
+            <li><a href="ask/question_26647992.html">您好，我想咨询下抢劫几千元<span>回复数: 0</span></a></li>
+        </ul>
     </div>
     <div class="ft item_bt">
         <a class="aw_link" href="ask">进入咨询中心>></a>
     </div>
 </div>
+
+<div class="new_article">
+    <h2 class="hd"><a href="article">最新律师稿子</a></h2>
+    <div class="bd f17">
+        <ul class="fl_list">
+            @foreach($gaozi_data as $k=>$v)
+                <li>
+                    <a href="/gaozi_detail?art_id={{$v->art_id}}">{{$v->title}}<span>回复数: 0</span></a>
+                </li>
+            @endforeach
+        </ul>
+    </div>
+    <div class="ft item_bt">
+        <a class="aw_link" href="article">进入咨询中心>></a>
+    </div>
+</div>
+
+<div class="new_article">
+    <h2 class="hd"><a href="hot">时事热点</a></h2>
+    <div class="bd f17">
+        <ul class="fl_list">
+            @foreach($hot_data as $k=>$v)
+                <li>
+                    <a href="/hot_detail?h_id={{$v->h_id}}">{{$v->h_title}}<span>回复数: 0</span></a>
+                </li>
+            @endforeach
+        </ul>
+    </div>
+    <div class="ft item_bt">
+        <a class="aw_link" href="hot">进入咨询中心>></a>
+    </div>
+</div>
+
 <div class="rec_lawyer">
     <h2 class="hd"><a href="lawyer">推荐广州律师</a></h2>
     <div class="ly_list bd f17">

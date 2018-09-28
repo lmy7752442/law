@@ -49,15 +49,11 @@
             <td>
                 <a style="margin-left:45px;margin-top: 10px;">稿子类型</a>&nbsp;&nbsp;
                 <select name="cate_id" style="margin-top: 10px;">
-                    <option value="1">婚姻家庭</option>
-                    <option value="2">刑事辩护</option>
-                    <option value="3">交通事故</option>
-                    <option value="4">合同纠纷</option>
-                    <option value="5">房产纠纷</option>
-                    <option value="6">公司法</option>
-                    <option value="7">知识产权</option>
-                    <option value="8">劳动纠纷</option>
-                    <option value="9">债权债务</option>
+                    @foreach($cate_data as $k=>$v)
+                        <li>
+                            <option value="{{$v->cate_id}}" id="cate_id">{{$v->catename}}</option>
+                        </li>
+                    @endforeach
                 </select>
             </td>
         </tr>
@@ -77,7 +73,7 @@
         var content = $("[name=content]").val();
 //        console.log(content);
         //获取稿子类型
-        var cate_id = $("[name=cate_id]").val();
+        var cate_id = $("#cate_id").val();
 //        console.log(cate_id);
         $.ajax({
             url:"/gaozi_add",
@@ -88,7 +84,7 @@
                 console.log(res);
                 if(res.msg == '投稿成功') {
                     alert('投稿成功');
-                    window.location.href="law_knowledge";
+                    window.location.href="tiaozhuan";
                 }else{
                     alert('投稿失败');
                     window.location.href="/tougao";

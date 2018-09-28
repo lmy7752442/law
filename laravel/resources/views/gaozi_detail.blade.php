@@ -11,48 +11,63 @@
 <body>
 <header class="sub_header">
     <a href="law_knowledge" class="b_link">首页</a>
-    <h1 class="sub_title">律师投稿</h1>
-    <style>
-        #erweima{
-            margin-left:560px;
-        }
-    </style>
+    <h1 class="sub_title">律师稿子展示</h1>
 </header>
-    <form id="erweima">
-        <ul>
-            <li>
-                <img src="{{$url}}" alt="" style="margin-left:50px;width:200px;height: 200px;"/>
-            </li>
-        </ul>
-    </form>
-<script>
-    window.onload=function(){
-        function a(){
-            $.get("/pc_gaozi_add",
-                    { },
-                    function(data){
-                        console.log(data);
-//                        var data=JSON.parse(data)
-                        if(data.msg == '进入律师投稿页面'){
-                            alert(data.msg);
-                            location.href="/tougao"
-                        }else if(data.mag == '未扫码'){
-                            alert(data.msg);
-                            location.href='/pc_tougao'
-                        }else if(data.msg == '此用户不存在'){
-                            alert(data.msg);
-                            location.href='/login';
-                        }else if(data.msg == '此用户不是律师'){
-                            alert(data.msg);
-                            location.href='tiaozhuan';
-                        }
-                    }
-            )
-        }
-        setInterval(a,2000);
+<style>
+    #text{
+        margin-left:28px;
     }
-</script>
+    #title{
+        margin-left:45px;
+        margin-top:10px;
+    }
+    #content{
+        margin-left:45px;
+        margin-top:10px;
+    }
 
+    #submit{
+        margin-left:45px;
+        margin-top:10px;
+    }
+</style>
+<div style="border:solid red 1px;width:1300px;height:1700px;" id="text">
+    {{--<div style=" overflow:scroll; width:400px; height:400px;”>  overflow-y:auto; overflow-x:auto; --}}
+    <table>
+        <tr>
+            <td>
+                <input type="text" name="title" style="border:solid yellow 1px;width:1200px;height:70px;" id="title" value="{{$gaozi_data->title}}">
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <textarea name="content" style="border:solid blue 1px;width:1200px;height:1400px;" id="content">
+                    {{$gaozi_data->content}}
+                </textarea>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <a style="margin-left:45px;margin-top: 10px;">稿子类型</a>&nbsp;&nbsp;
+                <select name="cate_id" style="margin-top: 10px;">
+                    @foreach($cate_data as $k=>$v)
+                        <li>
+                            @if($v->cate_id == $gaozi_data->cate_id)
+                                <option value="{{$v->cate_id}}" id="cate_id" checked>{{$v->catename}}</option>
+                            @endif
+                        </li>
+                    @endforeach
+                </select>
+            </td>
+        </tr>
+        {{--<tr>--}}
+            {{--<td>--}}
+                {{--<a href="/gaozi_update?art_id={{$gaozi_data->art_id}}">修改</a>--}}
+                {{--<a href="/gaozi_delete?art_id={{$gaozi_data->art_id}}">删除</a>--}}
+            {{--</td>--}}
+        {{--</tr>--}}
+    </table>
+</div>
 <a class="tips_box" href="../tel_3A400-676-8333"><div class="tips_inbox"><span class="tips_tel">400-676-8333</span><span class="tips_inbox-text">点击免费咨询律师</span></div></a>
 <footer class="f16 tc c666">
     <div class="footer_bar">
