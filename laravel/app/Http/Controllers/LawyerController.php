@@ -184,7 +184,6 @@ class LawyerController extends Controller
     public function user_role_type(Request $request){
         $session = new Session;
         $openid = $request->get('openid');
-        echo 123;
         print_r($openid);exit;
 
         # 根据sessionid查询数据库此用户是否存在
