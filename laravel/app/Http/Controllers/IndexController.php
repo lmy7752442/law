@@ -9,8 +9,8 @@ class IndexController extends Controller
     public $APPID="wxf50dc03dd5f160a7";
     public $APPSECRET="2077c45807dae09d4915b53ccbe723bc";
 
-//    public $APPID="wx8dace98e9b799000";
-//    public $APPSECRET="40b9d8949a8ae965637316fbb888a50e";
+
+
     public function index(Request $request){
 
     }
@@ -26,9 +26,9 @@ class IndexController extends Controller
         //  单选框页面  选择律师或公众用户
         header('refresh:0;url=as');
     }
+
+
     public function ssss(Request $request){
-        session_start();
-        $session_id = session_id();
         $id = $request->get('id');
         $session = new Session;
         $session->set("state",$id);
@@ -46,9 +46,8 @@ class IndexController extends Controller
         }
 
     }
+
     public function as(Request $request){
-        session_start();
-        $session_id = session_id();
         $session = new Session;
         $openid = $session->get('openid');
         $token = $session->get('token');
@@ -64,7 +63,7 @@ class IndexController extends Controller
         }else{
             // $state  1 = 热点列表   2,3= 首页 找律师    4 = 个人中心
             if($state == '1' ){
-                return view('hotspot_list');
+                header('refresh:0;url=person');
             }else if($state == '2' ){
                 return view('law_knowledge')->with('gaozi_data',$gaozi_data)->with('hot_data',$hot_data);
             }else if($state == '3'){
@@ -168,6 +167,8 @@ class IndexController extends Controller
         curl_close($ch);
         return 	$output=json_decode($output,true);
     }
+
+
     // 热点评论
     public function comment(Request $request){
         //  热点id
@@ -239,3 +240,4 @@ class IndexController extends Controller
         }
     }
 }
+
