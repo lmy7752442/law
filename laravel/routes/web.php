@@ -42,6 +42,10 @@ Route::get('/gaozi_detail','LawyerController@gaozi_detail');
 Route::get('/qrcode','LawyerController@qrcode');
 //微信获取access_token 入数据库
 Route::get('/access_token','LawyerController@access_token');
+//判断身份 是用户还是律师
+Route::get('/user_role_type','LawyerController@user_role_type');
+//所有稿子
+Route::get('/all_gaozi','LawyerController@all_gaozi');
 
 ########## HotController控制器 ##########
 //热点后台展示
@@ -50,6 +54,8 @@ Route::get('/hot_list','HotController@hot_list');
 Route::get('/is_show','HotController@is_show');
 //热点详情
 Route::get('/hot_detail','HotController@hot_detail');
+//所有热点
+Route::get('/all_hot','HotController@all_hot');
 
 
 Route::get('user_add','IndexController@user_add');

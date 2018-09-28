@@ -6,8 +6,8 @@ use Illuminate\Support\Facades\DB;
 use Symfony\Component\HttpFoundation\Session\Session;
 class IndexController extends Controller
 {
-    public $APPID="wxf50dc03dd5f160a7";
-    public $APPSECRET="2077c45807dae09d4915b53ccbe723bc";
+    public $APPID="wx8dace98e9b799000";
+    public $APPSECRET="40b9d8949a8ae965637316fbb888a50e";
 
 
 
@@ -25,7 +25,7 @@ class IndexController extends Controller
         $redis->connect('127.0.0.1','6379');
         $openid = $redis->get($session_id);
         if(empty($openid)){
-            $data = file_get_contents('https://api.weixin.qq.com/sns/oauth2/access_token?appid=wxf50dc03dd5f160a7&secret=2077c45807dae09d4915b53ccbe723bc&code='.$code .'&grant_type=authorization_code');
+            $data = file_get_contents('https://api.weixin.qq.com/sns/oauth2/access_token?appid=wx8dace98e9b799000&secret=40b9d8949a8ae965637316fbb888a50e&code='.$code .'&grant_type=authorization_code');
             $data = json_decode($data,true);
             $session = new Session;
             $session->set("openid",$data['openid']);
@@ -34,10 +34,7 @@ class IndexController extends Controller
         //  单选框页面  选择律师或公众用户
         header('refresh:0;url=as');
     }
-<<<<<<< HEAD
 
-=======
->>>>>>> aacd63c89252878574e924497a594f7f42d84668
     public function ssss(Request $request){
         session_start();
         $session_id = session_id();
@@ -49,22 +46,19 @@ class IndexController extends Controller
         $openid = $redis->get($session_id);
         if(empty($openid)){
             if($id == '1'){
-                header('refresh:0;url=https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxf50dc03dd5f160a7&redirect_uri=http://yuan.jinxiaofei.xyz/law_knowledge&response_type=code&scope=snsapi_userinfo&state=1#wechat_redirect');
+                header('refresh:0;url=https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx8dace98e9b799000&redirect_uri=http://ruirui.jinxiaofei.xyz/law_knowledge&response_type=code&scope=snsapi_userinfo&state=1#wechat_redirect');
             }elseif ($id == '2'){
-                header('refresh:0;url=https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxf50dc03dd5f160a7&redirect_uri=http://yuan.jinxiaofei.xyz/law_knowledge&response_type=code&scope=snsapi_userinfo&state=2#wechat_redirect');
+                header('refresh:0;url=https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx8dace98e9b799000&redirect_uri=http://ruirui.jinxiaofei.xyz/law_knowledge&response_type=code&scope=snsapi_userinfo&state=2#wechat_redirect');
             } else{
-                header('refresh:0;url=https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxf50dc03dd5f160a7&redirect_uri=http://yuan.jinxiaofei.xyz/law_knowledge&response_type=code&scope=snsapi_userinfo&state=3#wechat_redirect');
+                header('refresh:0;url=https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx8dace98e9b799000&redirect_uri=http://ruirui.jinxiaofei.xyz/law_knowledge&response_type=code&scope=snsapi_userinfo&state=3#wechat_redirect');
             }
         }else{
-            header('refresh:0;url=http://yuan.jinxiaofei.xyz/as');
+            header('refresh:0;url=http://ruirui.jinxiaofei.xyz/as');
 
         }
 
     }
-<<<<<<< HEAD
 
-=======
->>>>>>> aacd63c89252878574e924497a594f7f42d84668
     public function as(Request $request){
         session_start();
         $session_id = session_id();
@@ -75,23 +69,20 @@ class IndexController extends Controller
         $user_data =  DB::table('user')->where(['openid'=>$openid])->first();
         $redis = new \Redis();
         $redis->connect('127.0.0.1','6379');
-<<<<<<< HEAD
 
-=======
->>>>>>> aacd63c89252878574e924497a594f7f42d84668
         $redis->set($session_id,$openid,30);
 
         # 查询稿子表数据
-        $gaozi_data = DB::table('article')->where(['status'=>1])->orderBy('ctime','desc')->get();
+        $gaozi_data = DB::table('article')->where(['status'=>1])->orderBy('ctime','desc')->limit(5)->get();
         # 查询热点表数据
-        $hot_data = DB::table('hot')->where(['is_show'=>2])->orderBy('ctime','desc')->get();
-<<<<<<< HEAD
+        $hot_data = DB::table('hot')->where(['is_show'=>2])->orderBy('ctime','desc')->limit(5)->get();
+
         
         $redis->set($session_id,$openid,30*60);
 
-=======
+
         $redis->set($session_id,$openid,30*60);
->>>>>>> aacd63c89252878574e924497a594f7f42d84668
+
         if(empty($user_data)){
             $user_arr = file_get_contents('https://api.weixin.qq.com/sns/userinfo?access_token='. $token .'&openid='. $openid .'&lang=zh_CN');
             return view('radio')->with('data',$user_arr)->with('openid',$openid)->with('state',$state);
@@ -155,7 +146,7 @@ class IndexController extends Controller
        {
                "type":"view",
                "name":"实时热点",
-               "url":"http://yuan.jinxiaofei.xyz/ssss?id=1"
+               "url":"http://ruirui.jinxiaofei.xyz/ssss?id=1"
       },
       {
             "name":"法律服务",
@@ -163,18 +154,18 @@ class IndexController extends Controller
             {
                "type":"view",
                 "name":"找律师",
-                "url":"http://yuan.jinxiaofei.xyz/ssss?id=2"
+                "url":"http://ruirui.jinxiaofei.xyz/ssss?id=2"
             },
             {
                "type":"view",
                 "name":"法律常识",
-                "url":"http://yuan.jinxiaofei.xyz/ssss?id=2"
+                "url":"http://ruirui.jinxiaofei.xyz/ssss?id=2"
             } ]
        },
        {
                "type":"view",
                "name":"个人中心",
-               "url":"http://yuan.jinxiaofei.xyz/ssss?id=3"
+               "url":"http://ruirui.jinxiaofei.xyz/ssss?id=3"
       }
        ] 
  }';
@@ -202,9 +193,9 @@ class IndexController extends Controller
         curl_close($ch);
         return 	$output=json_decode($output,true);
     }
-<<<<<<< HEAD
-}
-=======
+
+//}
+
     // 热点评论
     public function comment(Request $request){
 //        echo 123;exit;
@@ -269,4 +260,4 @@ class IndexController extends Controller
         }
     }
 }
->>>>>>> aacd63c89252878574e924497a594f7f42d84668
+
