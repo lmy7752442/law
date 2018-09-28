@@ -50,8 +50,29 @@ class HotController extends Controller{
     public function hot_detail(){
         $h_id = $_GET['h_id'];
 //        print_r($h_id);exit;
-        $res = DB::table('hot')->where(['h_id'=>$h_id])->first();
-//        print_r($res);exit;
-        return view('hot_detail')->with('data',$res);
+        $data = DB::table('hot')->where('h_id',$h_id)->first();
+        $arr = DB::table('comment')->leftjoin('user','comment.uid','=','user.id')->where(['h_id'=>$h_id,'pid'=>0])->get();
+//        $arr = json_decode($arr,true);
+//        print_r($arr);exit;
+        foreach($arr as $k=>$v){
+            $v->ctime1 = date("Y-m-d H:i",$v->ctime1);
+            if($v->m_id){
+                $res = (array)DB::table('medal')->where(['m_id'=>$v->m_id])->first();
+                $v->m_id = $res['name'];
+            }
+            $res2 = DB::table('comment')->leftjoin('user','comment.uid','=','user.id')->where(['pid'=>$v->comment_id])->get();
+            if($res2){
+                foreach($res2 as $key =>$val){
+                    $val->ctime1 = date("Y-m-d H:i",$val->ctime1);
+                    if($val->m_id){
+                        $res3 = (array)DB::table('medal')->where(['m_id'=>$val->m_id])->first();
+                        $val->m_id = $res3['name'];
+                    }
+                }
+                $v->res = $res2;
+            }
+        }
+//        print_r($arr);exit;
+        return view('hot_detail')->with('data',$data)->with('arr',$arr);
     }
 }

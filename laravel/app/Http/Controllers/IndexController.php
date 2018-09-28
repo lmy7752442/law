@@ -18,19 +18,11 @@ class IndexController extends Controller
     public function law_knowledge(Request $request){
         $arr = $_GET;
         $code = $arr['code'];
-        $state = $arr['state'];
-        session_start();
-        $session_id = session_id();
-        $redis = new \Redis();
-        $redis->connect('127.0.0.1','6379');
-        $openid = $redis->get($session_id);
-        if(empty($openid)){
-            $data = file_get_contents('https://api.weixin.qq.com/sns/oauth2/access_token?appid=wxf50dc03dd5f160a7&secret=2077c45807dae09d4915b53ccbe723bc&code='.$code .'&grant_type=authorization_code');
-            $data = json_decode($data,true);
-            $session = new Session;
-            $session->set("openid",$data['openid']);
-            $session ->set('token',$data['access_token']);
-        }
+        $data = file_get_contents('https://api.weixin.qq.com/sns/oauth2/access_token?appid=wxf50dc03dd5f160a7&secret=2077c45807dae09d4915b53ccbe723bc&code='.$code .'&grant_type=authorization_code');
+        $data = json_decode($data,true);
+        $session = new Session;
+        $session->set("openid",$data['openid']);
+        $session ->set('token',$data['access_token']);
         //  单选框页面  选择律师或公众用户
         header('refresh:0;url=as');
     }
@@ -40,9 +32,7 @@ class IndexController extends Controller
         $id = $request->get('id');
         $session = new Session;
         $session->set("state",$id);
-        $redis = new \Redis();
-        $redis->connect('127.0.0.1','6379');
-        $openid = $redis->get($session_id);
+        $openid = $session->get('openid');
         if(empty($openid)){
             if($id == '1'){
                 header('refresh:0;url=https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxf50dc03dd5f160a7&redirect_uri=http://yuan.jinxiaofei.xyz/law_knowledge&response_type=code&scope=snsapi_userinfo&state=1#wechat_redirect');
@@ -64,15 +54,10 @@ class IndexController extends Controller
         $token = $session->get('token');
         $state = $session->get('state');
         $user_data =  DB::table('user')->where(['openid'=>$openid])->first();
-        $redis = new \Redis();
-        $redis->connect('127.0.0.1','6379');
-        $redis->set($session_id,$openid,30);
-
         # 查询稿子表数据
         $gaozi_data = DB::table('article')->where(['status'=>1])->orderBy('ctime','desc')->get();
         # 查询热点表数据
         $hot_data = DB::table('hot')->where(['is_show'=>2])->orderBy('ctime','desc')->get();
-        $redis->set($session_id,$openid,30*60);
         if(empty($user_data)){
             $user_arr = file_get_contents('https://api.weixin.qq.com/sns/userinfo?access_token='. $token .'&openid='. $openid .'&lang=zh_CN');
             return view('radio')->with('data',$user_arr)->with('openid',$openid)->with('state',$state);
@@ -185,11 +170,10 @@ class IndexController extends Controller
     }
     // 热点评论
     public function comment(Request $request){
-//        echo 123;exit;
         //  热点id
         $id = $request->get('id');
         // 评论内容
-        $content = $request->get('content');
+        $content = $request->get('area');
         session_start();
         $session_id = session_id();
         $redis = new \Redis();
@@ -198,12 +182,14 @@ class IndexController extends Controller
         $data = (array)DB::table('user')->where(['openid'=>$openid])->first();
         // 用户 id
         $u_id = $data['id'];
+
         $arr = [
             'h_id'=>$id,
             'uid'=>$u_id,
             'content'=>$content,
-            'ctime'=>time(),
-            'status'=>1
+            'ctime1'=>time(),
+            'status'=>1,
+            'pid'=>0
         ];
         $res = DB::table('comment')->insert($arr);
         if($res){
@@ -216,13 +202,18 @@ class IndexController extends Controller
     public  function comment_do(Request $request){
         //  上级评论 id
         $pid = $request->get('pid');
-        $data = DB::table('comment')->where(['pid'=>$pid])->first();
-        return view('comment')->with('data',$data);
+        $data = DB::table('comment')->where(['comment_id'=>$pid])->first();
+        $res = DB::table('hot')->where(['h_id'=>$data->h_id])->first();
+
+        return view('comment')->with('data',$data)->with('res',$res);
     }
     public function comment_do_do(Request $request){
         $id = $request->get('id');// pid
         $hid = $request->get('hid');// 热点 id
         $area =  $request->get('area'); // 评论内容
+//        print_r($id);
+//        print_r($hid);
+//        print_r($area);exit;
         session_start();
         $session_id = session_id();
         $redis = new \Redis();
@@ -235,11 +226,12 @@ class IndexController extends Controller
             'h_id'=>$hid,
             'uid'=>$u_id,
             'content'=>$area,
-            'ctime'=>time(),
+            'ctime1'=>time(),
             'status'=>1,
             'pid'=>$id
         ];
         $res = DB::table('comment')->insert($arr);
+
         if($res){
             return 1;
         }else{
