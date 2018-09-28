@@ -41,7 +41,7 @@
                             location.href='/pc_tougao'
                         }else if(data.msg == '此用户不存在'){
                             alert(data.msg);
-                            location.href='/login';
+//                            location.href='/login';
                         }else if(data.msg == '此用户不是律师'){
                             alert(data.msg);
                             location.href='tiaozhuan';

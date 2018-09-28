@@ -24,12 +24,27 @@
 </nav>
 <script>
     $('#tougao').on('click',function(){
-        var r = confirm('是否输入方便，如果方便，您即将进入到投稿页面;如果输入不方便可以选择投稿栏目');
-        if (r==true){
-            location.href="/tougao";
-        }else{
-            location.href="tiaozhuan";
-        }
+        $.get("/user_role_type",
+                function(data){
+                    console.log(data);
+                    alert(data);
+//                    var data=JSON.parse(data);
+//                    if(data.code == 1){
+//                        var r = confirm('是否输入方便，如果方便，您即将进入到投稿页面;如果输入不方便可以选择投稿栏目');
+//                        if (r==true){
+//                            location.href="/tougao";
+//                        }else{
+//                            location.href="tiaozhuan";
+//                        }
+//                    }else if(data.code == 2){
+//                        alert(data.msg);
+////                        location.href='/login';
+//                    }else if(data.code == 3){
+//                        alert(data.msg);
+//                        location.href='tiaozhuan';
+//                    }
+                }
+        )
     })
 </script>
 <div class="new_ask">
@@ -60,7 +75,8 @@
         </ul>
     </div>
     <div class="ft item_bt">
-        <a class="aw_link" href="article">进入咨询中心>></a>
+        <a class="aw_link" href="/all_gaozi">进入咨询中心>></a>
+
     </div>
 </div>
 
@@ -76,7 +92,7 @@
         </ul>
     </div>
     <div class="ft item_bt">
-        <a class="aw_link" href="hot">进入咨询中心>></a>
+        <a class="aw_link" href="/all_hot">进入咨询中心>></a>
     </div>
 </div>
 

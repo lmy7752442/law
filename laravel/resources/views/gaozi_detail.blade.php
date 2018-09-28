@@ -41,9 +41,7 @@
         </tr>
         <tr>
             <td>
-                <textarea name="content" style="border:solid blue 1px;width:1200px;height:1400px;" id="content">
-                    {{$gaozi_data->content}}
-                </textarea>
+                <textarea name="content" style="border:solid blue 1px;width:1200px;height:1400px;" id="content">{{$gaozi_data->content}}</textarea>
             </td>
         </tr>
         <tr>

@@ -10,10 +10,15 @@ class HotController extends Controller{
         $hot_data = DB::table('hot')->where(['is_show'=>1])->get();
 //        print_r($hot_data);exit;
         $new_data = json_decode($hot_data,true);
-        foreach($new_data as $k=>$v){
-            $new_data[$k]['ctime'] = date('Y-m-s H:i:s',$v['ctime']);
+        if($new_data){
+            foreach($new_data as $k=>$v){
+                $new_data[$k]['ctime'] = date('Y-m-s H:i:s',$v['ctime']);
+            }
+            return view('hot_list')->with('new_data',$new_data);
+        }else{
+            exit("<script>没有可以展示的数据了</script>");
         }
-        return view('hot_list')->with('new_data',$new_data);
+
     }
 
     /** 是否展示 */
@@ -41,9 +46,9 @@ class HotController extends Controller{
     /** 跳 */
     public function tiao(){
         # 查询稿子表数据
-        $gaozi_data = DB::table('article')->where(['status'=>1])->orderBy('ctime','desc')->get();
+        $gaozi_data = DB::table('article')->where(['status'=>1])->orderBy('ctime','desc')->limit(5)->get();
         # 查询热点表数据
-        $hot_data = DB::table('hot')->where(['is_show'=>2])->orderBy('ctime','desc')->get();
+        $hot_data = DB::table('hot')->where(['is_show'=>2])->orderBy('ctime','desc')->limit(5)->get();
 
         return view('law_knowledge')->with('gaozi_data',$gaozi_data)->with('hot_data',$hot_data);
     }
@@ -76,5 +81,13 @@ class HotController extends Controller{
         }
 //        print_r($arr);exit;
         return view('hot_detail')->with('data',$data)->with('arr',$arr);
+    }
+
+    /** 所有热点 */
+    public function all_hot(){
+        # 查询热点表数据
+        $hot_data = DB::table('hot')->where(['is_show'=>2])->orderBy('ctime','desc')->get();
+
+        return view('all_hot')->with('hot_data',$hot_data);
     }
 }

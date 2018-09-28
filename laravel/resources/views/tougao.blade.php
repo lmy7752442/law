@@ -41,8 +41,7 @@
         </tr>
         <tr>
             <td>
-                <textarea name="content" style="border:solid blue 1px;width:1200px;height:1400px;" id="content">
-                </textarea>
+                <textarea name="content" style="border:solid blue 1px;width:1200px;height:1400px;" id="content"></textarea>
             </td>
         </tr>
         <tr>
