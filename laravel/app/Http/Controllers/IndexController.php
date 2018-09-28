@@ -6,13 +6,19 @@ use Illuminate\Support\Facades\DB;
 use Symfony\Component\HttpFoundation\Session\Session;
 class IndexController extends Controller
 {
+<<<<<<< HEAD
         public $APPID="wxf50dc03dd5f160a7";
         public $APPSECRET="2077c45807dae09d4915b53ccbe723bc";
+=======
+    public $APPID="wxf50dc03dd5f160a7";
+    public $APPSECRET="2077c45807dae09d4915b53ccbe723bc";
+>>>>>>> 9cc2ebdb8b9a92904dbac2fd39a74203a81b96ba
 
 
 
         public function index(Request $request){
 
+<<<<<<< HEAD
         }
         // 判断 选择角色
         public function law_knowledge(Request $request){
@@ -44,6 +50,63 @@ class IndexController extends Controller
                         header('refresh:0;url=http://yuan.jinxiaofei.xyz/as');
                 }
 
+=======
+    }
+    // 判断 选择角色
+    public function law_knowledge(Request $request){
+        $arr = $_GET;
+        $code = $arr['code'];
+        $data = file_get_contents('https://api.weixin.qq.com/sns/oauth2/access_token?appid=wxf50dc03dd5f160a7&secret=2077c45807dae09d4915b53ccbe723bc&code='.$code .'&grant_type=authorization_code');
+        $data = json_decode($data,true);
+        $session = new Session;
+        $session->set("openid",$data['openid']);
+        $session ->set('token',$data['access_token']);
+        //  单选框页面  选择律师或公众用户
+        header('refresh:0;url=as');
+    }
+
+    public function ssss(Request $request){
+        $id = $request->get('id');
+        $session = new Session;
+        $session->set("state",$id);
+        $openid = $session->get('openid');
+        if(empty($openid)){
+            if($id == '1'){
+                header('refresh:0;url=https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxf50dc03dd5f160a7&redirect_uri=http://yuan.jinxiaofei.xyz/law_knowledge&response_type=code&scope=snsapi_userinfo&state=1#wechat_redirect');
+            }elseif ($id == '2'){
+                header('refresh:0;url=https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxf50dc03dd5f160a7&redirect_uri=http://yuan.jinxiaofei.xyz/law_knowledge&response_type=code&scope=snsapi_userinfo&state=2#wechat_redirect');
+            } else{
+                header('refresh:0;url=https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxf50dc03dd5f160a7&redirect_uri=http://yuan.jinxiaofei.xyz/law_knowledge&response_type=code&scope=snsapi_userinfo&state=3#wechat_redirect');
+            }
+        }else{
+            header('refresh:0;url=http://yuan.jinxiaofei.xyz/as');
+        }
+
+    }
+
+    public function as(Request $request){
+        $session = new Session;
+        $openid = $session->get('openid');
+        $token = $session->get('token');
+        $state = $session->get('state');
+        $user_data =  DB::table('user')->where(['openid'=>$openid])->first();
+        # 查询稿子表数据
+        $gaozi_data = DB::table('article')->where(['status'=>1])->orderBy('ctime','desc')->get();
+        # 查询热点表数据
+        $hot_data = DB::table('hot')->where(['is_show'=>2])->orderBy('ctime','desc')->get();
+        if(empty($user_data)){
+            $user_arr = file_get_contents('https://api.weixin.qq.com/sns/userinfo?access_token='. $token .'&openid='. $openid .'&lang=zh_CN');
+            return view('radio')->with('data',$user_arr)->with('openid',$openid)->with('state',$state);
+        }else{
+            // $state  1 = 热点列表   2,3= 首页 找律师    4 = 个人中心
+            if($state == '1' ){
+                header('refresh:0;url=person');
+            }else if($state == '2' ){
+                return view('law_knowledge')->with('gaozi_data',$gaozi_data)->with('hot_data',$hot_data);
+            }else if($state == '3'){
+                header('refresh:0;url=person');
+            }
+>>>>>>> 9cc2ebdb8b9a92904dbac2fd39a74203a81b96ba
         }
 
         public function as(Request $request){
@@ -168,6 +231,14 @@ class IndexController extends Controller
                 curl_close($ch);
                 return     $output=json_decode($output,true);
         }
+<<<<<<< HEAD
+=======
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+        $output = curl_exec($ch);
+        curl_close($ch);
+        return     $output=json_decode($output,true);
+    }
+>>>>>>> 9cc2ebdb8b9a92904dbac2fd39a74203a81b96ba
 
 
         // 热点评论
