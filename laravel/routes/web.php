@@ -54,9 +54,14 @@ Route::get('/hot_detail','HotController@hot_detail');
 
 Route::get('user_add','IndexController@user_add');
 Route::get('as','IndexController@as');
-
+// 创建菜单
 Route::get('createmenu','IndexController@createmenu');
 Route::get('ssss','IndexController@ssss');
 Route::get('person','PersonController@index');
+// 热点评论
+Route::get('comment','IndexController@comment');
+// 热点评论后 评论
+Route::get('comment_do','IndexController@comment_do');
+Route::get('comment_do_do','IndexController@comment_do_do');
 
 
