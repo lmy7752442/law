@@ -219,6 +219,34 @@ class IndexController extends Controller
 
     // 热点评论
     public function comment(Request $request){
+<<<<<<< HEAD
+        //  热点id
+        $id = $request->get('id');
+        // 评论内容
+        $content = $request->get('area');
+        session_start();
+        $session_id = session_id();
+        $redis = new \Redis();
+        $redis->connect('127.0.0.1','6379');
+        $openid = $redis->get($session_id);
+        $data = (array)DB::table('user')->where(['openid'=>$openid])->first();
+        // 用户 id
+        $u_id = $data['id'];
+        $arr = [
+            'h_id'=>$id,
+            'uid'=>$u_id,
+            'content'=>$content,
+            'ctime1'=>time(),
+            'status'=>1
+        ];
+
+        $res= DB::table('comment')->insert($arr);
+        if($res){
+            return 1;
+        }else{
+            return 2;
+        }
+=======
 //        echo 123;exit;
             //  热点id
             $id = $request->get('id');
@@ -245,17 +273,53 @@ class IndexController extends Controller
             }else{
                     return 2;
             }
+>>>>>>> e73201ea7e603d49d9d98acfdaf893cb8c22180e
     }
 
     // 评论 后 评论
     public  function comment_do(Request $request){
+<<<<<<< HEAD
+        //  上级评论 id
+        $pid = $request->get('pid');
+        $data = DB::table('comment')->where(['comment_id'=>$pid])->first();
+       $res =  DB::table('hot')->where(['h_id'=>$data->h_id])->first();
+        return view('comment')->with('data',$data)->with('res',$res);
+=======
             //  上级评论 id
             $pid = $request->get('pid');
             $data = DB::table('comment')->where(['pid'=>$pid])->first();
             return view('comment')->with('data',$data);
+>>>>>>> e73201ea7e603d49d9d98acfdaf893cb8c22180e
     }
 
     public function comment_do_do(Request $request){
+<<<<<<< HEAD
+        $id = $request->get('id');// pid
+        $hid = $request->get('hid');// 热点 id
+        $area =  $request->get('area'); // 评论内容
+        session_start();
+        $session_id = session_id();
+        $redis = new \Redis();
+        $redis->connect('127.0.0.1','6379');
+        $openid = $redis->get($session_id);
+        $data = (array)DB::table('user')->where(['openid'=>$openid])->first();
+        // 用户 id
+        $u_id = $data['id'];
+        $arr = [
+            'h_id'=>$hid,
+            'uid'=>$u_id,
+            'content'=>$area,
+            'ctime1'=>time(),
+            'status'=>1,
+            'pid'=>$id
+        ];
+        $res = DB::table('comment')->insert($arr);
+        if($res){
+            return 1;
+        }else{
+            return 2;
+        }
+=======
             $id = $request->get('id');// pid
             $hid = $request->get('hid');// 热点 id
             $area =  $request->get('area'); // 评论内容
@@ -281,5 +345,6 @@ class IndexController extends Controller
             }else{
                     return 2;
             }
+>>>>>>> e73201ea7e603d49d9d98acfdaf893cb8c22180e
     }
 }

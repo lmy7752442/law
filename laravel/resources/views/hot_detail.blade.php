@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <title>仿找法网触屏手机wap法律网站模板律师在线-【shenghuofuwu/chaxun/】</title>
     <meta name="keywords" content="广州律师  广州律师在线 广州法律咨询  律师" /><meta name="description" content="找法网广州律师网为您提供广州律师在线法律咨询服务和法律法规、法律知识查询。解决法律难题 请找广州律师，专业律师在线为您提供全面的广州法律咨询服务。" />		<link type="text/css" href="/law_css/law_touch.css" rel="stylesheet" />
-    <script type="text/javascript" src="/law_css/mobi.min.js" charset="gbk"></script>
+    {{--<script type="text/javascript" src="/law_css/mobi.min.js" charset="gbk"></script>--}}
     <script type="text/javascript" src="http://code.jquery.com/jquery-latest.js"></script>
     {{--<link rel="stylesheet" href="https://weui.io/weui.css">--}}
 
@@ -166,7 +166,7 @@
                 id:id,
                 area:area
             },function(data){
-            // alert(data)
+            // alert(data);
                if(data == 1){
                    location.href='/hot_detail/?h_id='+id;
                }else{
