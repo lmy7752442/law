@@ -6,14 +6,7 @@ use Illuminate\Support\Facades\DB;
 use Symfony\Component\HttpFoundation\Session\Session;
 class IndexController extends Controller
 {
-    public $APPID="wxf50dc03dd5f160a7";
-<<<<<<< HEAD
-    public $APPSECRET="40b9d8949a8ae965637316fbb888a50e";
-
-    public function index(Request $request){
-
-
-=======
+    public $APPID="wxf50dc03dd5f160a.7";
     public $APPSECRET="2077c45807dae09d4915b53ccbe723bc";
 
     public function index(Request $request){
@@ -52,60 +45,56 @@ class IndexController extends Controller
             }
             echo $str = $this -> ArrToXml($weixin_arr);
         }
->>>>>>> 30153f50c34ffac8cb7e217171ff59b59e0d1f87
     }
 
     // 判断 选择角色
     public function law_knowledge(Request $request){
-            $arr = $_GET;
-            $code = $arr['code'];
-            $data = file_get_contents('https://api.weixin.qq.com/sns/oauth2/access_token?appid=wxf50dc03dd5f160a7&secret=40b9d8949a8ae965637316fbb888a50e&code='.$code .'&grant_type=authorization_code');
-            $data = json_decode($data,true);
-            $session = new Session;
-            $session->set("openid",$data['openid']);
-            $session ->set('token',$data['access_token']);
-            //  单选框页面  选择律师或公众用户
-            header('refresh:0;url=as');
+        $arr = $_GET;
+        $code = $arr['code'];
+        $data = file_get_contents('https://api.weixin.qq.com/sns/oauth2/access_token?appid=wx812a083d4498638e&secret=92a75a70f282313ac6c1d5075c4c23e5&code='.$code .'&grant_type=authorization_code');
+        $data = json_decode($data,true);
+        $session = new Session;
+        $session->set("openid",$data['openid']);
+        $session ->set('token',$data['access_token']);
+        //  单选框页面  选择律师或公众用户
+        header('refresh:0;url=as');
     }
 
     public function ssss(Request $request){
-            $id = $request->get('id');
-            $session = new Session;
-            $session->set("state",$id);
-            $openid = $session->get('openid');
-            if(empty($openid)){
-                    if($id == '1'){
-                            header('refresh:0;url=https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxf50dc03dd5f160a7&redirect_uri=http://yuan.jinxiaofei.xyz/law_knowledge&response_type=code&scope=snsapi_userinfo&state=1#wechat_redirect');
-                    }elseif ($id == '2'){
-                            header('refresh:0;url=https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxf50dc03dd5f160a7&redirect_uri=http://yuan.jinxiaofei.xyz/law_knowledge&response_type=code&scope=snsapi_userinfo&state=2#wechat_redirect');
-                    } else{
-                            header('refresh:0;url=https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxf50dc03dd5f160a7&redirect_uri=http://yuan.jinxiaofei.xyz/law_knowledge&response_type=code&scope=snsapi_userinfo&state=3#wechat_redirect');
-                    }
-            }else{
-                    header('refresh:0;url=http://yuan.jinxiaofei.xyz/as');
+        $id = $request->get('id');
+        $session = new Session;
+        $session->set("state",$id);
+        $openid = $session->get('openid');
+        if(empty($openid)){
+            if($id == '1'){
+                header('refresh:0;url=https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx812a083d4498638e&redirect_uri=http://shuai.jinxiaofei.xyz/law_knowledge&response_type=code&scope=snsapi_userinfo&state=1#wechat_redirect');
+            }elseif ($id == '2'){
+                header('refresh:0;url=https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx812a083d4498638e&redirect_uri=http://shuai.jinxiaofei.xyz/law_knowledge&response_type=code&scope=snsapi_userinfo&state=2#wechat_redirect');
+            } else{
+                header('refresh:0;url=https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx812a083d4498638e&redirect_uri=http://shuai.jinxiaofei.xyz/law_knowledge&response_type=code&scope=snsapi_userinfo&state=3#wechat_redirect');
             }
+        }else{
+            header('refresh:0;url=http://shuai.jinxiaofei.xyz/as');
+        }
     }
 
-<<<<<<< HEAD
+
+
     public function as(Request $request)
     {
-=======
-
-
-    public function as(Request $request){
-        $status = $request -> get('status');
->>>>>>> 30153f50c34ffac8cb7e217171ff59b59e0d1f87
+        $status = $request->get('status');
         $session = new Session;
         $openid = $session->get('openid');
         $token = $session->get('token');
         $state = $session->get('state');
-<<<<<<< HEAD
         $user_data = DB::table('user')->where(['openid' => $openid])->first();
         # 查询稿子表数据
         $gaozi_data = DB::table('article')->where(['status' => 1])->orderBy('ctime', 'desc')->limit(5)->get();
         # 查询热点表数据
         $hot_data = DB::table('hot')->where(['is_show' => 2])->orderBy('ctime', 'desc')->limit(5)->get();
-
+        if($status == 1){
+            return view('law_knowledge')->with('gaozi_data', $gaozi_data)->with('hot_data', $hot_data);
+        }
         if (empty($user_data)) {
             $user_arr = file_get_contents('https://api.weixin.qq.com/sns/userinfo?access_token=' . $token . '&openid=' . $openid . '&lang=zh_CN');
             return view('radio')->with('data', $user_arr)->with('openid', $openid)->with('state', $state);
@@ -124,52 +113,50 @@ class IndexController extends Controller
     }
 
     public function user_add(Request $request){
-            $user_arr = $request->get('data');
-            $openid = $request->get('openid');
-            $name = $request->get('name');
-            $state = $request->get('state');
-            $user_arr = json_decode($user_arr,true);
-
+        $user_arr = $request->get('data');
+        $openid = $request->get('openid');
+        $name = $request->get('name');
+        $state = $request->get('state');
+        $user_arr = json_decode($user_arr,true);
         # 查询稿子表数据
         $gaozi_data = DB::table('article')->where(['status' => 1])->orderBy('ctime', 'desc')->limit(5)->get();
         # 查询热点表数据
         $hot_data = DB::table('hot')->where(['is_show'=>2])->orderBy('ctime','desc')->limit(5)->get();
-
-            if($name == '公众用户'){
-                    $res = [
-                        'openid'=>$openid,
-                        'username'=>$user_arr['nickname'],
-                        'headimg'=>$user_arr['headimgurl'],
-                        'introduce'=>'公众用户',
-                        'role_type'=>1,
-                        'ctime'=>time(),
-                        'utime'=>time(),
-                        'status'=>1
-                    ];
-            }else if($name == '律师'){
-                    $res = [
-                        'openid'=>$openid,
-                        'username'=>$user_arr['nickname'],
-                        'headimg'=>$user_arr['headimgurl'],
-                        'introduce'=>'这是律师',
-                        'role_type'=>2,
-                        'ctime'=>time(),
-                        'utime'=>time(),
-                        'status'=>1
-                    ];
-            }
-            $res2 = DB::table('user')->where(['openid'=>$openid])->first();
-            if(empty($res2)){
-                    DB::table('user')->insert($res);
-            }
-            // $state  1 = 热点列表   2,3= 首页 找律师    4 = 个人中心
-            if($state == '1' ){
-                    return view('hotspot_list');
-            }else if($state == '2'){
-                    return view('law_knowledge')->with('gaozi_data',$gaozi_data)->with('hot_data',$hot_data);
-            }else if($state == '3'){
-                    header('refresh:0;url=person');
-            }
+        if($name == '公众用户'){
+            $res = [
+                'openid'=>$openid,
+                'username'=>$user_arr['nickname'],
+                'headimg'=>$user_arr['headimgurl'],
+                'introduce'=>'公众用户',
+                'role_type'=>1,
+                'ctime'=>time(),
+                'utime'=>time(),
+                'status'=>1
+            ];
+        }else if($name == '律师'){
+            $res = [
+                'openid'=>$openid,
+                'username'=>$user_arr['nickname'],
+                'headimg'=>$user_arr['headimgurl'],
+                'introduce'=>'这是律师',
+                'role_type'=>2,
+                'ctime'=>time(),
+                'utime'=>time(),
+                'status'=>1
+            ];
+        }
+        $res2 = DB::table('user')->where(['openid'=>$openid])->first();
+        if(empty($res2)){
+            DB::table('user')->insert($res);
+        }
+        // $state  1 = 热点列表   2,3= 首页 找律师    4 = 个人中心
+        if($state == '1' ){
+            return view('hotspot_list');
+        }else if($state == '2'){
+            return view('law_knowledge')->with('gaozi_data',$gaozi_data)->with('hot_data',$hot_data);
+        }else if($state == '3'){
+            header('refresh:0;url=person');
+        }
     }
 
     //拼接参数，带着access_token请求创建菜单的接口
@@ -179,7 +166,7 @@ class IndexController extends Controller
                    {
                            "type":"view",
                            "name":"实时热点",
-                           "url":"http://yuan.jinxiaofei.xyz/ssss?id=1"
+                           "url":"http://shuai.jinxiaofei.xyz/ssss?id=1"
                    },
                    {
                        "name":"法律服务",
@@ -187,19 +174,19 @@ class IndexController extends Controller
                             {
                                "type":"view",
                                 "name":"找律师",
-                                "url":"http://yuan.jinxiaofei.xyz/ssss?id=2"
+                                "url":"http://shuai.jinxiaofei.xyz/ssss?id=2"
                             },
                             {
                                "type":"view",
                                 "name":"法律常识",
-                                "url":"http://yuan.jinxiaofei.xyz/ssss?id=2"
+                                "url":"http://shuai.jinxiaofei.xyz/ssss?id=2"
                             }
                        ]
                    },
                    {
                            "type":"view",
                            "name":"个人中心",
-                           "url":"http://yuan.jinxiaofei.xyz/ssss?id=3"
+                           "url":"http://shuai.jinxiaofei.xyz/ssss?id=3"
 
               ]
         }';
@@ -214,163 +201,31 @@ class IndexController extends Controller
         var_dump($result);
 
     }
-=======
-        $user_data =  DB::table('user')->where(['openid'=>$openid])->first();
 
-        # 查询稿子表数据
-        $gaozi_data = DB::table('article')->where(['status'=>1])->orderBy('ctime','desc')->limit(5)->get();
-        # 查询热点表数据
-        $hot_data = DB::table('hot')->where(['is_show'=>2])->orderBy('ctime','desc')->limit(5)->get();
-        if($status == 1){
-            return view('law_knowledge')->with('gaozi_data',$gaozi_data)->with('hot_data',$hot_data);
+    public function postcurl($url,$data = null){
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, FALSE);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, FALSE);
+        if (!empty($data)){
+            curl_setopt($ch, CURLOPT_POST, TRUE);
+            curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
         }
-        if(empty($user_data)){
-                $user_arr = file_get_contents('https://api.weixin.qq.com/sns/userinfo?access_token='. $token .'&openid='. $openid .'&lang=zh_CN');
-                return view('radio')->with('data',$user_arr)->with('openid',$openid)->with('state',$state);
-        }else{
-                // $state  1 = 热点列表   2,3= 首页 找律师    4 = 个人中心
-                if($state == '1' ){
-                        header('refresh:0;url=person');
-                }else if($state == '2' ){
-                        return view('law_knowledge')->with('gaozi_data',$gaozi_data)->with('hot_data',$hot_data);
-                }else if($state == '3'){
-                        header('refresh:0;url=person');
-                }
-        }
-    }
-
-        public function user_add(Request $request){
-                $user_arr = $request->get('data');
-                $openid = $request->get('openid');
-                $name = $request->get('name');
-                $state = $request->get('state');
-                $user_arr = json_decode($user_arr,true);
-                if($name == '公众用户'){
-                        $res = [
-                            'openid'=>$openid,
-                            'username'=>$user_arr['nickname'],
-                            'headimg'=>$user_arr['headimgurl'],
-                            'introduce'=>'公众用户',
-                            'role_type'=>1,
-                            'ctime'=>time(),
-                            'utime'=>time(),
-                            'status'=>1
-                        ];
-                }else if($name == '律师'){
-                        $res = [
-                            'openid'=>$openid,
-                            'username'=>$user_arr['nickname'],
-                            'headimg'=>$user_arr['headimgurl'],
-                            'introduce'=>'这是律师',
-                            'role_type'=>2,
-                            'ctime'=>time(),
-                            'utime'=>time(),
-                            'status'=>1
-                        ];
-                }
-                $res2 = DB::table('user')->where(['openid'=>$openid])->first();
-                if(empty($res2)){
-                        DB::table('user')->insert($res);
-                }
-                // $state  1 = 热点列表   2,3= 首页 找律师    4 = 个人中心
-                if($state == '1' ){
-                        return view('hotspot_list');
-                }else if($state == '2'){
-                        return view('law_knowledge');
-                }else if($state == '3'){
-                        header('refresh:0;url=person');
-                }
-        }
-        //拼接参数，带着access_token请求创建菜单的接口
-        public function createmenu(){
-                $data='{
-      "button":[
-       {
-               "type":"view",
-               "name":"实时热点",
-               "url":"http://yuan.jinxiaofei.xyz/ssss?id=1"
-      },
-      {
-            "name":"法律服务",
-           "sub_button":[
-            {
-               "type":"view",
-                "name":"找律师",
-                "url":"http://yuan.jinxiaofei.xyz/ssss?id=2"
-            },
-            {
-               "type":"view",
-                "name":"法律常识",
-                "url":"http://yuan.jinxiaofei.xyz/ssss?id=2"
-            } ]
-       },
-       {
-               "type":"view",
-               "name":"个人中心",
-               "url":"http://yuan.jinxiaofei.xyz/ssss?id=3"
-      }
-       ]
- }';
-
-                $link = mysqli_connect('127.0.0.1','root','root','shop');
-                $sql = "select * from shop_token";
-                $res = mysqli_query($link,$sql);
-                $data2 = mysqli_fetch_assoc($res);
-                $access_token=$data2['token'];
-                $url="https://api.weixin.qq.com/cgi-bin/menu/create?access_token=".$access_token;
-                $result=$this->postcurl($url,$data);
-                var_dump($result);
-        }
-        function postcurl($url,$data = null){
-                $ch = curl_init();
-                curl_setopt($ch, CURLOPT_URL, $url);
-                curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, FALSE);
-                curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, FALSE);
-                if (!empty($data)){
-                        curl_setopt($ch, CURLOPT_POST, TRUE);
-                        curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
-                }
-                curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-                $output = curl_exec($ch);
-                curl_close($ch);
-                return     $output=json_decode($output,true);
-        }
-
-//        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-//        $output = curl_exec($ch);
-//        curl_close($ch);
-//        return     $output=json_decode($output,true);
-//    }
-
->>>>>>> 30153f50c34ffac8cb7e217171ff59b59e0d1f87
-
-    function postcurl($url,$data = null){
-            $ch = curl_init();
-            curl_setopt($ch, CURLOPT_URL, $url);
-            curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, FALSE);
-            curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, FALSE);
-            if (!empty($data)){
-                    curl_setopt($ch, CURLOPT_POST, TRUE);
-                    curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
-            }
-            curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-            $output = curl_exec($ch);
-            curl_close($ch);
-            return     $output=json_decode($output,true);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+        $output = curl_exec($ch);
+        curl_close($ch);
+        return     $output=json_decode($output,true);
     }
 
     // 热点评论
     public function comment(Request $request){
-<<<<<<< HEAD
+//        echo 123;exit;
         //  热点id
         $id = $request->get('id');
         // 评论内容
-        $content = $request->get('area');
-        session_start();
-        $session_id = session_id();
-        $redis = new \Redis();
-        $redis->connect('127.0.0.1','6379');
-        $openid = $redis->get($session_id);
+        $content = $request->get('content');
+        $session = new Session;
+        $openid = $session->get('openid');
         $data = (array)DB::table('user')->where(['openid'=>$openid])->first();
         // 用户 id
         $u_id = $data['id'];
@@ -378,80 +233,43 @@ class IndexController extends Controller
             'h_id'=>$id,
             'uid'=>$u_id,
             'content'=>$content,
-            'ctime1'=>time(),
+            'ctime'=>time(),
             'status'=>1
         ];
-
-        $res= DB::table('comment')->insert($arr);
+        $res = DB::table('comment')->insert($arr);
         if($res){
             return 1;
         }else{
             return 2;
         }
-=======
-//        echo 123;exit;
-            //  热点id
-            $id = $request->get('id');
-            // 评论内容
-            $content = $request->get('content');
-            session_start();
-            $session_id = session_id();
-            $redis = new \Redis();
-            $redis->connect('127.0.0.1','6379');
-            $openid = $redis->get($session_id);
-            $data = (array)DB::table('user')->where(['openid'=>$openid])->first();
-            // 用户 id
-            $u_id = $data['id'];
-            $arr = [
-                'h_id'=>$id,
-                'uid'=>$u_id,
-                'content'=>$content,
-                'ctime'=>time(),
-                'status'=>1
-            ];
-            $res = DB::table('comment')->insert($arr);
-            if($res){
-                    return 1;
-            }else{
-                    return 2;
-            }
->>>>>>> e73201ea7e603d49d9d98acfdaf893cb8c22180e
     }
 
     // 评论 后 评论
     public  function comment_do(Request $request){
-<<<<<<< HEAD
         //  上级评论 id
         $pid = $request->get('pid');
-        $data = DB::table('comment')->where(['comment_id'=>$pid])->first();
-       $res =  DB::table('hot')->where(['h_id'=>$data->h_id])->first();
+        $data = DB::table('comment')->where(['pid'=>$pid])->first();
+        $res =  DB::table('hot')->where(['h_id'=>$data->h_id])->first();
         return view('comment')->with('data',$data)->with('res',$res);
-=======
-            //  上级评论 id
-            $pid = $request->get('pid');
-            $data = DB::table('comment')->where(['pid'=>$pid])->first();
-            return view('comment')->with('data',$data);
->>>>>>> e73201ea7e603d49d9d98acfdaf893cb8c22180e
     }
 
     public function comment_do_do(Request $request){
-<<<<<<< HEAD
         $id = $request->get('id');// pid
         $hid = $request->get('hid');// 热点 id
         $area =  $request->get('area'); // 评论内容
-        session_start();
-        $session_id = session_id();
-        $redis = new \Redis();
-        $redis->connect('127.0.0.1','6379');
-        $openid = $redis->get($session_id);
+        $session = new Session;
+        $openid = $session->get('openid');
+//        echo $openid;exit;
         $data = (array)DB::table('user')->where(['openid'=>$openid])->first();
         // 用户 id
         $u_id = $data['id'];
+
+//        echo $u_id;exit;
         $arr = [
             'h_id'=>$hid,
             'uid'=>$u_id,
             'content'=>$area,
-            'ctime1'=>time(),
+            'ctime'=>time(),
             'status'=>1,
             'pid'=>$id
         ];
@@ -461,32 +279,6 @@ class IndexController extends Controller
         }else{
             return 2;
         }
-=======
-            $id = $request->get('id');// pid
-            $hid = $request->get('hid');// 热点 id
-            $area =  $request->get('area'); // 评论内容
-            session_start();
-            $session_id = session_id();
-            $redis = new \Redis();
-            $redis->connect('127.0.0.1','6379');
-            $openid = $redis->get($session_id);
-            $data = (array)DB::table('user')->where(['openid'=>$openid])->first();
-            // 用户 id
-            $u_id = $data['id'];
-            $arr = [
-                'h_id'=>$hid,
-                'uid'=>$u_id,
-                'content'=>$area,
-                'ctime'=>time(),
-                'status'=>1,
-                'pid'=>$id
-            ];
-            $res = DB::table('comment')->insert($arr);
-            if($res){
-                    return 1;
-            }else{
-                    return 2;
-            }
->>>>>>> e73201ea7e603d49d9d98acfdaf893cb8c22180e
     }
 }
+

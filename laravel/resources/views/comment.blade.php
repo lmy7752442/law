@@ -59,6 +59,7 @@
                 hid:hid,
                 area:area
             },function(data){
+            // alert(data)
                 if(data == 1){
                     location.href='hot_detail?h_id='+hid;
                 }
