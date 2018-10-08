@@ -9,15 +9,37 @@
 </head>
 <body>
 <div style="margin-left: 40%;">
-    <input type="hidden" value="{{$data['comment_id']}}" id="hi">
-    <input type="hidden" value="{{$data['h_id']}}" id="pid">
-    <div style="width:300px;height:300px;border:1px sienna solid;">
-        <p>{{$data['content']}}</p>
-    </div>
-    <div style="margin-top:10px; ">
-        <textarea name="" id="area" cols="50" rows="20"></textarea>
-    </div>
-    <input type="button" value="评论" id="bu">
+    <input type="hidden" value="{{$data->comment_id}}" id="hi">
+    <input type="hidden" value="{{$data->h_id}}" id="hid">
+
+        <table>
+            <tr>
+                <td>
+                    热点：
+                </td>
+                <td>
+                    {{$res->h_content}}
+                </td>
+            </tr>
+            <tr>
+                <td>评论：</td>
+                {{--<td><textarea name="" readonly>{{$data->content}}</textarea></td>--}}
+                <td>{{$data->content}}</td>
+            </tr>
+    <tr>
+        <td></td>
+        <td>
+            <div style="margin-top:10px; ">
+                <textarea name="" id="area" cols="40" rows="10"></textarea>
+            </div>
+        </td>
+    </tr>
+    <tr>
+        <td></td>
+        <td><input type="button" value="评论" id="bu"></td>
+    </tr>
+
+    </table>
 </div>
 </body>
 </html>
@@ -28,15 +50,19 @@
         var id = $('#hi').val();
         var hid = $('#hid').val(); // h_id 热点
         var area = $("#area").val();// 评论内容
-        $.get('comment_do_do',
+        // alert(id);
+        // alert(hid);
+        // alert(area);
+        $.get('/comment_do_do',
             {
                 id:id,
                 hid:hid,
                 area:area
             },function(data){
                 if(data == 1){
-                    location.href='comment';
+                    location.href='hot_detail?h_id='+hid;
                 }
+                // console.log(data)
             })
 
     })

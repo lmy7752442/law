@@ -10,8 +10,8 @@
 </head>
 <body>
 <header class="sub_header">
-    <a href="law_knowledge" class="b_link">首页</a>
-    <h1 class="sub_title">律师稿子展示</h1>
+    <a href="index" class="b_link">首页</a>
+    <h1 class="sub_title">律师投稿展示</h1>
 </header>
 <style>
     #text{
@@ -41,14 +41,12 @@
         </tr>
         <tr>
             <td>
-                <textarea name="content" style="border:solid blue 1px;width:1200px;height:1400px;" id="content">
-                    {{$gaozi_data->content}}
-                </textarea>
+                <textarea name="content" style="border:solid blue 1px;width:1200px;height:1400px;" id="content">{{$gaozi_data->content}}</textarea>
             </td>
         </tr>
         <tr>
             <td>
-                <a style="margin-left:45px;margin-top: 10px;">稿子类型</a>&nbsp;&nbsp;
+                <a style="margin-left:45px;margin-top: 10px;">投稿类型</a>&nbsp;&nbsp;
                 <select name="cate_id" style="margin-top: 10px;">
                     @foreach($cate_data as $k=>$v)
                         <li>
