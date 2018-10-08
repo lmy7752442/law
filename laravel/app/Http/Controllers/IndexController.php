@@ -7,11 +7,52 @@ use Symfony\Component\HttpFoundation\Session\Session;
 class IndexController extends Controller
 {
     public $APPID="wxf50dc03dd5f160a7";
+<<<<<<< HEAD
     public $APPSECRET="40b9d8949a8ae965637316fbb888a50e";
 
     public function index(Request $request){
 
 
+=======
+    public $APPSECRET="2077c45807dae09d4915b53ccbe723bc";
+
+    public function index(Request $request){
+        $data = file_get_contents('php://input');
+        $arr = $this -> XmlToArr($data);
+        file_put_contents('./aa.log',print_r($arr,true),FILE_APPEND);
+        if($arr['Event'] == 'subscribe' || $arr['Event'] == 'SCAN') {
+            $ToUserName = $arr['ToUserName'];
+            $CreateTime = time();
+            if(strpos($arr['EventKey'],'_') > 0){
+                $s_id = substr($arr['EventKey'],strpos($arr['EventKey'],'_')+1);
+                $sid = substr($s_id,1);
+                $che_id = $s_id[0];
+            }else{
+                $sid = substr($arr['EventKey'],1);
+                $che_id = $arr['EventKey'][0];
+            }
+            $link = mysqli_connect('127.0.0.1','luo','root','images');
+            $openid = $arr['FromUserName'];
+            $weixin_arr = [
+                'ToUserName'    =>  $openid,
+                'FromUserName'    =>  $ToUserName,
+                'CreateTime'    =>  $CreateTime,
+                'MsgType'    =>  'text'
+            ];
+            $che_data = mysqli_query($link,"select * from image_sid_openid where openid='{$openid}' and status=1");
+            $che_status = mysqli_query($link,"select * from image_che where id='{$che_id}' and status=2");
+            if(mysqli_fetch_assoc($che_data)){
+                $weixin_arr['Content'] = '您在骑行中';
+            }else if(mysqli_fetch_assoc($che_status)){
+                $weixin_arr['Content'] = '此车正在骑行中，请选其他车';
+            } else{
+                $weixin_arr['Content'] = '扫描成功';
+                mysqli_query($link,"insert into image_sid_openid(sid,openid,che_id) values('{$sid}','{$openid}',{$che_id})");
+                mysqli_query($link,"update image_che set status=2 where id = '$che_id' and status=1");
+            }
+            echo $str = $this -> ArrToXml($weixin_arr);
+        }
+>>>>>>> 30153f50c34ffac8cb7e217171ff59b59e0d1f87
     }
 
     // 判断 选择角色
@@ -45,12 +86,20 @@ class IndexController extends Controller
             }
     }
 
+<<<<<<< HEAD
     public function as(Request $request)
     {
+=======
+
+
+    public function as(Request $request){
+        $status = $request -> get('status');
+>>>>>>> 30153f50c34ffac8cb7e217171ff59b59e0d1f87
         $session = new Session;
         $openid = $session->get('openid');
         $token = $session->get('token');
         $state = $session->get('state');
+<<<<<<< HEAD
         $user_data = DB::table('user')->where(['openid' => $openid])->first();
         # 查询稿子表数据
         $gaozi_data = DB::table('article')->where(['status' => 1])->orderBy('ctime', 'desc')->limit(5)->get();
@@ -165,6 +214,135 @@ class IndexController extends Controller
         var_dump($result);
 
     }
+=======
+        $user_data =  DB::table('user')->where(['openid'=>$openid])->first();
+
+        # 查询稿子表数据
+        $gaozi_data = DB::table('article')->where(['status'=>1])->orderBy('ctime','desc')->limit(5)->get();
+        # 查询热点表数据
+        $hot_data = DB::table('hot')->where(['is_show'=>2])->orderBy('ctime','desc')->limit(5)->get();
+        if($status == 1){
+            return view('law_knowledge')->with('gaozi_data',$gaozi_data)->with('hot_data',$hot_data);
+        }
+        if(empty($user_data)){
+                $user_arr = file_get_contents('https://api.weixin.qq.com/sns/userinfo?access_token='. $token .'&openid='. $openid .'&lang=zh_CN');
+                return view('radio')->with('data',$user_arr)->with('openid',$openid)->with('state',$state);
+        }else{
+                // $state  1 = 热点列表   2,3= 首页 找律师    4 = 个人中心
+                if($state == '1' ){
+                        header('refresh:0;url=person');
+                }else if($state == '2' ){
+                        return view('law_knowledge')->with('gaozi_data',$gaozi_data)->with('hot_data',$hot_data);
+                }else if($state == '3'){
+                        header('refresh:0;url=person');
+                }
+        }
+    }
+
+        public function user_add(Request $request){
+                $user_arr = $request->get('data');
+                $openid = $request->get('openid');
+                $name = $request->get('name');
+                $state = $request->get('state');
+                $user_arr = json_decode($user_arr,true);
+                if($name == '公众用户'){
+                        $res = [
+                            'openid'=>$openid,
+                            'username'=>$user_arr['nickname'],
+                            'headimg'=>$user_arr['headimgurl'],
+                            'introduce'=>'公众用户',
+                            'role_type'=>1,
+                            'ctime'=>time(),
+                            'utime'=>time(),
+                            'status'=>1
+                        ];
+                }else if($name == '律师'){
+                        $res = [
+                            'openid'=>$openid,
+                            'username'=>$user_arr['nickname'],
+                            'headimg'=>$user_arr['headimgurl'],
+                            'introduce'=>'这是律师',
+                            'role_type'=>2,
+                            'ctime'=>time(),
+                            'utime'=>time(),
+                            'status'=>1
+                        ];
+                }
+                $res2 = DB::table('user')->where(['openid'=>$openid])->first();
+                if(empty($res2)){
+                        DB::table('user')->insert($res);
+                }
+                // $state  1 = 热点列表   2,3= 首页 找律师    4 = 个人中心
+                if($state == '1' ){
+                        return view('hotspot_list');
+                }else if($state == '2'){
+                        return view('law_knowledge');
+                }else if($state == '3'){
+                        header('refresh:0;url=person');
+                }
+        }
+        //拼接参数，带着access_token请求创建菜单的接口
+        public function createmenu(){
+                $data='{
+      "button":[
+       {
+               "type":"view",
+               "name":"实时热点",
+               "url":"http://yuan.jinxiaofei.xyz/ssss?id=1"
+      },
+      {
+            "name":"法律服务",
+           "sub_button":[
+            {
+               "type":"view",
+                "name":"找律师",
+                "url":"http://yuan.jinxiaofei.xyz/ssss?id=2"
+            },
+            {
+               "type":"view",
+                "name":"法律常识",
+                "url":"http://yuan.jinxiaofei.xyz/ssss?id=2"
+            } ]
+       },
+       {
+               "type":"view",
+               "name":"个人中心",
+               "url":"http://yuan.jinxiaofei.xyz/ssss?id=3"
+      }
+       ]
+ }';
+
+                $link = mysqli_connect('127.0.0.1','root','root','shop');
+                $sql = "select * from shop_token";
+                $res = mysqli_query($link,$sql);
+                $data2 = mysqli_fetch_assoc($res);
+                $access_token=$data2['token'];
+                $url="https://api.weixin.qq.com/cgi-bin/menu/create?access_token=".$access_token;
+                $result=$this->postcurl($url,$data);
+                var_dump($result);
+        }
+        function postcurl($url,$data = null){
+                $ch = curl_init();
+                curl_setopt($ch, CURLOPT_URL, $url);
+                curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, FALSE);
+                curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, FALSE);
+                if (!empty($data)){
+                        curl_setopt($ch, CURLOPT_POST, TRUE);
+                        curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
+                }
+                curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+                $output = curl_exec($ch);
+                curl_close($ch);
+                return     $output=json_decode($output,true);
+        }
+
+//        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+//        $output = curl_exec($ch);
+//        curl_close($ch);
+//        return     $output=json_decode($output,true);
+//    }
+
+>>>>>>> 30153f50c34ffac8cb7e217171ff59b59e0d1f87
 
     function postcurl($url,$data = null){
             $ch = curl_init();
