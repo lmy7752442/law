@@ -27,22 +27,22 @@
         $.get("/user_role_type",
                 function(data){
                     console.log(data);
-                    alert(data);
-//                    var data=JSON.parse(data);
-//                    if(data.code == 1){
-//                        var r = confirm('是否输入方便，如果方便，您即将进入到投稿页面;如果输入不方便可以选择投稿栏目');
-//                        if (r==true){
-//                            location.href="/tougao";
-//                        }else{
-//                            location.href="tiaozhuan";
-//                        }
-//                    }else if(data.code == 2){
-//                        alert(data.msg);
-////                        location.href='/login';
-//                    }else if(data.code == 3){
-//                        alert(data.msg);
-//                        location.href='tiaozhuan';
-//                    }
+//                    alert(data);
+                    var res=JSON.parse(data);
+                    if(res.code == 1){
+                        var r = confirm('是否输入方便，如果方便，您即将进入到投稿页面;如果输入不方便可以选择投稿栏目');
+                        if (r==true){
+                            location.href="/tougao";
+                        }else{
+                            location.href="/tiaozhuan";
+                        }
+                    }else if(res.code == 2){
+                        alert(res.msg);
+                        location.href='/tiaozhuan';
+                    }else if(res.code == 3){
+                        alert(res.msg);
+                        location.href='/tiaozhuan';
+                    }
                 }
         )
     })

@@ -32,7 +32,7 @@
                     { },
                     function(data){
                         console.log(data);
-//                        var data=JSON.parse(data)
+//                        var data=JSON.parse(data);
                         if(data.msg == '进入律师投稿页面'){
                             alert(data.msg);
                             location.href="/tougao"

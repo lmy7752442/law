@@ -46,7 +46,9 @@ class LawyerController extends Controller
     /** 跳转页面 */
     public function tiaozhuan(){
         # 查询稿子表数据
-        $gaozi_data = DB::table('article')->where(['status'=>1])->orderBy('ctime','desc')->limit(5)->get();
+        $gaozi_data = DB::table('article')->where(['status' => 1])->orderBy('ctime', 'desc')->limit(5)->get();
+
+//        return 2;
         # 查询热点表数据
         $hot_data = DB::table('hot')->where(['is_show'=>2])->orderBy('ctime','desc')->limit(5)->get();
 
@@ -136,37 +138,29 @@ class LawyerController extends Controller
 
     /** 判断是用户还是身份 */
     public function user_role_type(Request $request){
+        # 获取当前 user openid
         $session = new Session;
         $openid = $session->get('openid');
-//        return $data = [ 'data' => $openid ];exit;
-//        print_r($openid['openid']);exit;
-        return $openid['openid'];exit;
+//        print_r($openid);exit;
 
         # 根据openid查询此用户是否存在
-//        $user_info = (array)DB::table('user')->where(['openid'=>$sessionid])->first();
-//        print_r($res);exit;
-//        $data = [];
-//        # 用户存在
-//        if($res){
-//            # 根据openid查询用户表 用户的角色
-//            $openid = $res['openid'];
-//            $user = (array)DB::table('user')->where(['openid'=>$openid])->first();
-////            print_r($user);exit;
-//            if(empty($user)) {
-//                return $data = ['msg'=>'此用户不存在','code'=>2];
-//            }else{
-//                if($user['role_type'] == 2){
-////                    header("location:http://ruirui.jinxiaofei.xyz/tougao");
-//                    return $data = ['msg'=>'进入律师投稿页面','code'=>1];
-//                }else{
-////                    echo "<script>alert('此用户不是律师')</script>";
-//                    return $data=['msg'=>'此用户不是律师','code'=>3];
-//                }
-//            }
-//        }else{
-//            return $data=['msg'=>'此用户不存在','code'=>2];
-//            exit;
-//        }
+        $user_info = (array)DB::table('user')->where(['openid'=>$openid])->first();
+//        print_r($user_info);exit;
+        $data = [];
+        # 用户存在
+        if($user_info){
+            # 判断用户的角色
+            if($user_info['role_type'] == 2){
+//                    header("location:http://ruirui.jinxiaofei.xyz/tougao");
+                return $data = ['msg'=>'此用户是律师','code'=>1];
+            }else{
+//                    echo "<script>alert('此用户不是律师')</script>";
+                return $data=['msg'=>'此用户不是律师','code'=>3];
+            }
+        }else{
+            return $data=['msg'=>'此用户不存在','code'=>2];
+            exit;
+        }
 //        echo json_encode($data,JSON_UNESCAPED_UNICODE);
     }
 
