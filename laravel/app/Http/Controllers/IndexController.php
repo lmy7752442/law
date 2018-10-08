@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\DB;
 use Symfony\Component\HttpFoundation\Session\Session;
 class IndexController extends Controller
 {
-    public $APPID="wxf50dc03dd5f160a.7";
+    public $APPID="wxf50dc03dd5f160a7";
     public $APPSECRET="2077c45807dae09d4915b53ccbe723bc";
 
     public function index(Request $request){
@@ -51,7 +51,7 @@ class IndexController extends Controller
     public function law_knowledge(Request $request){
         $arr = $_GET;
         $code = $arr['code'];
-        $data = file_get_contents('https://api.weixin.qq.com/sns/oauth2/access_token?appid=wx812a083d4498638e&secret=92a75a70f282313ac6c1d5075c4c23e5&code='.$code .'&grant_type=authorization_code');
+        $data = file_get_contents('https://api.weixin.qq.com/sns/oauth2/access_token?appid=wxf50dc03dd5f160a7&secret=2077c45807dae09d4915b53ccbe723bc&code='.$code .'&grant_type=authorization_code');
         $data = json_decode($data,true);
         $session = new Session;
         $session->set("openid",$data['openid']);
@@ -67,14 +67,14 @@ class IndexController extends Controller
         $openid = $session->get('openid');
         if(empty($openid)){
             if($id == '1'){
-                header('refresh:0;url=https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx812a083d4498638e&redirect_uri=http://shuai.jinxiaofei.xyz/law_knowledge&response_type=code&scope=snsapi_userinfo&state=1#wechat_redirect');
+                header('refresh:0;url=https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxf50dc03dd5f160a7&redirect_uri=http://yuan.jinxiaofei.xyz/law_knowledge&response_type=code&scope=snsapi_userinfo&state=1#wechat_redirect');
             }elseif ($id == '2'){
-                header('refresh:0;url=https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx812a083d4498638e&redirect_uri=http://shuai.jinxiaofei.xyz/law_knowledge&response_type=code&scope=snsapi_userinfo&state=2#wechat_redirect');
+                header('refresh:0;url=https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxf50dc03dd5f160a7&redirect_uri=http://yuan.jinxiaofei.xyz/law_knowledge&response_type=code&scope=snsapi_userinfo&state=2#wechat_redirect');
             } else{
-                header('refresh:0;url=https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx812a083d4498638e&redirect_uri=http://shuai.jinxiaofei.xyz/law_knowledge&response_type=code&scope=snsapi_userinfo&state=3#wechat_redirect');
+                header('refresh:0;url=https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxf50dc03dd5f160a7&redirect_uri=http://yuan.jinxiaofei.xyz/law_knowledge&response_type=code&scope=snsapi_userinfo&state=3#wechat_redirect');
             }
         }else{
-            header('refresh:0;url=http://shuai.jinxiaofei.xyz/as');
+            header('refresh:0;url=http://yuan.jinxiaofei.xyz/as');
         }
     }
 
@@ -108,7 +108,6 @@ class IndexController extends Controller
             } else if ($state == '3') {
                 header('refresh:0;url=person');
             }
-
         }
     }
 
@@ -166,7 +165,7 @@ class IndexController extends Controller
                    {
                            "type":"view",
                            "name":"实时热点",
-                           "url":"http://shuai.jinxiaofei.xyz/ssss?id=1"
+                           "url":"http://yuan.jinxiaofei.xyz/ssss?id=1"
                    },
                    {
                        "name":"法律服务",
@@ -174,19 +173,19 @@ class IndexController extends Controller
                             {
                                "type":"view",
                                 "name":"找律师",
-                                "url":"http://shuai.jinxiaofei.xyz/ssss?id=2"
+                                "url":"http://yuan.jinxiaofei.xyz/ssss?id=2"
                             },
                             {
                                "type":"view",
                                 "name":"法律常识",
-                                "url":"http://shuai.jinxiaofei.xyz/ssss?id=2"
+                                "url":"http://yuan.jinxiaofei.xyz/ssss?id=2"
                             }
                        ]
                    },
                    {
                            "type":"view",
                            "name":"个人中心",
-                           "url":"http://shuai.jinxiaofei.xyz/ssss?id=3"
+                           "url":"http://yuan.jinxiaofei.xyz/ssss?id=3"
 
               ]
         }';
@@ -219,11 +218,10 @@ class IndexController extends Controller
 
     // 热点评论
     public function comment(Request $request){
-//        echo 123;exit;
         //  热点id
         $id = $request->get('id');
         // 评论内容
-        $content = $request->get('content');
+        $content = $request->get('area');
         $session = new Session;
         $openid = $session->get('openid');
         $data = (array)DB::table('user')->where(['openid'=>$openid])->first();
@@ -233,10 +231,11 @@ class IndexController extends Controller
             'h_id'=>$id,
             'uid'=>$u_id,
             'content'=>$content,
-            'ctime'=>time(),
+            'ctime1'=>time(),
             'status'=>1
         ];
-        $res = DB::table('comment')->insert($arr);
+
+        $res= DB::table('comment')->insert($arr);
         if($res){
             return 1;
         }else{
@@ -248,7 +247,7 @@ class IndexController extends Controller
     public  function comment_do(Request $request){
         //  上级评论 id
         $pid = $request->get('pid');
-        $data = DB::table('comment')->where(['pid'=>$pid])->first();
+        $data = DB::table('comment')->where(['comment_id'=>$pid])->first();
         $res =  DB::table('hot')->where(['h_id'=>$data->h_id])->first();
         return view('comment')->with('data',$data)->with('res',$res);
     }
@@ -259,17 +258,14 @@ class IndexController extends Controller
         $area =  $request->get('area'); // 评论内容
         $session = new Session;
         $openid = $session->get('openid');
-//        echo $openid;exit;
         $data = (array)DB::table('user')->where(['openid'=>$openid])->first();
         // 用户 id
         $u_id = $data['id'];
-
-//        echo $u_id;exit;
         $arr = [
             'h_id'=>$hid,
             'uid'=>$u_id,
             'content'=>$area,
-            'ctime'=>time(),
+            'ctime1'=>time(),
             'status'=>1,
             'pid'=>$id
         ];
@@ -281,4 +277,3 @@ class IndexController extends Controller
         }
     }
 }
-
