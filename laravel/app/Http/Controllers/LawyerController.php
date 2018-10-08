@@ -46,7 +46,9 @@ class LawyerController extends Controller
     /** 跳转页面 */
     public function tiaozhuan(){
         # 查询稿子表数据
-        $gaozi_data = DB::table('article')->where(['status'=>1])->orderBy('ctime','desc')->limit(5)->get();
+        $gaozi_data = DB::table('article')->where(['status' => 1])->orderBy('ctime', 'desc')->limit(5)->get();
+
+//        return 2;
         # 查询热点表数据
         $hot_data = DB::table('hot')->where(['is_show'=>2])->orderBy('ctime','desc')->limit(5)->get();
 
@@ -120,52 +122,6 @@ class LawyerController extends Controller
         return view('gaozi_detail')->with('gaozi_data',$gaozi_data)->with('cate_data',$cate_data);
     }
 
-
-    /**  */
-//    public function pc(Request $request){
-//        session_start();
-//        $sessionid = session_id();
-////        print_r($sessionid);exit;
-//        # 根据 sessionid 查询 session_openid 表 openid
-//        $result = (array)Db::table('session_openid')->where(['sessionid'=>$sessionid])->first();
-////        print_r($result);exit;
-//        $data = [];
-//        if($result){
-//            # 根据 openid 查询 user 表
-//            $user_info = (array)Db::table('user')->where(['openid'=>$result['openid']])->first();
-////            print_r($we_info);exit;
-//            if(empty($user_info)){
-//                return $data = ['msg'=>'此用户不存在','code'=>2];
-//                exit;
-//            }else{
-//                //登陆成功，session 赋值
-//                $request->session()->put(['u_id'=>$user_info['u_id']]);
-//                //删除登录成功数据,session_openid
-////                $result2=Db::table('session_openid')->where(['sessionid'=>$sessionid])->delete();
-////                print_r($result2);exit;
-//                $data=['msg'=>'登录成功','code'=>1];
-//            }
-//        }else{
-//            return $data=['msg'=>'未扫码','code'=>2];
-//        }
-//        echo json_encode($data,JSON_UNESCAPED_UNICODE);
-////        return $data;
-//    }
-
-    /** 微信直接生成二维码 */
-    public function qrcode(){
-//        $qrcode=new QR_CodeController();
-//        $data=json_decode($qrcode->send(),true);
-////        print_r($data);exit;
-//        //echo '<pre/>';
-//        //print_r($data);
-//        $ticket=$data['ticket'];
-//        $url='https://mp.weixin.qq.com/cgi-bin/showqrcode?ticket='.$ticket;
-//        //echo $url;die;
-////        return view('qrcode')->with('url',$url);
-//        return view('pc_tougao')->with('url',$url);
-    }
-
     /** 微信获取access_token 入数据库 */
     public function access_token(){
         //获取微信access_token
@@ -182,44 +138,38 @@ class LawyerController extends Controller
 
     /** 判断是用户还是身份 */
     public function user_role_type(Request $request){
+        # 获取当前 user openid
         $session = new Session;
-        $openid = $request->get('openid');
-        echo 123;
-        print_r($openid);exit;
+        $openid = $session->get('openid');
+//        print_r($openid);exit;
 
-        # 根据sessionid查询数据库此用户是否存在
-        $res = (array)DB::table('session_openid')->where(['sessionid'=>$sessionid])->first();
-//        print_r($res);exit;
+        # 根据openid查询此用户是否存在
+        $user_info = (array)DB::table('user')->where(['openid'=>$openid])->first();
+//        print_r($user_info);exit;
         $data = [];
         # 用户存在
-        if($res){
-            # 根据openid查询用户表 用户的角色
-            $openid = $res['openid'];
-            $user = (array)DB::table('user')->where(['openid'=>$openid])->first();
-//            print_r($user);exit;
-            if(empty($user)) {
-                return $data = ['msg'=>'此用户不存在','code'=>2];
-            }else{
-                if($user['role_type'] == 2){
+        if($user_info){
+            # 判断用户的角色
+            if($user_info['role_type'] == 2){
 //                    header("location:http://ruirui.jinxiaofei.xyz/tougao");
-                    return $data = ['msg'=>'进入律师投稿页面','code'=>1];
-                }else{
+                return $data = ['msg'=>'此用户是律师','code'=>1];
+            }else{
 //                    echo "<script>alert('此用户不是律师')</script>";
-                    return $data=['msg'=>'此用户不是律师','code'=>3];
-                }
+                return $data=['msg'=>'此用户不是律师','code'=>3];
             }
         }else{
             return $data=['msg'=>'此用户不存在','code'=>2];
             exit;
         }
-        echo json_encode($data,JSON_UNESCAPED_UNICODE);
+//        echo json_encode($data,JSON_UNESCAPED_UNICODE);
     }
 
     /** 所有稿子 */
-    public function all_gaozi(){
+    public function all_gaozi()
+    {
         # 查询稿子表数据
-        $gaozi_data = DB::table('article')->where(['status'=>1])->orderBy('ctime','desc')->get();
+        $gaozi_data = DB::table('article')->where(['status' => 1])->orderBy('ctime', 'desc')->get();
 
-        return view('all_gaozi')->with('gaozi_data',$gaozi_data);
+        return view('all_gaozi')->with('gaozi_data', $gaozi_data);
     }
 }

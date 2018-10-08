@@ -11,7 +11,7 @@
 </head>
 <body>
 <header class="sub_header">
-	<a class="b_link"><?php if($user->role_type==1){echo '用户';}else{echo '律师';}?></a>
+	<a class="b_link" href="as?status=1">首页</a>
 	<ul class="top_nav">
 		<li><a href="ask.html">发咨询</a></li>
 		<li><a href="../lawyer/lawyer.html">找律师</a></li>
@@ -22,7 +22,7 @@
 <div class="f16">
 	<div class="ly_info f17">
 		<p class="hs_link"><img alt="刘小丽" src="{{$user->headimg}}" /></p>
-		<p><span class="ly_name">{{$user->username}}</span>勋章等级：<?php if($user->m_id==''){echo '暂无';}else{echo $user->m_id;} ?></p>
+		<p><span class="ly_name">{{$user->username}} (<?php if($user->role_type==1){echo '用户';}else{echo '律师';}?>)</span>勋章等级：<?php if($user->m_id==''){echo '暂无';}else{echo $user->m_id;} ?></p>
 		{{--<p><a href="tel_3A15322380728" class="ly_mp_num">15322380728</a></p>--}}
 		<p>账户余额：{{$user->money}}</p>
 		<div style="margin-left: 70px"><button id="chongzhi" >充值</button>  <button id="tixian">提现</button></div>

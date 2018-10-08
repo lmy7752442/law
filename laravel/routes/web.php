@@ -11,13 +11,19 @@
 |
 */
 
-Route::get('/', 'IndexController@index');
+Route::any('/', 'IndexController@index');
 
 Route::get('law_knowledge', 'IndexController@law_knowledge');
 
 Route::get('lawyer', 'LawyerController@lawyer');
 
 Route::get('ask', 'AskController@ask');
+Route::get('add_medal', 'UserController@add_medal');
+Route::get('login', 'Admin\LoginController@login');
+Route::get('homepage','Admin\IndexController@homepage');
+Route::get('hot_article ','Admin\IndexController@hot_article');
+Route::get('select_article','Admin\IndexController@select_article');
+
 
 Route::get('lawyer', 'IndexController@lawyer');
 
@@ -34,18 +40,15 @@ Route::get('/tiaozhuan','LawyerController@tiaozhuan');
 Route::get('/pc_tougao','LawyerController@pc_tougao');
 //扫二维码投稿
 Route::get('/pc_gaozi_add','LawyerController@pc_gaozi_add');
-//
-Route::get('/pc','LawyerController@pc');
 //稿子详情
 Route::get('/gaozi_detail','LawyerController@gaozi_detail');
-//微信直接生成二维码
-Route::get('/qrcode','LawyerController@qrcode');
 //微信获取access_token 入数据库
 Route::get('/access_token','LawyerController@access_token');
 //判断身份 是用户还是律师
 Route::get('/user_role_type','LawyerController@user_role_type');
 //所有稿子
 Route::get('/all_gaozi','LawyerController@all_gaozi');
+
 
 ########## HotController控制器 ##########
 //热点后台展示
