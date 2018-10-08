@@ -4,29 +4,38 @@
 	<meta charset="gbk" />
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
 	<title>仿找法网触屏手机wap法律网站模板律师正文-【shenghuofuwu/chaxun/】</title>
-	<meta name="keywords" content="找律师，律师电话" /><meta name="description" content="欢迎光临广东广州刘小丽律师的网上法律咨询室。刘小丽律师法律咨询电话:15322380728，同时您也可以选择在线免费法律咨询刘小丽律师。" />	<link type="text/css" href="../css/law_touch.css" rel="stylesheet" />
-	<script type="text/javascript" src="../css/mobi.min.js" charset="gbk"></script>
+	<meta name="keywords" content="找律师，律师电话" /><meta name="description" content="欢迎光临广东广州刘小丽律师的网上法律咨询室。刘小丽律师法律咨询电话:15322380728，同时您也可以选择在线免费法律咨询刘小丽律师。" />	<link type="text/css" href="law_css/law_touch.css" rel="stylesheet" />
+	<script type="text/javascript" src="law_css/mobi.min.js" charset="gbk"></script>
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
 
 </head>
 <body>
 <header class="sub_header">
-	<a href="../lawyer" class="b_link">律师</a>
+	<a class="b_link"><?php if($user->role_type==1){echo '用户';}else{echo '律师';}?></a>
 	<ul class="top_nav">
 		<li><a href="ask.html">发咨询</a></li>
 		<li><a href="../lawyer/lawyer.html">找律师</a></li>
 		<li><a href="../fagui/fagui.html">查法规</a></li>
 	</ul>
-	<h1 class="sub_title">律师介绍</h1>
+	<h1 class="sub_title">个人中心</h1>
 </header>
 <div class="f16">
 	<div class="ly_info f17">
-		<p class="hs_link"><img alt="刘小丽" src="http://d03.findlawimg.com/my/photo/20101223140623.jpg" /></p>
-		<p><span class="ly_name">刘小丽</span>广东 - 广州</p>
-		<p><a href="tel_3A15322380728" class="ly_mp_num">15322380728</a></p>
-		<p class="mt5 f14 cf60">欢迎直接电话咨询律师</p>
+		<p class="hs_link"><img alt="刘小丽" src="{{$user->headimg}}" /></p>
+		<p><span class="ly_name">{{$user->username}}</span>勋章等级：<?php if($user->m_id==''){echo '暂无';}else{echo $user->m_id;} ?></p>
+		{{--<p><a href="tel_3A15322380728" class="ly_mp_num">15322380728</a></p>--}}
+		<p>账户余额：{{$user->money}}</p>
+		<div style="margin-left: 70px"><button id="chongzhi" >充值</button>  <button id="tixian">提现</button></div>
 	</div>
 
-
+	<script>
+		$('#chongzhi').click(function(){
+		    location.href = 'chongzhi';
+        })
+        $('#tixian').click(function(){
+            location.href = 'tixian';
+        })
+	</script>
 	<div class="plpr10 item_bt item_bb">
 		<h3 class="mt10 mb10 f18 fb cf60">擅长专业</h3>
 		<p class="mt10 mb10 c666 l26">婚姻家庭 公司法 企业法律顾问 债务债权 婚姻家庭 合同纠纷 交通事故 继承 工伤赔偿</p>

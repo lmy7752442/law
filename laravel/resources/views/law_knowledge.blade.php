@@ -19,19 +19,83 @@
     <ul>
         <li><a class="ask" href="ask">发咨询</a></li>
         <li><a class="findlawyers" href="lawyer">找律师</a></li>
-        <li><a class="fagui" href="fagui.html">查法规</a></li>
+        <li><a class="fagui" id="tougao">律师投稿</a></li>
     </ul>
 </nav>
+<script>
+    $('#tougao').on('click',function(){
+        $.get("/user_role_type",
+                function(data){
+                    console.log(data);
+                    alert(data);
+//                    var data=JSON.parse(data);
+//                    if(data.code == 1){
+//                        var r = confirm('是否输入方便，如果方便，您即将进入到投稿页面;如果输入不方便可以选择投稿栏目');
+//                        if (r==true){
+//                            location.href="/tougao";
+//                        }else{
+//                            location.href="tiaozhuan";
+//                        }
+//                    }else if(data.code == 2){
+//                        alert(data.msg);
+////                        location.href='/login';
+//                    }else if(data.code == 3){
+//                        alert(data.msg);
+//                        location.href='tiaozhuan';
+//                    }
+                }
+        )
+    })
+</script>
 <div class="new_ask">
     <h2 class="hd"><a href="ask">最新法律咨询</a></h2>
     <div class="bd f17">
         <ul class="fl_list">
-            <li><a href="ask/question_26648000.html">劳动法退休赔偿<span>回复数: 0</span></a></li><li><a href="ask/question_26647996.html">因工受伤不解除劳动关系的应<span>回复数: 0</span></a></li><li><a href="ask/question_26647995.html">我家前面盖的是点式楼低层9<span>回复数: 0</span></a></li><li><a href="ask/question_26648002.html">淘宝兼职刷信誉维权<span>回复数: 0</span></a></li><li><a href="ask/question_26647992.html">您好，我想咨询下抢劫几千元<span>回复数: 0</span></a></li>        </ul>
+            <li><a href="ask/question_26648000.html">劳动法退休赔偿<span>回复数: 0</span></a></li>
+            <li><a href="ask/question_26647996.html">因工受伤不解除劳动关系的应<span>回复数: 0</span></a></li>
+            <li><a href="ask/question_26647995.html">我家前面盖的是点式楼低层9<span>回复数: 0</span></a></li>
+            <li><a href="ask/question_26648002.html">淘宝兼职刷信誉维权<span>回复数: 0</span></a></li>
+            <li><a href="ask/question_26647992.html">您好，我想咨询下抢劫几千元<span>回复数: 0</span></a></li>
+        </ul>
     </div>
     <div class="ft item_bt">
         <a class="aw_link" href="ask">进入咨询中心>></a>
     </div>
 </div>
+
+<div class="new_article">
+    <h2 class="hd"><a href="article">最新律师稿子</a></h2>
+    <div class="bd f17">
+        <ul class="fl_list">
+            @foreach($gaozi_data as $k=>$v)
+                <li>
+                    <a href="/gaozi_detail?art_id={{$v->art_id}}">{{$v->title}}<span>回复数: 0</span></a>
+                </li>
+            @endforeach
+        </ul>
+    </div>
+    <div class="ft item_bt">
+        <a class="aw_link" href="/all_gaozi">进入咨询中心>></a>
+
+    </div>
+</div>
+
+<div class="new_article">
+    <h2 class="hd"><a href="hot">时事热点</a></h2>
+    <div class="bd f17">
+        <ul class="fl_list">
+            @foreach($hot_data as $k=>$v)
+                <li>
+                    <a href="/hot_detail?h_id={{$v->h_id}}">{{$v->h_title}}<span>回复数: 0</span></a>
+                </li>
+            @endforeach
+        </ul>
+    </div>
+    <div class="ft item_bt">
+        <a class="aw_link" href="/all_hot">进入咨询中心>></a>
+    </div>
+</div>
+
 <div class="rec_lawyer">
     <h2 class="hd"><a href="lawyer">推荐广州律师</a></h2>
     <div class="ly_list bd f17">
@@ -79,8 +143,13 @@
         <a href="default.htm">首页</a>
         <a href="ask">发咨询</a>
         <a href="lawyer">找律师</a>
-        <a href="fagui">查法规</a>
+        <a id="pc_tougao">律师投稿(使用电脑输入)</a>
     </div>
+    <script>
+        $('#pc_tougao').on('click',function(){
+            alert('http://ruirui.jinxiaofei.xyz/pc_tougao');
+        })
+    </script>
     <p class="copyright">Copyright@2003-2014　版权所有 找法网（Findlaw.cn）- 中国最大的法律服务平台</p>
 </footer>
 </body>
