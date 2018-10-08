@@ -170,11 +170,10 @@ class IndexController extends Controller
 
     // 热点评论
     public function comment(Request $request){
-//        echo 123;exit;
         //  热点id
         $id = $request->get('id');
         // 评论内容
-        $content = $request->get('content');
+        $content = $request->get('area');
         session_start();
         $session_id = session_id();
         $redis = new \Redis();
@@ -187,10 +186,11 @@ class IndexController extends Controller
             'h_id'=>$id,
             'uid'=>$u_id,
             'content'=>$content,
-            'ctime'=>time(),
+            'ctime1'=>time(),
             'status'=>1
         ];
-        $res = DB::table('comment')->insert($arr);
+
+        $res= DB::table('comment')->insert($arr);
         if($res){
             return 1;
         }else{
@@ -201,8 +201,9 @@ class IndexController extends Controller
     public  function comment_do(Request $request){
         //  上级评论 id
         $pid = $request->get('pid');
-        $data = DB::table('comment')->where(['pid'=>$pid])->first();
-        return view('comment')->with('data',$data);
+        $data = DB::table('comment')->where(['comment_id'=>$pid])->first();
+       $res =  DB::table('hot')->where(['h_id'=>$data->h_id])->first();
+        return view('comment')->with('data',$data)->with('res',$res);
     }
     public function comment_do_do(Request $request){
         $id = $request->get('id');// pid
@@ -220,7 +221,7 @@ class IndexController extends Controller
             'h_id'=>$hid,
             'uid'=>$u_id,
             'content'=>$area,
-            'ctime'=>time(),
+            'ctime1'=>time(),
             'status'=>1,
             'pid'=>$id
         ];
