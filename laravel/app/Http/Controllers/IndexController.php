@@ -9,10 +9,42 @@ class IndexController extends Controller
     public $APPID="wxf50dc03dd5f160a7";
     public $APPSECRET="2077c45807dae09d4915b53ccbe723bc";
 
-
-
     public function index(Request $request){
-
+        $data = file_get_contents('php://input');
+        $arr = $this -> XmlToArr($data);
+        file_put_contents('./aa.log',print_r($arr,true),FILE_APPEND);
+        if($arr['Event'] == 'subscribe' || $arr['Event'] == 'SCAN') {
+            $ToUserName = $arr['ToUserName'];
+            $CreateTime = time();
+            if(strpos($arr['EventKey'],'_') > 0){
+                $s_id = substr($arr['EventKey'],strpos($arr['EventKey'],'_')+1);
+                $sid = substr($s_id,1);
+                $che_id = $s_id[0];
+            }else{
+                $sid = substr($arr['EventKey'],1);
+                $che_id = $arr['EventKey'][0];
+            }
+            $link = mysqli_connect('127.0.0.1','luo','root','images');
+            $openid = $arr['FromUserName'];
+            $weixin_arr = [
+                'ToUserName'    =>  $openid,
+                'FromUserName'    =>  $ToUserName,
+                'CreateTime'    =>  $CreateTime,
+                'MsgType'    =>  'text'
+            ];
+            $che_data = mysqli_query($link,"select * from image_sid_openid where openid='{$openid}' and status=1");
+            $che_status = mysqli_query($link,"select * from image_che where id='{$che_id}' and status=2");
+            if(mysqli_fetch_assoc($che_data)){
+                $weixin_arr['Content'] = '您在骑行中';
+            }else if(mysqli_fetch_assoc($che_status)){
+                $weixin_arr['Content'] = '此车正在骑行中，请选其他车';
+            } else{
+                $weixin_arr['Content'] = '扫描成功';
+                mysqli_query($link,"insert into image_sid_openid(sid,openid,che_id) values('{$sid}','{$openid}',{$che_id})");
+                mysqli_query($link,"update image_che set status=2 where id = '$che_id' and status=1");
+            }
+            echo $str = $this -> ArrToXml($weixin_arr);
+        }
     }
     // 判断 选择角色
     public function law_knowledge(Request $request){
@@ -26,7 +58,6 @@ class IndexController extends Controller
         //  单选框页面  选择律师或公众用户
         header('refresh:0;url=as');
     }
-
 
     public function ssss(Request $request){
         $id = $request->get('id');

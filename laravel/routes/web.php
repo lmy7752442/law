@@ -11,7 +11,7 @@
 |
 */
 
-Route::get('/', 'IndexController@index');
+Route::any('/', 'IndexController@index');
 
 Route::get('law_knowledge', 'IndexController@law_knowledge');
 
