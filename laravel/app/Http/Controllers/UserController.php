@@ -48,8 +48,6 @@ class UserController extends Controller{
         $number = 50;
 
         $sum = $this->check_zero($number);
-        echo 'user';
-        var_dump($sum);exit;
         if($user_money >0 && $user_money <= 10){#如果消费金额大于0小于10勋章是铜
             #如果用户有勋章，并且没有过期，就续费7天 否则就颁发勋章
             if( $mid ==1 && $now < $user_info->last_time ){

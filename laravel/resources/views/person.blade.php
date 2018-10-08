@@ -11,7 +11,7 @@
 </head>
 <body>
 <header class="sub_header">
-	<a class="b_link">首页</a>
+	<a class="b_link" href="as?status=1">首页</a>
 	<ul class="top_nav">
 		<li><a href="ask.html">发咨询</a></li>
 		<li><a href="../lawyer/lawyer.html">找律师</a></li>

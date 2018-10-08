@@ -82,30 +82,33 @@ class IndexController extends Controller
 
 
     public function as(Request $request){
-            $session = new Session;
-            $openid = $session->get('openid');
-            $token = $session->get('token');
-            $state = $session->get('state');
-            $user_data =  DB::table('user')->where(['openid'=>$openid])->first();
+        $status = $request -> get('status');
+        $session = new Session;
+        $openid = $session->get('openid');
+        $token = $session->get('token');
+        $state = $session->get('state');
+        $user_data =  DB::table('user')->where(['openid'=>$openid])->first();
 
-            # 查询稿子表数据
-            $gaozi_data = DB::table('article')->where(['status'=>1])->orderBy('ctime','desc')->limit(5)->get();
-            # 查询热点表数据
-            $hot_data = DB::table('hot')->where(['is_show'=>2])->orderBy('ctime','desc')->limit(5)->get();
-
-            if(empty($user_data)){
-                    $user_arr = file_get_contents('https://api.weixin.qq.com/sns/userinfo?access_token='. $token .'&openid='. $openid .'&lang=zh_CN');
-                    return view('radio')->with('data',$user_arr)->with('openid',$openid)->with('state',$state);
-            }else{
-                    // $state  1 = 热点列表   2,3= 首页 找律师    4 = 个人中心
-                    if($state == '1' ){
-                            header('refresh:0;url=person');
-                    }else if($state == '2' ){
-                            return view('law_knowledge')->with('gaozi_data',$gaozi_data)->with('hot_data',$hot_data);
-                    }else if($state == '3'){
-                            header('refresh:0;url=person');
-                    }
-            }
+        # 查询稿子表数据
+        $gaozi_data = DB::table('article')->where(['status'=>1])->orderBy('ctime','desc')->limit(5)->get();
+        # 查询热点表数据
+        $hot_data = DB::table('hot')->where(['is_show'=>2])->orderBy('ctime','desc')->limit(5)->get();
+        if($status == 1){
+            return view('law_knowledge')->with('gaozi_data',$gaozi_data)->with('hot_data',$hot_data);
+        }
+        if(empty($user_data)){
+                $user_arr = file_get_contents('https://api.weixin.qq.com/sns/userinfo?access_token='. $token .'&openid='. $openid .'&lang=zh_CN');
+                return view('radio')->with('data',$user_arr)->with('openid',$openid)->with('state',$state);
+        }else{
+                // $state  1 = 热点列表   2,3= 首页 找律师    4 = 个人中心
+                if($state == '1' ){
+                        header('refresh:0;url=person');
+                }else if($state == '2' ){
+                        return view('law_knowledge')->with('gaozi_data',$gaozi_data)->with('hot_data',$hot_data);
+                }else if($state == '3'){
+                        header('refresh:0;url=person');
+                }
+        }
     }
 
         public function user_add(Request $request){
