@@ -1198,3 +1198,13 @@ Array
     [EventKey] => http://yuan.jinxiaofei.xyz/ssss?id=2
     [MenuId] => 693021697
 )
+Array
+(
+    [ToUserName] => gh_ef9280ec87dc
+    [FromUserName] => oemNh1jsYgd5gkcDXfFYrvW9FIMQ
+    [CreateTime] => 1538987938
+    [MsgType] => event
+    [Event] => VIEW
+    [EventKey] => http://yuan.jinxiaofei.xyz/ssss?id=2
+    [MenuId] => 693021697
+)
