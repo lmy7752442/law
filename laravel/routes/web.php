@@ -65,3 +65,41 @@ Route::get('comment_do','IndexController@comment_do');
 Route::get('comment_do_do','IndexController@comment_do_do');
 
 
+//找律师
+Route::get('lawyer', 'FindlawyerController@lawyer');
+//免费咨询
+Route::get('consult', 'FindlawyerController@consult'); 
+//咨询提交
+Route::post('subconsult','FindlawyerController@subconsult');
+//律师回复
+Route::get('relayconsult','FindlawyerController@relayconsult');
+//回复提交
+Route::post('relayconsultDo','FindlawyerController@relayconsultDo');
+//悬赏问题
+Route::get('postReward','FindlawyerController@postReward');
+//悬赏问题提交
+Route::post('postRewardDo','FindlawyerController@postRewardDo');
+//悬赏金额支付
+Route::get('pay_reward','FindlawyerController@pay_reward');
+//支付
+Route::post('pay_rewardDo','FindlawyerController@pay_rewardDo');
+//律师评论悬赏问题
+Route::get('reward_comment','FindlawyerController@reward_comment');
+//提交悬赏评论
+Route::post('reward_commentDo','FindlawyerController@reward_commentDo');
+//悬赏问题列表
+Route::get('reward_problem_list','FindlawyerController@reward_problem_list');
+//用户选择悬赏最佳答案
+Route::post('select_best','FindlawyerController@select_best');
+//用户撤销悬赏问题
+Route::post('revoke','FindlawyerController@revoke');
+//获取律师的联系方式、
+Route::get('obtain_contact','FindlawyerController@obtain_contact');
+//
+Route::get('fp_reward','FindlawyerController@fp_reward');
+//
+Route::post('check','FindlawyerController@check');
+Route::post('obtain_contactDO','FindlawyerController@obtain_contactDO');
+
+
+
