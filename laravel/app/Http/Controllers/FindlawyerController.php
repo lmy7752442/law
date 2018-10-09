@@ -9,6 +9,7 @@ use Illuminate\Http\Response;
 
 class FindlawyerController extends Controller
 {
+	//找律师
     public function lawyer(Request $request){
 		$page = $request->get('page');
 		$law_data = DB::table('user')->where(['role_type' => 2,'status' => 1])->orderBy('integral','desc','help_count','desc')->paginate(2);

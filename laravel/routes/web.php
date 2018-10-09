@@ -84,7 +84,7 @@ Route::get('comment_do','IndexController@comment_do');
 Route::get('comment_do_do','IndexController@comment_do_do');
 
 
-
+########## FindlawyerController控制器 ##########
 //找律师
 Route::get('lawyer', 'FindlawyerController@lawyer');
 //免费咨询
@@ -113,12 +113,13 @@ Route::get('reward_problem_list','FindlawyerController@reward_problem_list');
 Route::post('select_best','FindlawyerController@select_best');
 //用户撤销悬赏问题
 Route::post('revoke','FindlawyerController@revoke');
-//获取律师的联系方式、
-Route::get('obtain_contact','FindlawyerController@obtain_contact');
-//
+//计划任务
 Route::get('fp_reward','FindlawyerController@fp_reward');
-//
+//检查是否获取了联系方式
 Route::post('check','FindlawyerController@check');
+//获取律师的联系方式(支付)
+Route::get('obtain_contact','FindlawyerController@obtain_contact');
+//提交获取律师的联系方式(支付)
 Route::post('obtain_contactDO','FindlawyerController@obtain_contactDO');
 
 
