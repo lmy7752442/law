@@ -407,12 +407,10 @@ class FindlawyerController extends Controller
    public function check(Request $request){
       if($request->ajax()){
 		   $law_id = $request->post('uid');
-		   echo $law_id;die;
 		   $uid = 2;
 		   $data = (array)DB::table('contact_log')->where(['uid' => $uid,'law_id' => $law_id])->first();
-		   var_dump($data);die;
 		   if(!empty($data)){
-			  $user_data =(array)DB::table('user')->where(['id' => $uid])->first();
+			  $user_data =(array)DB::table('user')->where(['id' => $law_id])->first();
 			  return ['status' => 1,'msg' => '','data' => $user_data['mobile']];
 		   }else{
 		      return ['status' => 2,'msg' => '','data' => $law_id];

@@ -21,10 +21,15 @@
             <td>{{$v['h_content']}}</td>
             <td>{{$v['ctime']}}</td>
             <td>
-                <input type="checkbox" name="is_show" class="show" lay-skin="switch" value="{{$v['h_id']}}" lay-text="ON" checked>
+                <input type="checkbox" name="is_show" class="show" lay-skin="switch" value="{{$v['h_id']}}" check="">
             </td>
         </tr>
     @endforeach
+    <tr>
+        <td>
+            <input type="button" id="queren" value="确认">
+        </td>
+    </tr>
 </table>
 </body>
 </html>
@@ -33,23 +38,28 @@
 
 <script>
     var a = '';
-    $(".show").each(function(){
-//        alert($(this).val());
-       a += $(this).val()+',';
-    });
-//    alert(a);
-    $.get("/is_show",
-            {h_id:a},
-            function(data){
-                console.log(data);
-                if(data == 1){
-                    alert('前台展示成功');
-                    window.location.href="tiao";
-                }else{
-                    alert('前台展示失败');
-                    window.location.href="/hot_list";
+    $("#queren").click(function(){
+        var a = '';
+        $("#queren").click(function(){
+            $('.show:checked').each(function(){
+//                console.log($(this).val());
+                a += $(this).val()+',';
+            });
+            alert(a);
+            $.get("/is_show",
+                {h_id:a},
+                function(data){
+                    console.log(data);
+                    if(data == 1){
+                        alert('前台展示成功');
+                        window.location.href="tiao";
+                    }else{
+                        alert('前台展示失败');
+                        window.location.href="/hot_list";
+                    }
                 }
-            }
-    )
+            )
+        })
+    })
 
 </script>

@@ -17,37 +17,26 @@
     #text{
         margin-left:28px;
     }
-    #title{
-        margin-left:45px;
-        margin-top:10px;
-    }
-    #content{
-        margin-left:45px;
-        margin-top:10px;
-    }
-
     #submit{
-        margin-left:45px;
         margin-top:10px;
     }
 </style>
-<div style="border:solid red 1px;width:1300px;height:1700px;" id="text">
+<div style="width:100%;height:100%;margin-left:45px;" id="text">
     {{--<div style=" overflow:scroll; width:400px; height:400px;”>  overflow-y:auto; overflow-x:auto; --}}
     <table>
         <tr>
             <td>
-                <input type="text" name="title" style="border:solid yellow 1px;width:1200px;height:70px;" id="title" placeholder="请输入稿子标题">
+                <input type="text" name="title" style="border:solid yellow 1px;width:200px;;height:50px;margin-top:10px;" placeholder="请输入稿子标题">
             </td>
         </tr>
         <tr>
             <td>
-                <textarea name="content" style="border:solid blue 1px;width:1200px;height:1400px;" id="content">
-                </textarea>
+                <textarea name="content" style="width:300px;height:200px;margin-top:10px;" id="content"></textarea>
             </td>
         </tr>
         <tr>
             <td>
-                <a style="margin-left:45px;margin-top: 10px;">稿子类型</a>&nbsp;&nbsp;
+                <a style="margin-top: 10px;">稿子类型</a>&nbsp;&nbsp;
                 <select name="cate_id" style="margin-top: 10px;">
                     @foreach($cate_data as $k=>$v)
                         <li>

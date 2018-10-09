@@ -21,28 +21,31 @@
     <form id="erweima">
         <ul>
             <li>
-                <img src="http://ruirui.jinxiaofei.xyz/qrcode.php" alt="" style="margin-left:50px;width:200px;height: 200px;"/>
+                <img src="{{$url}}" alt="" style="margin-left:50px;width:200px;height: 200px;"/>
             </li>
         </ul>
     </form>
 <script>
     window.onload=function(){
         function a(){
-            $.get("/pc",
+            $.get("/pc_gaozi_add",
                     { },
                     function(data){
                         console.log(data);
-//                        var data=JSON.parse(data)
-//                        if(data.msg == '登录成功'){
-//                            alert(data.msg);
-//                            location.href="/index"
-//                        }else if(data.mag == '未扫码'){
-//                            alert(data.msg);
-//                            location.href='/erweima_login'
-//                        }else if(data.msg == '此用户不存在'){
-//                            alert(data.msg);
+//                        var data=JSON.parse(data);
+                        if(data.msg == '进入律师投稿页面'){
+                            alert(data.msg);
+                            location.href="/tougao"
+                        }else if(data.msg == '未扫码'){
+                            alert(data.msg);
+                            location.href='/pc_tougao'
+                        }else if(data.msg == '此用户不存在'){
+                            alert(data.msg);
 //                            location.href='/login';
-//                        }
+                        }else if(data.msg == '此用户不是律师'){
+                            alert(data.msg);
+                            location.href='tiaozhuan';
+                        }
                     }
             )
         }

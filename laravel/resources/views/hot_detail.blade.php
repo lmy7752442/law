@@ -4,13 +4,20 @@
     <meta charset="gbk" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <title>仿找法网触屏手机wap法律网站模板律师在线-【shenghuofuwu/chaxun/】</title>
-    <meta name="keywords" content="广州律师  广州律师在线 广州法律咨询  律师" /><meta name="description" content="找法网广州律师网为您提供广州律师在线法律咨询服务和法律法规、法律知识查询。解决法律难题 请找广州律师，专业律师在线为您提供全面的广州法律咨询服务。" />		<link type="text/css" href="law_css/law_touch.css" rel="stylesheet" />
-    <script type="text/javascript" src="law_css/mobi.min.js" charset="gbk"></script>
+    <meta name="keywords" content="广州律师  广州律师在线 广州法律咨询  律师" /><meta name="description" content="找法网广州律师网为您提供广州律师在线法律咨询服务和法律法规、法律知识查询。解决法律难题 请找广州律师，专业律师在线为您提供全面的广州法律咨询服务。" />		<link type="text/css" href="/law_css/law_touch.css" rel="stylesheet" />
+    {{--<script type="text/javascript" src="/law_css/mobi.min.js" charset="gbk"></script>--}}
     <script type="text/javascript" src="http://code.jquery.com/jquery-latest.js"></script>
+    {{--<link rel="stylesheet" href="https://weui.io/weui.css">--}}
+
 </head>
 <body>
+<style>
+    .s{
+        margin-top:10px;
+    }
+</style>
 <header class="sub_header">
-    <a href="law_knowledge" class="b_link">首页</a>
+    {{--<a href="/" class="b_link">首页</a>--}}
     <h1 class="sub_title">时事热点展示</h1>
 </header>
 <style>
@@ -31,23 +38,80 @@
         margin-top:10px;
     }
 </style>
-<div style="border:solid red 1px;width:1300px;height:1700px;" id="text">
+<div style="width:100%;height:100%;margin-left:0%; " id="text"  >
     {{--<div style=" overflow:scroll; width:400px; height:400px;”>  overflow-y:auto; overflow-x:auto; --}}
     <table>
-        <input type="hidden" name="h_id" valu="{{$data->h_id}}">
+        <input type="hidden" id="h_id" value="{{$data->h_id}}">
         <tr>
             <td>
-                <input type="text" name="title" style="border:solid yellow 1px;width:50%;height:20px;" id="title" value="{{$data->h_title}}">
+                标题：
+            </td>
+            <td >
+                {{$data->h_title}}
             </td>
         </tr>
         <tr>
             <td>
-                <textarea name="content" style="border:solid blue 1px;width:70px;height:70px;" id="content">
-                    {{$data->h_content}}
-                </textarea>
+               热点 信息：
+            </td>
+            <td>
+               {{$data->h_content}}
             </td>
         </tr>
     </table>
+
+       <div class="s">
+                <textarea name="" id="area" style="width:80%;height:70px;"></textarea>
+                {{--<textarea class="weui-textarea" placeholder="请输入文本" rows="3"></textarea>--}}
+       </div>
+        <tr>
+            <td>
+                {{--<a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_primary" id="bu">评论</a>--}}
+                <input type="button" value="评论" id="bu">
+            </td>
+        </tr>
+
+
+</div>
+<div class="s">
+     @foreach($arr as $k=>$v)
+    <div class="s" style="color:blue;">
+            <img src="{{$v->headimg}}" alt="" style="width:40px;height:40px;">
+                {{$v->username}}{{$v->ctime1}}{{$v->m_id}}
+     </div>
+    <div class="s">
+     {{$v->content}}
+        <div style="margin-left:20px;" class="s">
+            @if($v->res)
+                @foreach($v->res as $key=>$val)
+                    <div class="s" >
+                        <div style="color:blue;">
+                            <a href="javascript:;" >
+                                <img src="{{$val->headimg}}" alt="" style="width:40px;height:40px;">
+                                {{$val->username}}{{$val->ctime1}}{{$val->m_id}}
+                            </a>
+                        </div>
+                        <div >
+                            <a href="javascript:;" style="margin-left:20px;">{{$val->content}}</a>
+                        </div>
+                    </div>
+                @endforeach
+            @endif
+        </div>
+     </div>
+    <div class="s">
+             <input type="hidden" value="{{$v->comment_id}}" id="comment{{$v->comment_id}}">
+             {{--<input type="hidden" value="{{$v->id}}" id="pid{{$v->comment_id}}">--}}
+    </div>
+   <div class="s">
+            <input type="button" value="评论" onclick="but({{$v->comment_id}})">
+            <div style="display: none;" class="div"class="s">
+                <textarea name="" id="" cols="30" rows="10"></textarea>
+                {{--class="weui-btn weui-btn_mini weui-btn_primary"--}}
+            </div>
+    </div>
+        <hr>
+     @endforeach
 </div>
 <a class="tips_box" href="../tel_3A400-676-8333"><div class="tips_inbox"><span class="tips_tel">400-676-8333</span><span class="tips_inbox-text">点击免费咨询律师</span></div></a>
 <footer class="f16 tc c666">
@@ -65,6 +129,15 @@
 </footer>
 </body>
 </html>
+<script>
+    function but(i){
+        // document.getElementsByClassName('div')[i].style.display='block';
+        var comment_id = $('#comment'+i).val();
+        // var pid = $('#pid'+i).val();
+        location.href='/comment_do?pid='+comment_id;
+
+    }
+</script>
 <script type="text/javascript">
 
     $(function(){
@@ -83,4 +156,22 @@
         var $a = $('body>a');
         $a[$a.length - 1].style.display = 'none';
     });
+</script>
+<script>
+    $('#bu').on('click',function(){
+        var id = $('#h_id').val();// 热点 id
+        var area = $('#area').val();// 评论 内容
+        $.get('/comment',
+            {
+                id:id,
+                area:area
+            },function(data){
+            // alert(data);
+               if(data == 1){
+                   location.href='/hot_detail/?h_id='+id;
+               }else{
+                   alert('失败');
+               }
+            })
+    })
 </script>

@@ -111,11 +111,12 @@
       layer.confirm('请选择咨询方式',{
 		  btn: ['电话咨询','在线咨询'] //按钮
 		}, function(){
-			$.post('/index.php/check',{uid:uid,_token:token},function(info){
-			  if(info.status == 1){
-                 window.location.href = 'tel://' + info;
+			$.post('/index.php/check',{uid:uid,_token:token},function(res){
+			  if(res.status == 1){
+                 window.location.href = 'tel://' + res.data;
 			  }else{
-			     window.location.href = '/index.php/obtain_contact?uid='+uid;
+				  alert(111);
+			     //window.location.href = '/index.php/obtain_contact?uid='+uid;
 			  }
 			},'json')
 		   
