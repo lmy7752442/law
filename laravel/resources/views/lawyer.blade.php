@@ -31,9 +31,9 @@
         <ul>
 		    @foreach($law_data as $v)
             <li class="clearfix">
-                <a href="../lawyer/person_LIUXIAOLI.html">
+                <a href="javascript:;">
                     <p class="hs_link">@if($v->ID_Photo == '')<img src="/img/empty.jpg">@else<img alt="{{$v->username}}" src="{{$v->ID_Photo}}">@endif</p>
-                    <p><span class="ly_name">{{$v->username}}</span><a href="javascript:;" style="padding-left:180px" id="zx" data-uid="{{$v->id}}" data-phone="{{$v->mobile}}">咨询</a></p>
+                    <p><span class="ly_name">{{$v->username}}</span><a href="javascript:;" style="padding-left:180px"  onclick="consult($(this))" data-uid="{{$v->id}}" data-phone="{{$v->mobile}}">咨询</a></p>
                     <p style="padding-top:3px">已帮助：<span class="cf60">{{$v->help_count}}人</span><span style="padding-left:10px;padding-right:10px">|</span>好评数：<span class="cf60">{{$v->help_count}}条</span></p>
 					<p style="padding-top:3px">{{$v->introduce}}</p>
                 </a>
@@ -104,9 +104,9 @@
     });
 </script>
 <script type="text/javascript">
-   $('#zx').click(function(){
-	  var uid = $(this).data('uid');
-	  var mobile = $(this).data('phone');
+   function consult(obj){
+      var uid = obj.data('uid');
+	  var mobile = obj.data('phone');
 	  var token = $('#token').val();
       layer.confirm('请选择咨询方式',{
 		  btn: ['电话咨询','在线咨询'] //按钮
@@ -115,15 +115,15 @@
 			  if(res.status == 1){
                  window.location.href = 'tel://' + res.data;
 			  }else{
-				  alert(111);
-			     //window.location.href = '/index.php/obtain_contact?uid='+uid;
+			     window.location.href = '/index.php/obtain_contact?uid='+uid;
 			  }
 			},'json')
 		   
 		}, function(){
 		  window.location.href = '/index.php/consult?id='+uid;
 		});
-   })
+   }
+ 
    $('#rock').click(function(){
 	  var q_id = 3;
 	  var token = $('#token').val();

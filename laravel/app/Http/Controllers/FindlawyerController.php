@@ -406,7 +406,7 @@ class FindlawyerController extends Controller
    //检查是否已经获取了联系方式
    public function check(Request $request){
       if($request->ajax()){
-		   $law_id = $request->post('uid');
+		   $law_id = $request->post('uid');                                            
 		   $uid = 2;
 		   $data = (array)DB::table('contact_log')->where(['uid' => $uid,'law_id' => $law_id])->first();
 		   if(!empty($data)){
