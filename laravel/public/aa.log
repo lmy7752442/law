@@ -1208,3 +1208,43 @@ Array
     [EventKey] => http://yuan.jinxiaofei.xyz/ssss?id=2
     [MenuId] => 693021697
 )
+Array
+(
+    [ToUserName] => gh_ef9280ec87dc
+    [FromUserName] => oemNh1jsYgd5gkcDXfFYrvW9FIMQ
+    [CreateTime] => 1539047014
+    [MsgType] => event
+    [Event] => VIEW
+    [EventKey] => http://yuan.jinxiaofei.xyz/ssss?id=2
+    [MenuId] => 693021697
+)
+Array
+(
+    [ToUserName] => gh_ef9280ec87dc
+    [FromUserName] => oemNh1jA_1arXGbpj6EinxVjaPE0
+    [CreateTime] => 1539047019
+    [MsgType] => event
+    [Event] => VIEW
+    [EventKey] => http://yuan.jinxiaofei.xyz/ssss?id=2
+    [MenuId] => 693021697
+)
+Array
+(
+    [ToUserName] => gh_ef9280ec87dc
+    [FromUserName] => oemNh1jsYgd5gkcDXfFYrvW9FIMQ
+    [CreateTime] => 1539047547
+    [MsgType] => event
+    [Event] => VIEW
+    [EventKey] => http://yuan.jinxiaofei.xyz/ssss?id=2
+    [MenuId] => 693021697
+)
+Array
+(
+    [ToUserName] => gh_ef9280ec87dc
+    [FromUserName] => oemNh1jA_1arXGbpj6EinxVjaPE0
+    [CreateTime] => 1539047555
+    [MsgType] => event
+    [Event] => VIEW
+    [EventKey] => http://yuan.jinxiaofei.xyz/ssss?id=2
+    [MenuId] => 693021697
+)
