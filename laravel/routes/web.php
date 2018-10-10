@@ -91,6 +91,8 @@ Route::get('lawyer', 'FindlawyerController@lawyer');
 Route::get('consult', 'FindlawyerController@consult'); 
 //咨询提交
 Route::post('subconsult','FindlawyerController@subconsult');
+//咨询列表(用户指定律师，已经回复的咨询)
+Route::get('consult_list','FindlawyerController@consult_list');
 //律师回复
 Route::get('relayconsult','FindlawyerController@relayconsult');
 //回复提交
@@ -121,6 +123,8 @@ Route::post('check','FindlawyerController@check');
 Route::get('obtain_contact','FindlawyerController@obtain_contact');
 //提交获取律师的联系方式(支付)
 Route::post('obtain_contactDO','FindlawyerController@obtain_contactDO');
+//个人中心(悬赏问题详情)
+Route::get('person_reward_detail','PersonController@person_reward_detail');
 
 
 

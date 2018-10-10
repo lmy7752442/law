@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Response;
-
+use Symfony\Component\HttpFoundation\Session\Session;
 
 class FindlawyerController extends Controller
 {
@@ -42,7 +42,13 @@ class FindlawyerController extends Controller
 	public function subconsult(Request $request){
 	   if($request->ajax()){
 		  //$uid = session('userid');
-	      $uid = 2;
+		  $session = new Session;
+          $openid = $session->get("openid");
+		  $user_data = (array)DB::table('user')->where(['openid' => $openid,'status' => 1])->first();
+	      $uid = $user_data['id'];
+		  if($user_data['role_type'] == 2){
+		     return ['status' => 0,'msg'=>'该操作只适用于普通用户，律师不能进行该操作'];
+		  }
 		  $content = $request->post('content');
 		  $id = $request->post('id');
           $consult_id = DB::table('consult')->insert(['uid' => $uid,'law_id' => $id,'consult_content' => $content,'consult_time' => time()]);
@@ -57,6 +63,7 @@ class FindlawyerController extends Controller
 	}
    //咨询回复
    public function relayconsult(Request $request){
+
 	   $consult_id = $request->get('consult_id');
 	   //$uid = session('userid');
 	   $consult_data = DB::table('consult')->where(['consult_id' => $consult_id])->first();
@@ -68,8 +75,16 @@ class FindlawyerController extends Controller
    //提交回复
    public function relayconsultDo(Request $request){
      if($request->ajax()){
-        //$uid = session('userid');
-	    $uid = 1;
+        $openid = $request->get('openid');
+		$session = new Session;
+	    $openid = $session->get("openid");
+	    $user_data = (array)DB::table('user')->where(['openid' => $openid,'status' => 1])->first();
+	    $uid = $user_data['id'];
+		if($user_data['role_type'] == 1){
+			return ['status' => 0,'msg' => '该操作只适用于律师，普通用户不能进行该操作'];
+		}
+		//$uid = session('userid');
+	    //$uid = 1;
 		$content = $request->post('content');
 		if(mb_strlen($content,'UTF8') <=0 || mb_strlen($content,'UTF8') > 800){
 			return ['status' => 0,'msg' => '请输入10~800个字符，且需包含中文','data'=>''];
@@ -112,6 +127,14 @@ class FindlawyerController extends Controller
    public function postRewardDo(Request $request){
 	   if($request->ajax()){
           $data = $_POST;
+		  $openid = $request->get('openid');
+		$session = new Session;
+	    $openid = $session->get("openid");
+	    $user_data = (array)DB::table('user')->where(['openid' => $openid,'status' => 1])->first();
+	    $uid = $user_data['id'];
+		if($user_data['role_type'] == 2){
+			return ['status' => 0,'msg' => '该操作只适用于普通用户，律师不能进行该操作'];
+		}
 		  //var_dump($data);die;
 		  //$uid = session('userid');
 		 if(empty($data['content'])){
@@ -138,7 +161,8 @@ class FindlawyerController extends Controller
 		 if($data['validity'] < 2 || $data['validity'] > 7){
 			 return ['status' => 0,'msg' => '请设置正确的问题有效期(2-7天)','data'=>''];
 		 }
-		 $uid = 2;
+		
+		 //$uid = 2;
 		 $len = strlen($uid);
 		 if($len < 4){
            $uid = str_repeat(0,(4-$len)).$uid;
@@ -179,7 +203,15 @@ class FindlawyerController extends Controller
    public function pay_rewardDo(Request $request){
 	   if($request->ajax()){
 	     $data = $_POST;
-		 $uid = 2;
+		 $openid = $request->get('openid');
+		 $session = new Session;
+		 $openid = $session->get("openid");
+		 $user_data = (array)DB::table('user')->where(['openid' => $openid,'status' => 1])->first();
+		 $uid = $user_data['id'];
+		 if($user_data['role_type'] == 2){
+            return ['status' => 0,'msg' => '该操作只适用于普通用户，律师不能进行该操作'];
+		 }
+		 //$uid = 2;
 		 //var_dump($data);die;
 		 if($data['pay_type'] != 1){
 			 return ['status' => 0,'msg' => '请选择支付方式','data' => ''];
@@ -231,7 +263,15 @@ class FindlawyerController extends Controller
    public function reward_commentDo(Request $request){
      if($request->ajax()){
 		//$uid = session('userid');
-        $uid = 1;
+		$openid = $request->get('openid');
+		$session = new Session;
+	    $openid = $session->get("openid");
+	    $user_data = (array)DB::table('user')->where(['openid' => $openid,'status' => 1])->first();
+	    $uid = $user_data['id'];
+		if($user_data['role_type'] == 1){
+		  return ['status' => 0,'msg' => '该操作只是适用于律师，普通用户不能进行该操作'];
+		}
+        //$uid = 1;
 		$data = $_POST;
 		$reward_problem = (array)DB::table('reward_problem')->where(['q_id' => $data['q_id']])->first();
 		if(empty($reward_problem)){
@@ -263,19 +303,33 @@ class FindlawyerController extends Controller
 		 echo '非法操作';
 	 }
    }
-
+ 
    //悬赏问题列表
-   public function reward_problem_list(){
-	  $reward_problem = (array)DB::table('reward_problem')->where('status','<>',4 )->where('pay_status','=',2)->get();
-      return view('reward_comment_list',['reward_problem' => $reward_problem]);
+   public function reward_problem_list(Request $request){
+	    $page = $request->get('page');
+		$reward_problem = DB::table('reward_problem')->orderBy('pay_time','desc')->paginate(2);
+        return view('reward_problem_list',['reward_problem' => $reward_problem]);
    }
-
+   //咨询列表
+   public function consult_list(){
+		$consult_data = DB::table('consult')->where(['status' => 2])->get()->toArray();
+		return view('consult_list',['consult_data'=>$consult_data]);
+   }
    //用户选择悬赏问题评论最佳答案
    public function select_best(Request $request){
       if($request->ajax()){
          $data = $_POST;
          //$uid = session('userid');
-		 $uid = 2;
+		 //$uid = 2;
+		 $openid = $request->get('openid');
+		$session = new Session;
+	    $openid = $session->get("openid");
+	    $user_data = (array)DB::table('user')->where(['openid' => $openid,'status' => 1])->first();
+	    $uid = $user_data['id'];
+		//$uid = 2;
+		if($user_data['status'] == 2){
+			return ['status' => 0,'msg' => '该操作只适用于普通用户，律师不能进行该操作'];
+		}
 		 $reward_data = (array)DB::table('reward_comment')->where(['rc_id' => $data['rc_id'],'status' => 1])->first();
 		 if(empty($reward_data)){
 		    return ['status' => 0,'msg' => '该评论不存在','url' => ''];
@@ -383,7 +437,15 @@ class FindlawyerController extends Controller
    //如果有效期内无一律师评论则有效期内用户可以随时撤销问题
    public function revoke(Request $request){
       $q_id = $request->post('q_id');
-	  $uid = 2;
+	  //$uid = 2;
+	  $openid = $request->get('openid');
+		$session = new Session;
+	    $openid = $session->get("openid");
+	    $user_data = (array)DB::table('user')->where(['openid' => $openid,'status' => 1])->first();
+	    $uid = $user_data['id'];
+		if($user_data['role_type'] == 2){
+			return ['status' => 0,'msg' => '该操作只适用于普通用户，律师不能进行该操作'];
+		}
 	  $question = (array)DB::table('reward_problem')->where(['q_id' => $q_id,'uid' => $uid,'status' => 1])->first();
 	  if(empty($question)){
 	    return ['status' => 0,'msg'=>'该悬赏问题不存在，或者已经解决'];
@@ -408,7 +470,12 @@ class FindlawyerController extends Controller
    public function check(Request $request){
       if($request->ajax()){
 		   $law_id = $request->post('uid');                                            
-		   $uid = 2;
+		   //$uid = 2;
+		   $openid = $request->get('openid');
+		$session = new Session;
+	    $openid = $session->get("openid");
+	    $user_data = (array)DB::table('user')->where(['openid' => $openid,'status' => 1])->first();
+	    $uid = $user_data['id'];
 		   $data = (array)DB::table('contact_log')->where(['uid' => $uid,'law_id' => $law_id])->first();
 		   if(!empty($data)){
 			  $user_data =(array)DB::table('user')->where(['id' => $law_id])->first();
@@ -428,11 +495,20 @@ class FindlawyerController extends Controller
    //获取律师联系方式
    public function obtain_contactDO(Request $request){
       if($request->ajax()){
-         $uid = 2;
+         //$uid = 2;
+		 $openid = $request->get('openid');
+		$session = new Session;
+	    $openid = $session->get("openid");
+	    $user_data = (array)DB::table('user')->where(['openid' => $openid,'status' => 1])->first();
+	    $uid = $user_data['id'];
+
          $law_id = $request->post('id');
 		 $pay_type = $request->post('pay_type');
 		 if($pay_type != 1 && $pay_type == 2){
 		   return ['status' => 0,'msg' => '请选择支付方式'];
+		 }
+		 if($uid == $law_id){
+			 return ['status' => 0,'msg' => '律师本人不能获取自己的联系方式'];
 		 }
 		 $contact_log = (array)DB::table('contact_log')->where(['uid' => $uid,'law_id' => $law_id])->first();
 		 if(empty($contact_log)){

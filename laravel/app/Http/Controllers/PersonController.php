@@ -9,9 +9,36 @@ class PersonController extends Controller
     public function index(){
         $session = new Session;
         $openid = $session->get('openid');
+        //$openid = 'qwerrtyyu1232145';
         $data = DB::table('user')->where('openid',$openid)->first();
-        return view('person',['user'=>$data]);
+		//用户发布的悬赏问题
+		$reward_problem = DB::table('reward_problem')->where(['uid' => $data->id])->get();
+		$reward_problem = json_encode($reward_problem);
+		$reward_problem = json_decode($reward_problem,true);
+        return view('person',['user'=>$data,'reward_problem' => $reward_problem]);
     }
+    //悬赏问题详情
+	public function person_reward_detail(Request $request){
+	   $q_id = $request->get('q_id');
+	   //$openid = 'qwerrtyyu1232145';
+	   $session = new Session;
+       $openid = $session->get('openid');
+       $data = DB::table('user')->where('openid',$openid)->first();
+	   $reward_problem = DB::table('reward_problem')->where(['uid' => $data->id,'q_id' => $q_id])->first();
+	   $reward_problem = json_encode($reward_problem);
+	   $reward_problem = json_decode($reward_problem,true);
+	   //悬赏评论
+	   $reward_comment = DB::table('reward_comment')
+		          ->join('user', 'reward_comment.law_id', '=', 'user.id')
+	              ->where(['rp_id' => $q_id,'reward_comment.status' => 1])
+		          ->select('reward_comment.*','user.username','user.headimg')
+		          ->orderBy('is_best','desc','reward_comment.ctime','desc')
+		          ->get();
+	   $reward_comment = json_encode($reward_comment);
+	   $reward_comment = json_decode($reward_comment,true);
+       $count = DB::table('reward_comment')->where(['rp_id' => $q_id,'is_best' => 1])->count();
+	   return view('person_reward_detail',['reward_problem' => $reward_problem,'reward_comment' => $reward_comment,'is_best' => $count]);
+	}
     public function chongzhi(){
         $out_trade_no = time().rand(1000,9999);
         return view('chongzhi',['order_number'=>$out_trade_no]);
