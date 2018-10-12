@@ -10,6 +10,13 @@
 	<link type="text/css" href="/layer/theme/default/layer.css" rel="stylesheet" />
 	<script type="text/javascript" src="/layer/layer.js"></script>
 </head>
+<style>
+.page-item{
+  width:20px;
+  float:left;
+  margin-left:2px;
+}
+</style>
 <body>
 <header class="sub_header">
     <a href="../default.htm" class="b_link">首页</a>
@@ -31,9 +38,9 @@
         <ul>
 		    @foreach($law_data as $v)
             <li class="clearfix">
-                <a href="../lawyer/person_LIUXIAOLI.html">
-                    <p class="hs_link">@if($v->ID_Photo == '')<img src="/img/empty.jpg">@else<img alt="{{$v->username}}" src="{{$v->ID_Photo}}">@endif</p>
-                    <p><span class="ly_name">{{$v->username}}</span><a href="javascript:;" style="padding-left:180px" id="zx" data-uid="{{$v->id}}" data-phone="{{$v->mobile}}">咨询</a></p>
+                <a href="javascript:;">
+                    <p class="hs_link">@if($v->ID_Photo == '')<img src="/images/empty.jpg">@else<img alt="{{$v->username}}" src="{{$v->ID_Photo}}">@endif</p>
+                    <p><span class="ly_name">{{$v->username}}</span><a href="javascript:;" style="padding-left:180px"  onclick="consult($(this))" data-uid="{{$v->id}}" data-phone="{{$v->mobile}}">咨询</a></p>
                     <p style="padding-top:3px">已帮助：<span class="cf60">{{$v->help_count}}人</span><span style="padding-left:10px;padding-right:10px">|</span>好评数：<span class="cf60">{{$v->help_count}}条</span></p>
 					<p style="padding-top:3px">{{$v->introduce}}</p>
                 </a>
@@ -43,7 +50,8 @@
     </div>
 </div>
 <div class="page_control item_bt c666">
-<p class="mb10">{{ $law_data->links() }}<input type="button" value="撤销" id="rock">{{--<a class="next_p page_btn mr10" href="/index.php/lawyer?page=">下一页</a><span>(1/15)</span></p><p><form id="pagesForm" action="http://m.findlaw.cn/lawyer/a1702" method="get">跳到第<input class="txt_ipt" type="number" max="15" min="1" name="page">页<input class="page_btn ml10" type="submit" value="跳转">--}}<input type="hidden" name="__hash__" value="ea4937e1ba27c6d1054b1e13223f5949" /></form></p>            <script type="text/javascript"> 
+<p class="mb10" style="text-align:center">{{ $law_data->links() }}{{--<a class="next_p page_btn mr10" href="/index.php/lawyer?page=">下一页</a><span>(1/15)</span></p><p><form id="pagesForm" action="http://m.findlaw.cn/lawyer/a1702" method="get">跳到第<input class="txt_ipt" type="number" max="15" min="1" name="page">页<input class="page_btn ml10" type="submit" value="跳转">--}}<input type="hidden" name="__hash__" value="ea4937e1ba27c6d1054b1e13223f5949" /></form></p> 
+<script type="text/javascript"> 
         $('#pagesForm').submit(function(){
             var page = $(this).children('input[name=page]').val();
             if (page <= 0) {
@@ -56,13 +64,17 @@
         });
     </script>
 	</div>
-	<div class="search_bar fl_form">
+	<div class="search_bar fl_form" style="text-align:center">
 	<input type="hidden" id="token" name="_token" value="{{ csrf_token() }}" />
     {{--<form action="http://m.findlaw.cn/?m=Findlawyer&a=search" name="form1" method="post">
         <input class="txt_ipt mr10" type="text" name="kw" x-webkit-speech="x-webkit-speech"/><input class="btn" value="搜律师" type="submit" />
         <input type="hidden" name="__hash__" value="ea4937e1ba27c6d1054b1e13223f5949" /></form>--}}
 </div>
+
 <a class="tips_box" href="../tel_3A400-676-8333"><div class="tips_inbox"><span class="tips_tel">400-676-8333</span><span class="tips_inbox-text">点击免费咨询律师</span></div></a>
+<div style="margin-top:50px"><input type="button" value="撤销" id="rock"></div>
+<div style="margin-top:20px"><a href="/index.php/relayconsult?consult_id=3">咨询回复(律师进行回复)</a></div>
+<div style="margin-top:20px"><a href="/index.php/reward_problem_list">悬赏问题列表</a></div>
 <footer class="f16 tc c666">
     <div class="footer_bar">
         <a href="../login">登录</a>
@@ -104,9 +116,9 @@
     });
 </script>
 <script type="text/javascript">
-   $('#zx').click(function(){
-	  var uid = $(this).data('uid');
-	  var mobile = $(this).data('phone');
+   function consult(obj){
+      var uid = obj.data('uid');
+	  var mobile = obj.data('phone');
 	  var token = $('#token').val();
       layer.confirm('请选择咨询方式',{
 		  btn: ['电话咨询','在线咨询'] //按钮
@@ -115,15 +127,15 @@
 			  if(res.status == 1){
                  window.location.href = 'tel://' + res.data;
 			  }else{
-				  alert(111);
-			     //window.location.href = '/index.php/obtain_contact?uid='+uid;
+			     window.location.href = '/index.php/obtain_contact?uid='+uid;
 			  }
 			},'json')
 		   
 		}, function(){
 		  window.location.href = '/index.php/consult?id='+uid;
 		});
-   })
+   }
+ 
    $('#rock').click(function(){
 	  var q_id = 3;
 	  var token = $('#token').val();

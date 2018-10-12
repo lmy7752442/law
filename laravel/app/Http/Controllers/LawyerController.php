@@ -23,20 +23,75 @@ class LawyerController extends Controller
 
     /** 添加稿子 */
     public function gaozi_add(Request $request){
+        # 接数据
         $data = $_GET;
 //        print_r($data);exit;
+
+        # 判断是手机投稿还是PC投稿 $type
+        $server_data = $_SERVER['HTTP_USER_AGENT'];
+//        print_r($a);
+        $strpos_res = strpos($server_data,'Windows');
+//        print_r($b);die;
+        if($strpos_res){
+            # 电脑投稿
+            $type = 2;
+
+            # 获取用户id $uid
+            session_start();
+            $sessionid = session_id();
+//        print_r($sessionid);exit;
+            # 根据sessionid查询数据库此用户
+            $session_openid_res = (array)DB::table('session_openid')->where(['sessionid'=>$sessionid])->first();
+//        print_r($session_openid_res);
+            # 根据openid查询数据库user
+            $user_res = (array)DB::table('user')->where(['openid'=>$session_openid_res['openid']])->first();
+//        print_r($user_res);
+            $u_id = $user_res['id'];
+        }else{
+            # 手机投稿
+            $type = 1;
+
+            # 获取用户id $uid
+            # 获取当前 user openid
+            $session = new Session;
+            $openid = $session->get('openid');
+//        print_r($openid);exit;
+
+            # 根据openid查询此用户是否存在
+            $user_id = (array)DB::table('user')->where(['openid'=>$openid])->first();
+//        print_r($user_id);exit;
+            $u_id = $user_id['id'];
+        }
+
+//exit;
         $insert_data = [
-            'uid' => 1,
+            'uid' => $u_id,
             'title' => $data['title'],
+            'type' => $type,
             'content' => $data['content'],
             'ctime' => time(),
             'utime' => time(),
             'cate_id' => $data['cate_id'],
         ];
 //        print_r($insert_data);exit;
+        # 执行添加稿子
         $res = DB::table('article')->insert($insert_data);
 //        print_r($res);
         if($res){
+            # 判断是PC端投稿还是手机端投稿
+            # PC端的话要把 session_openid 里的数据删掉
+            if($insert_data['type'] == 2){
+                $where = [
+                    'id' => $insert_data['uid']
+                ];
+                $user_info = (array)DB::table('user')->where($where)->first();
+//                print_r($user_info);
+                $where2 = [
+                    'openid'=>$user_info['openid']
+                ];
+                $del_sessionid = DB::table('session_openid')->where($where2)->delete();
+//                print_r($del_sessionid);exit;
+            }
             return ['msg'=>'投稿成功' , 'code'=>'1' , 'status'=>'true'];
         }else{
             return ['msg'=>'投稿失败' , 'code'=>'2' , 'status'=>'false'];
@@ -152,10 +207,10 @@ class LawyerController extends Controller
             # 判断用户的角色
             if($user_info['role_type'] == 2){
 //                    header("location:http://ruirui.jinxiaofei.xyz/tougao");
-                return $data = ['msg'=>'此用户是律师','code'=>1];
+                return $data = ['msg'=>'此用户是律师，可以进行投稿','code'=>1];
             }else{
 //                    echo "<script>alert('此用户不是律师')</script>";
-                return $data=['msg'=>'此用户不是律师','code'=>3];
+                return $data=['msg'=>'此用户不是律师，不能投稿','code'=>3];
             }
         }else{
             return $data=['msg'=>'此用户不存在','code'=>2];

@@ -45,10 +45,25 @@ class IndexController extends Controller
             }
             echo $str = $this -> ArrToXml($weixin_arr);
         }
+<<<<<<< HEAD
+
+=======
+>>>>>>> d4895a030bfcb5626d07aac56e7d32c1af339e74
     }
 
     // 判断 选择角色
     public function law_knowledge(Request $request){
+<<<<<<< HEAD
+            $arr = $_GET;
+            $code = $arr['code'];
+            $data = file_get_contents('https://api.weixin.qq.com/sns/oauth2/access_token?appid=wxf50dc03dd5f160a7&secret=2077c45807dae09d4915b53ccbe723bc&code='.$code .'&grant_type=authorization_code');
+            $data = json_decode($data,true);
+            $session = new Session;
+            $session->set("openid",$data['openid']);
+            $session ->set('token',$data['access_token']);
+            //  单选框页面  选择律师或公众用户
+            header('refresh:0;url=as');
+=======
         $arr = $_GET;
         $code = $arr['code'];
         $data = file_get_contents('https://api.weixin.qq.com/sns/oauth2/access_token?appid=wxf50dc03dd5f160a7&secret=2077c45807dae09d4915b53ccbe723bc&code='.$code .'&grant_type=authorization_code');
@@ -58,6 +73,7 @@ class IndexController extends Controller
         $session ->set('token',$data['access_token']);
         //  单选框页面  选择律师或公众用户
         header('refresh:0;url=as');
+>>>>>>> d4895a030bfcb5626d07aac56e7d32c1af339e74
     }
 
     public function ssss(Request $request){
@@ -78,11 +94,17 @@ class IndexController extends Controller
         }
     }
 
+<<<<<<< HEAD
+
+    public function as(Request $request){
+        $status = $request -> get('status');
+=======
 
 
     public function as(Request $request)
     {
         $status = $request->get('status');
+>>>>>>> d4895a030bfcb5626d07aac56e7d32c1af339e74
         $session = new Session;
         $openid = $session->get('openid');
         $token = $session->get('token');
@@ -201,6 +223,23 @@ class IndexController extends Controller
 
     }
 
+<<<<<<< HEAD
+
+
+    function postcurl($url,$data = null){
+            $ch = curl_init();
+            curl_setopt($ch, CURLOPT_URL, $url);
+            curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, FALSE);
+            curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, FALSE);
+            if (!empty($data)){
+                    curl_setopt($ch, CURLOPT_POST, TRUE);
+                    curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
+            }
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+            $output = curl_exec($ch);
+            curl_close($ch);
+            return     $output=json_decode($output,true);
+=======
     public function postcurl($url,$data = null){
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL, $url);
@@ -214,6 +253,7 @@ class IndexController extends Controller
         $output = curl_exec($ch);
         curl_close($ch);
         return     $output=json_decode($output,true);
+>>>>>>> d4895a030bfcb5626d07aac56e7d32c1af339e74
     }
 
     // 热点评论
