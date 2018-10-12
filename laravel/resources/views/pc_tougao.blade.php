@@ -32,12 +32,11 @@
                     { },
                     function(data){
                         console.log(data);
-//                        var data=JSON.parse(data);
                         if(data.msg == '进入律师投稿页面'){
-                            alert(data.msg);
+//                            alert(data.msg);
                             location.href="/tougao"
                         }else if(data.msg == '未扫码'){
-                            alert(data.msg);
+//                            alert(data.msg);
                             location.href='/pc_tougao'
                         }else if(data.msg == '此用户不存在'){
                             alert(data.msg);

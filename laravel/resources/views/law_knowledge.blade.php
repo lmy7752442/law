@@ -30,11 +30,14 @@
 //                    alert(data);
                     var res=JSON.parse(data);
                     if(res.code == 1){
-                        var r = confirm('是否输入方便，如果方便，您即将进入到投稿页面;如果输入不方便可以选择投稿栏目');
+//                        var r = confirm('是否输入方便，如果方便，您即将进入到投稿页面;如果输入不方便可以选择投稿栏目');
+                        var r = confirm('如果选择手机投稿，请点击是，如果选择电脑投稿，请点击否');
                         if (r==true){
+//                            alert(res.msg);
                             location.href="/tougao";
                         }else{
-                            location.href="/tiaozhuan";
+//                            location.href="http://ruirui.jinxiaofei.xyz/pc_tougao";
+                            alert("'http://ruirui.jinxiaofei.xyz/pc_tougao',请在电脑上输入此网址，进行投稿");
                         }
                     }else if(res.code == 2){
                         alert(res.msg);
@@ -143,13 +146,13 @@
         <a href="default.htm">首页</a>
         <a href="ask">发咨询</a>
         <a href="lawyer">找律师</a>
-        <a id="pc_tougao">律师投稿(使用电脑输入)</a>
+        {{--<a id="pc_tougao">律师投稿(使用电脑输入)</a>--}}
     </div>
-    <script>
-        $('#pc_tougao').on('click',function(){
-            alert('http://ruirui.jinxiaofei.xyz/pc_tougao');
-        })
-    </script>
+    {{--<script>--}}
+        {{--$('#pc_tougao').on('click',function(){--}}
+            {{--alert('http://ruirui.jinxiaofei.xyz/pc_tougao');--}}
+        {{--})--}}
+    {{--</script>--}}
     <p class="copyright">Copyright@2003-2014　版权所有 找法网（Findlaw.cn）- 中国最大的法律服务平台</p>
 </footer>
 </body>
