@@ -55,12 +55,12 @@ class HotController extends Controller{
 
     /** 热点详情 */
     public function hot_detail(){
+        //热点 id
         $h_id = $_GET['h_id'];
-//        print_r($h_id);exit;
+        // 根据 热点 id 查热点信息展示
         $data = DB::table('hot')->where('h_id',$h_id)->first();
+        // 根据热点 id 查评论表的所有评论
         $arr = DB::table('comment')->leftjoin('user','comment.uid','=','user.id')->where(['h_id'=>$h_id,'pid'=>0])->get();
-//        $arr = json_decode($arr,true);
-//        print_r($arr);exit;
         foreach($arr as $k=>$v){
             $v->ctime1 = date("Y-m-d H:i",$v->ctime1);
             if($v->m_id){
@@ -79,7 +79,8 @@ class HotController extends Controller{
                 $v->res = $res2;
             }
         }
-//        print_r($arr);exit;
+//        dump($data);
+//        dump($arr);exit;
         return view('hot_detail')->with('data',$data)->with('arr',$arr);
     }
 

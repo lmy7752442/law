@@ -36,6 +36,14 @@
             location.href = 'tixian';
         })
 	</script>
+	@if($user->role_type == 1)
+	<div class="plpr10 item_bt item_bb">
+		<h3 class="mt10 mb10 f18 fb cf60">悬赏问题</h3>
+		 @foreach($reward_problem as $v)
+		<a href="/index.php/person_reward_detail?q_id={{$v['q_id']}}"><p class="mt10 mb10 c666 l26">{{$v['q_title']}}</p></a>
+		@endforeach
+	</div>
+	@endif
 	<div class="plpr10 item_bt item_bb">
 		<h3 class="mt10 mb10 f18 fb cf60">擅长专业</h3>
 		<p class="mt10 mb10 c666 l26">婚姻家庭 公司法 企业法律顾问 债务债权 婚姻家庭 合同纠纷 交通事故 继承 工伤赔偿</p>

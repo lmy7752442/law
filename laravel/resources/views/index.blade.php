@@ -23,13 +23,13 @@
     </ul>
 </nav>
 <div class="new_ask">
-    <h2 class="hd"><a href="ask">最新法律咨询</a></h2>
+    <h2 class="hd"><a href="ask">最新悬赏问题</a></h2>
     <div class="bd f17">
         <ul class="fl_list">
             <li><a href="ask/question_26648000.html">劳动法退休赔偿<span>回复数: 0</span></a></li><li><a href="ask/question_26647996.html">因工受伤不解除劳动关系的应<span>回复数: 0</span></a></li><li><a href="ask/question_26647995.html">我家前面盖的是点式楼低层9<span>回复数: 0</span></a></li><li><a href="ask/question_26648002.html">淘宝兼职刷信誉维权<span>回复数: 0</span></a></li><li><a href="ask/question_26647992.html">您好，我想咨询下抢劫几千元<span>回复数: 0</span></a></li>        </ul>
     </div>
     <div class="ft item_bt">
-        <a class="aw_link" href="ask">进入咨询中心>></a>
+        <a class="aw_link" href="/index.php/reward_problem_list">进入悬赏问题列表>></a>
     </div>
 </div>
 <div class="rec_lawyer">
