@@ -40,9 +40,12 @@
 	<div class="plpr10 item_bt item_bb">
 		<h3 class="mt10 mb10 f18 fb cf60">悬赏问题</h3>
 		 @foreach($reward_problem as $v)
-		<a href="/index.php/person_reward_detail?q_id={{$v['q_id']}}"><p class="mt10 mb10 c666 l26">{{$v['q_title']}}</p></a>
+			<p class="mt10 mb10 c666 l26"><a href="/index.php/person_reward_detail?q_id={{$v['q_id']}}">{{$v['q_title']}}</a></p>@if($v['pay_status'] == 1)<a href="/index.php/pay_reward?order_no={{$v['order_no']}}}">（待支付）</a>@endif
 		@endforeach
 	</div>
+	@endif
+	@if($user->role_type == 1)
+		<a href="/index.php/postReward">发布悬赏</a>
 	@endif
 	<div class="plpr10 item_bt item_bb">
 		<h3 class="mt10 mb10 f18 fb cf60">擅长专业</h3>

@@ -504,7 +504,7 @@ class FindlawyerController extends Controller
 
          $law_id = $request->post('id');
 		 $pay_type = $request->post('pay_type');
-		 if($pay_type != 1 && $pay_type == 2){
+		 if($pay_type != 1 && $pay_type != 2){
 		   return ['status' => 0,'msg' => '请选择支付方式'];
 		 }
 		 if($uid == $law_id){
@@ -523,6 +523,8 @@ class FindlawyerController extends Controller
 		     if($user_data['integral'] < 50){
 			     return ['status' => 0,'msg' => '积分不足，请前往个人中心进行充值'];
 			  }
+			  $integral = $user_data['integral'] - 50;
+		      DB::table('user')->where(['id' => $uid])->update(['integral' => $integral]);
 		   }
 		   $insert = DB::table('contact_log')->insert(['uid' => $uid,'law_id' => $law_id,'ctime' => time(),'pay_type' => $pay_type]);
 

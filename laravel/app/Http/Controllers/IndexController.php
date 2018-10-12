@@ -89,12 +89,13 @@ class IndexController extends Controller
         $token = $session->get('token');
         $state = $session->get('state');
         $user_data = DB::table('user')->where(['openid' => $openid])->first();
+        $reward_problem = DB::table('reward_problem')->where(['pay_status' => 2])->orderBy('pay_time', 'desc')->limit(5)->get();
         # 查询稿子表数据
         $gaozi_data = DB::table('article')->where(['status' => 1])->orderBy('ctime', 'desc')->limit(5)->get();
         # 查询热点表数据
         $hot_data = DB::table('hot')->where(['is_show' => 2])->orderBy('ctime', 'desc')->limit(5)->get();
         if($status == 1){
-            return view('law_knowledge')->with('gaozi_data', $gaozi_data)->with('hot_data', $hot_data);
+            return view('law_knowledge')->with('reward_problem',$reward_problem)->with('gaozi_data', $gaozi_data)->with('hot_data', $hot_data);
         }
         if (empty($user_data)) {
             $user_arr = file_get_contents('https://api.weixin.qq.com/sns/userinfo?access_token=' . $token . '&openid=' . $openid . '&lang=zh_CN');
@@ -105,7 +106,7 @@ class IndexController extends Controller
                 header('refresh:0;url=person');
             } else if ($state == '2') {
 //                print_r($gaozi_data);exit;
-                return view('law_knowledge')->with('gaozi_data', $gaozi_data)->with('hot_data', $hot_data);
+                return view('law_knowledge')->with('reward_problem',$reward_problem)->with('gaozi_data', $gaozi_data)->with('hot_data', $hot_data);
             } else if ($state == '3') {
                 header('refresh:0;url=person');
             }

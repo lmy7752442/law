@@ -73,7 +73,7 @@ $(document).ready(function(){
 	  $('#rewardSubmit').click(function(){
 		 var pay_type = $("input[name='pay_type']:checked").val();
 		 var token = $('#token').val();
-		 if(pay_type != 1){
+		 if(pay_type != 1 && pay_type != 2){
 		     layer.msg('请选择支付方式',{icon:2});
 			 return false;
 		 }
