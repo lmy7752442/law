@@ -55,7 +55,7 @@
     <div class="bd f17">
         <ul class="fl_list">
             @foreach($reward_problem as $k=>$v)
-            <li><a href="/index.php/reward_comment?q_id={{$v->q_id}}}">{{$v->q_title}}<span>回复数: 0</span></a></li>
+            <li><a href="/index.php/reward_comment?q_id={{$v['q_id']}}}">{{$v['q_title']}}<span>回复数: {{$v['count']}}</span></a></li>
             @endforeach
 
         </ul>
@@ -99,31 +99,19 @@
 </div>
 
 <div class="rec_lawyer">
-    <h2 class="hd"><a href="lawyer">推荐广州律师</a></h2>
+    <h2 class="hd"><a href="lawyer">推荐律师</a></h2>
     <div class="ly_list bd f17">
         <ul>
+		    @foreach($recommend_lawyer as $k=>$v)
             <li class="clearfix">
-                <a href="lawyer/person_isaacchanlaw.html">
-                    <p class="hs_link"><img alt="陳樂超" src="http://d01.findlawimg.com/my/photo/20130115165256.gif"></p>
-                    <p><span class="ly_name">陳樂超</span>广东 - 广州</p>
-                    <p>专长： 损害赔偿 经济纠...</p>
-                    <p>电话：<span class="cf60">13427813313</span></p>
+                <a href="javascript:;">
+                    <p class="hs_link"><img alt="{{$v->username}}" src="{{$v->headimg}}"></p>
+                    <p><span class="ly_name">{{$v->username}}</span></p>
+                    <p>专长： {{$v->introduce}}</p>
                 </a>
-            </li><li class="clearfix">
-                <a href="lawyer/person_zzhylawyer.html">
-                    <p class="hs_link"><img alt="邹宙阳" src="http://d03.findlawimg.com/my/photo/20130827225336.jpg"></p>
-                    <p><span class="ly_name">邹宙阳</span>广东 - 广州</p>
-                    <p>专长： 损害赔偿 刑事辩...</p>
-                    <p>电话：<span class="cf60">13711506518</span></p>
-                </a>
-            </li><li class="clearfix">
-                <a href="lawyer/person_legohe.html">
-                    <p class="hs_link"><img alt="何丽国" src="http://d03.findlawimg.com/my/photo/20130901214937.jpg"></p>
-                    <p><span class="ly_name">何丽国</span>广东 - 广州</p>
-                    <p>专长： 经济纠纷 刑事辩...</p>
-                    <p>电话：<span class="cf60">15622757788</span></p>
-                </a>
-            </li>        </ul>
+            </li>
+			@endforeach
+	        </ul>
     </div>
     <div class="ft item_bt">
         <a class="aw_link" href="lawyer">进入律师中心>></a>

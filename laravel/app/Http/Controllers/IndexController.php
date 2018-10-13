@@ -89,13 +89,22 @@ class IndexController extends Controller
         $token = $session->get('token');
         $state = $session->get('state');
         $user_data = DB::table('user')->where(['openid' => $openid])->first();
+		//悬赏问题
         $reward_problem = DB::table('reward_problem')->where(['pay_status' => 2])->orderBy('pay_time', 'desc')->limit(5)->get();
+		$reward_problem = json_encode($reward_problem);
+		$reward_problem = json_decode($reward_problem,true);
+		foreach($reward_problem as $key=>&$val){
+		   $count = DB::table('reward_comment')->where(['rp_id' => $val['q_id'],'status' => 1])->count();
+		   $val['count'] => $count;
+		}
         # 查询稿子表数据
         $gaozi_data = DB::table('article')->where(['status' => 1])->orderBy('ctime', 'desc')->limit(5)->get();
         # 查询热点表数据
         $hot_data = DB::table('hot')->where(['is_show' => 2])->orderBy('ctime', 'desc')->limit(5)->get();
+		//推荐律师
+		$recommend_lawyer = DB::table('user')->where('role_type' => 2,'is_commend' => 1,'status' => 1)->limit(3)->get();
         if($status == 1){
-            return view('law_knowledge')->with('reward_problem',$reward_problem)->with('gaozi_data', $gaozi_data)->with('hot_data', $hot_data);
+            return view('law_knowledge')->with('reward_problem',$reward_problem)->with('gaozi_data', $gaozi_data)->with('hot_data', $hot_data)->with('recommend_lawyer',$recommend_lawyer);
         }
         if (empty($user_data)) {
             $user_arr = file_get_contents('https://api.weixin.qq.com/sns/userinfo?access_token=' . $token . '&openid=' . $openid . '&lang=zh_CN');
@@ -106,7 +115,7 @@ class IndexController extends Controller
                 header('refresh:0;url=person');
             } else if ($state == '2') {
 //                print_r($gaozi_data);exit;
-                return view('law_knowledge')->with('reward_problem',$reward_problem)->with('gaozi_data', $gaozi_data)->with('hot_data', $hot_data);
+                return view('law_knowledge')->with('reward_problem',$reward_problem)->with('gaozi_data', $gaozi_data)->with('hot_data', $hot_data)->with('recommend_lawyer',$recommend_lawyer);
             } else if ($state == '3') {
                 header('refresh:0;url=person');
             }

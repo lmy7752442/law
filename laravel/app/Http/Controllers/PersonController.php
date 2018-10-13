@@ -27,6 +27,9 @@ class PersonController extends Controller
 	   $reward_problem = DB::table('reward_problem')->where(['uid' => $data->id,'q_id' => $q_id])->first();
 	   $reward_problem = json_encode($reward_problem);
 	   $reward_problem = json_decode($reward_problem,true);
+	   if(empty($reward_problem)){
+		   echo '该悬赏问题不存在';die;
+	   }
 	   //悬赏评论
 	   $reward_comment = DB::table('reward_comment')
 		          ->join('user', 'reward_comment.law_id', '=', 'user.id')
@@ -39,6 +42,7 @@ class PersonController extends Controller
        $count = DB::table('reward_comment')->where(['rp_id' => $q_id,'is_best' => 1])->count();
 	   return view('person_reward_detail',['reward_problem' => $reward_problem,'reward_comment' => $reward_comment,'is_best' => $count]);
 	}
+
     public function chongzhi(){
         $out_trade_no = time().rand(1000,9999);
         return view('chongzhi',['order_number'=>$out_trade_no]);

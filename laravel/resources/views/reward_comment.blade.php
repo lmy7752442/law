@@ -29,7 +29,17 @@
         <p><input class="btn" id="askSubmit" value="回复" type="button" /></p>
         
 </div>
-
+<div class="s">
+     @foreach($all_comment as $k=>$v)
+    <div class="s" style="color:blue;">
+            <img src="{{$v->headimg}}" alt="" style="width:40px;height:40px;">
+                {{$v->username}}{{$v->ctime}}
+     </div>
+    <div class="s">
+     {{$v->content}}
+     </div>
+     @endforeach
+</div>
     <a class="tips_box" href="tel_3A400-676-8333"><div class="tips_inbox"><span class="tips_tel">400-676-8333</span><span class="tips_inbox-text">点击免费咨询律师</span></div></a>
 	<footer class="f16 tc c666">
 		<div class="footer_bar">

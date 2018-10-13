@@ -127,4 +127,5 @@ Route::post('obtain_contactDO','FindlawyerController@obtain_contactDO');
 Route::get('person_reward_detail','PersonController@person_reward_detail');
 
 
+Route::resource('posts','PostController');
 
