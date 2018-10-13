@@ -279,4 +279,7 @@ class IndexController extends Controller
             return 2;
         }
     }
+    public function fagui(){
+        return view('fagui');
+    }
 }

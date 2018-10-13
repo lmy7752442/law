@@ -14,6 +14,7 @@
 Route::any('/', 'IndexController@index');
 
 Route::get('law_knowledge', 'IndexController@law_knowledge');
+Route::get('fagui', 'IndexController@fagui');
 
 Route::get('lawyer', 'LawyerController@lawyer');
 

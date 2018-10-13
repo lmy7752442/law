@@ -4,8 +4,8 @@
     <meta charset="gbk" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <title>仿找法网触屏手机wap法律网站模板-【shenghuofuwu/chaxun/】</title>
-    <meta name="keywords" content="法律咨询，律师，法律咨询电话" /><meta name="description" content="找法网手机版为您提供法律咨询、找律师、查询法律法规，各地区律师电话咨询服务" />	<link type="text/css" href="law_css/law_touch.css" rel="stylesheet" />
-    <script type="text/javascript" src="law_css/mobi.min.js" charset="gbk"></script>
+    <meta name="keywords" content="法律咨询，律师，法律咨询电话" /><meta name="description" content="找法网手机版为您提供法律咨询、找律师、查询法律法规，各地区律师电话咨询服务" />	<link type="text/css" href="/law_css/law_touch.css" rel="stylesheet" />
+    <script type="text/javascript" src="/law_css/mobi.min.js" charset="gbk"></script>
 
 </head>
 <body>
@@ -30,8 +30,8 @@
 <a class="tips_box" href="tel_3A400-676-8333"><div class="tips_inbox"><span class="tips_tel">400-676-8333</span><span class="tips_inbox-text">点击免费咨询律师</span></div></a>
 <footer class="f16 tc c666">
     <div class="footer_bar">
-        <a href="login">登录</a>
-        <a href="register">注册</a>			<!--<a href="http://m.findlaw.cn/shortcut">下载到手机桌面</a>-->
+        {{--<a href="login">登录</a>--}}
+        {{--<a href="register">注册</a>			<!--<a href="http://m.findlaw.cn/shortcut">下载到手机桌面</a>-->--}}
         <a href="#" class="to_top tl">TOP</a>
     </div>
     <div class="footer_version">
@@ -40,7 +40,7 @@
         <a href="../china.findlaw.cn/default.htm">电脑版</a>
     </div>
     <div class="footer_nav">
-        <a href="default.htm">首页</a>
+        <a href="as?status=1">首页</a>
         <a href="ask">发咨询</a>
         <a href="lawyer">找律师</a>
         <a id="pc_tougao">律师投稿(使用电脑输入)</a>
