@@ -1682,3 +1682,207 @@ Array
     [EventKey] => http://yuan.jinxiaofei.xyz/ssss?id=2
     [MenuId] => 693021697
 )
+Array
+(
+    [ToUserName] => gh_ef9280ec87dc
+    [FromUserName] => oemNh1jsYgd5gkcDXfFYrvW9FIMQ
+    [CreateTime] => 1539349394
+    [MsgType] => event
+    [Event] => VIEW
+    [EventKey] => http://yuan.jinxiaofei.xyz/ssss?id=2
+    [MenuId] => 693021697
+)
+Array
+(
+    [ToUserName] => gh_ef9280ec87dc
+    [FromUserName] => oemNh1n8U3_0TyuH47RN6z1Va-NA
+    [CreateTime] => 1539349486
+    [MsgType] => event
+    [Event] => VIEW
+    [EventKey] => http://yuan.jinxiaofei.xyz/ssss?id=2
+    [MenuId] => 693021697
+)
+Array
+(
+    [ToUserName] => gh_ef9280ec87dc
+    [FromUserName] => oemNh1n8U3_0TyuH47RN6z1Va-NA
+    [CreateTime] => 1539349529
+    [MsgType] => event
+    [Event] => VIEW
+    [EventKey] => http://yuan.jinxiaofei.xyz/ssss?id=2
+    [MenuId] => 693021697
+)
+Array
+(
+    [ToUserName] => gh_ef9280ec87dc
+    [FromUserName] => oemNh1jsYgd5gkcDXfFYrvW9FIMQ
+    [CreateTime] => 1539349585
+    [MsgType] => event
+    [Event] => VIEW
+    [EventKey] => http://yuan.jinxiaofei.xyz/ssss?id=1
+    [MenuId] => 693021697
+)
+Array
+(
+    [ToUserName] => gh_ef9280ec87dc
+    [FromUserName] => oemNh1n8U3_0TyuH47RN6z1Va-NA
+    [CreateTime] => 1539349588
+    [MsgType] => event
+    [Event] => VIEW
+    [EventKey] => http://yuan.jinxiaofei.xyz/ssss?id=2
+    [MenuId] => 693021697
+)
+Array
+(
+    [ToUserName] => gh_ef9280ec87dc
+    [FromUserName] => oemNh1jsYgd5gkcDXfFYrvW9FIMQ
+    [CreateTime] => 1539349650
+    [MsgType] => event
+    [Event] => VIEW
+    [EventKey] => http://yuan.jinxiaofei.xyz/ssss?id=2
+    [MenuId] => 693021697
+)
+Array
+(
+    [ToUserName] => gh_ef9280ec87dc
+    [FromUserName] => oemNh1n8U3_0TyuH47RN6z1Va-NA
+    [CreateTime] => 1539349719
+    [MsgType] => event
+    [Event] => VIEW
+    [EventKey] => http://yuan.jinxiaofei.xyz/ssss?id=2
+    [MenuId] => 693021697
+)
+Array
+(
+    [ToUserName] => gh_ef9280ec87dc
+    [FromUserName] => oemNh1jsYgd5gkcDXfFYrvW9FIMQ
+    [CreateTime] => 1539350042
+    [MsgType] => event
+    [Event] => VIEW
+    [EventKey] => http://yuan.jinxiaofei.xyz/ssss?id=2
+    [MenuId] => 693021697
+)
+Array
+(
+    [ToUserName] => gh_ef9280ec87dc
+    [FromUserName] => oemNh1n8U3_0TyuH47RN6z1Va-NA
+    [CreateTime] => 1539350086
+    [MsgType] => event
+    [Event] => VIEW
+    [EventKey] => http://yuan.jinxiaofei.xyz/ssss?id=3
+    [MenuId] => 693021697
+)
+Array
+(
+    [ToUserName] => gh_ef9280ec87dc
+    [FromUserName] => oemNh1jsYgd5gkcDXfFYrvW9FIMQ
+    [CreateTime] => 1539350134
+    [MsgType] => text
+    [Content] => http://yuan.jinxiaofei.xyz/index.php/reward_comment?q_id=7%7D
+    [MsgId] => 6611458483316427640
+)
+Array
+(
+    [ToUserName] => gh_ef9280ec87dc
+    [FromUserName] => oemNh1jsYgd5gkcDXfFYrvW9FIMQ
+    [CreateTime] => 1539350134
+    [MsgType] => text
+    [Content] => http://yuan.jinxiaofei.xyz/index.php/reward_comment?q_id=7%7D
+    [MsgId] => 6611458483316427640
+)
+Array
+(
+    [ToUserName] => gh_ef9280ec87dc
+    [FromUserName] => oemNh1jsYgd5gkcDXfFYrvW9FIMQ
+    [CreateTime] => 1539350134
+    [MsgType] => text
+    [Content] => http://yuan.jinxiaofei.xyz/index.php/reward_comment?q_id=7%7D
+    [MsgId] => 6611458483316427640
+)
+Array
+(
+    [ToUserName] => gh_ef9280ec87dc
+    [FromUserName] => oemNh1n8U3_0TyuH47RN6z1Va-NA
+    [CreateTime] => 1539350255
+    [MsgType] => event
+    [Event] => VIEW
+    [EventKey] => http://yuan.jinxiaofei.xyz/ssss?id=3
+    [MenuId] => 693021697
+)
+Array
+(
+    [ToUserName] => gh_ef9280ec87dc
+    [FromUserName] => oemNh1n8U3_0TyuH47RN6z1Va-NA
+    [CreateTime] => 1539350260
+    [MsgType] => event
+    [Event] => VIEW
+    [EventKey] => http://yuan.jinxiaofei.xyz/ssss?id=2
+    [MenuId] => 693021697
+)
+Array
+(
+    [ToUserName] => gh_ef9280ec87dc
+    [FromUserName] => oemNh1jsYgd5gkcDXfFYrvW9FIMQ
+    [CreateTime] => 1539350335
+    [MsgType] => event
+    [Event] => VIEW
+    [EventKey] => http://yuan.jinxiaofei.xyz/ssss?id=2
+    [MenuId] => 693021697
+)
+Array
+(
+    [ToUserName] => gh_ef9280ec87dc
+    [FromUserName] => oemNh1n8U3_0TyuH47RN6z1Va-NA
+    [CreateTime] => 1539350369
+    [MsgType] => event
+    [Event] => VIEW
+    [EventKey] => http://yuan.jinxiaofei.xyz/ssss?id=3
+    [MenuId] => 693021697
+)
+Array
+(
+    [ToUserName] => gh_ef9280ec87dc
+    [FromUserName] => oemNh1jsYgd5gkcDXfFYrvW9FIMQ
+    [CreateTime] => 1539391366
+    [MsgType] => event
+    [Event] => VIEW
+    [EventKey] => http://yuan.jinxiaofei.xyz/ssss?id=2
+    [MenuId] => 693021697
+)
+Array
+(
+    [ToUserName] => gh_ef9280ec87dc
+    [FromUserName] => oemNh1jsYgd5gkcDXfFYrvW9FIMQ
+    [CreateTime] => 1539391869
+    [MsgType] => text
+    [Content] => http://yuan.jinxiaofei.xyz/tiaozhuan
+    [MsgId] => 6611637733776530163
+)
+Array
+(
+    [ToUserName] => gh_ef9280ec87dc
+    [FromUserName] => oemNh1jsYgd5gkcDXfFYrvW9FIMQ
+    [CreateTime] => 1539391869
+    [MsgType] => text
+    [Content] => http://yuan.jinxiaofei.xyz/tiaozhuan
+    [MsgId] => 6611637733776530163
+)
+Array
+(
+    [ToUserName] => gh_ef9280ec87dc
+    [FromUserName] => oemNh1jsYgd5gkcDXfFYrvW9FIMQ
+    [CreateTime] => 1539391869
+    [MsgType] => text
+    [Content] => http://yuan.jinxiaofei.xyz/tiaozhuan
+    [MsgId] => 6611637733776530163
+)
+Array
+(
+    [ToUserName] => gh_ef9280ec87dc
+    [FromUserName] => oemNh1jsYgd5gkcDXfFYrvW9FIMQ
+    [CreateTime] => 1539392182
+    [MsgType] => event
+    [Event] => VIEW
+    [EventKey] => http://yuan.jinxiaofei.xyz/ssss?id=2
+    [MenuId] => 693021697
+)

@@ -106,8 +106,8 @@ class LawyerController extends Controller
 //        return 2;
         # 查询热点表数据
         $hot_data = DB::table('hot')->where(['is_show'=>2])->orderBy('ctime','desc')->limit(5)->get();
-
-        return view('law_knowledge')->with('gaozi_data',$gaozi_data)->with('hot_data',$hot_data);
+        $reward_problem = DB::table('reward_problem')->where(['pay_status' => 2])->orderBy('pay_time', 'desc')->limit(5)->get();
+        return view('law_knowledge')->with('gaozi_data',$gaozi_data)->with('hot_data',$hot_data)->with('reward_problem',$reward_problem);
     }
 
     /** 律师电脑投稿 直接生成二维码 */

@@ -44,7 +44,7 @@
                         location.href='/tiaozhuan';
                     }else if(res.code == 3){
                         alert(res.msg);
-                        location.href='/tiaozhuan';
+                        return false;
                     }
                 }
         )

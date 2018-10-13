@@ -83,7 +83,7 @@ $(document).ready(function(){
 		 $.post('/index.php/reward_commentDo',{content:content,q_id:q_id,_token:token},function(info){
 		    if(info.status == 1){
 				layer.msg(info.msg,{icon:1},function(){
-				    location.href="/index.php/reward_comment";
+				    location.href="/as?status=1";
 				})
 			}else{
 			   layer.msg(info.msg,{icon:2});	
