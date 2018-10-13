@@ -95,14 +95,17 @@ class IndexController extends Controller
 		$reward_problem = json_decode($reward_problem,true);
 		foreach($reward_problem as $key=>&$val){
 		   $count = DB::table('reward_comment')->where(['rp_id' => $val['q_id'],'status' => 1])->count();
-		   $val['count'] => $count;
+		   $val['count'] = $count;
 		}
         # 查询稿子表数据
         $gaozi_data = DB::table('article')->where(['status' => 1])->orderBy('ctime', 'desc')->limit(5)->get();
         # 查询热点表数据
         $hot_data = DB::table('hot')->where(['is_show' => 2])->orderBy('ctime', 'desc')->limit(5)->get();
-		//推荐律师
-		$recommend_lawyer = DB::table('user')->where('role_type' => 2,'is_commend' => 1,'status' => 1)->limit(3)->get();
+        foreach($hot_data as $k => $v){
+            $v->count = DB::table('comment')->where(['h_id'=>$v->h_id])->count();
+        }
+        //推荐律师
+		$recommend_lawyer = DB::table('user')->where(['role_type' => 2,'is_recommend' => 1,'status' => 1])->limit(3)->get();
         if($status == 1){
             return view('law_knowledge')->with('reward_problem',$reward_problem)->with('gaozi_data', $gaozi_data)->with('hot_data', $hot_data)->with('recommend_lawyer',$recommend_lawyer);
         }

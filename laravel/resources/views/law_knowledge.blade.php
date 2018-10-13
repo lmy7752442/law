@@ -55,7 +55,7 @@
     <div class="bd f17">
         <ul class="fl_list">
             @foreach($reward_problem as $k=>$v)
-            <li><a href="/index.php/reward_comment?q_id={{$v['q_id']}}}">{{$v['q_title']}}<span>回复数: {{$v['count']}}</span></a></li>
+            <li><a href="/index.php/reward_comment?q_id={{$v['q_id']}}">{{$v['q_title']}}<span>回复数: {{$v['count']}}</span></a></li>
             @endforeach
 
         </ul>
@@ -88,7 +88,7 @@
         <ul class="fl_list">
             @foreach($hot_data as $k=>$v)
                 <li>
-                    <a href="/hot_detail?h_id={{$v->h_id}}">{{$v->h_title}}<span>回复数: 0</span></a>
+                    <a href="/hot_detail?h_id={{$v->h_id}}">{{$v->h_title}}<span>回复数: {{$v->count}}</span></a>
                 </li>
             @endforeach
         </ul>
@@ -99,19 +99,20 @@
 </div>
 
 <div class="rec_lawyer">
-    <h2 class="hd"><a href="lawyer">推荐律师</a></h2>
+    <h2 class="hd"><a href="lawyer">推荐广州律师</a></h2>
     <div class="ly_list bd f17">
         <ul>
-		    @foreach($recommend_lawyer as $k=>$v)
+            @foreach($recommend_lawyer as $k=>$v)
             <li class="clearfix">
                 <a href="javascript:;">
                     <p class="hs_link"><img alt="{{$v->username}}" src="{{$v->headimg}}"></p>
                     <p><span class="ly_name">{{$v->username}}</span></p>
-                    <p>专长： {{$v->introduce}}</p>
+                    {{--<p>专长： {{$v->introduce}}</p>--}}
+                    {{--<p>电话：<span class="cf60">13427813313</span></p>--}}
                 </a>
             </li>
-			@endforeach
-	        </ul>
+            @endforeach
+                   </ul>
     </div>
     <div class="ft item_bt">
         <a class="aw_link" href="lawyer">进入律师中心>></a>

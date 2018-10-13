@@ -33,7 +33,7 @@
      @foreach($all_comment as $k=>$v)
     <div class="s" style="color:blue;">
             <img src="{{$v->headimg}}" alt="" style="width:40px;height:40px;">
-                {{$v->username}}{{$v->ctime}}
+		{{$v->username}}<?php echo date('Y-m-d H:i:s',$v->ctime);?>@if($v->is_best == 1)<span style="color:red">最佳答案</span>@endif
      </div>
     <div class="s">
      {{$v->content}}

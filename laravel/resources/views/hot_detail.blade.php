@@ -17,7 +17,7 @@
     }
 </style>
 <header class="sub_header">
-    {{--<a href="/" class="b_link">首页</a>--}}
+    <a href="/as?status=1" class="b_link">首页</a>
     <h1 class="sub_title">时事热点展示</h1>
 </header>
 <style>

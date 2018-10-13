@@ -39,7 +39,7 @@
 		    @foreach($law_data as $v)
             <li class="clearfix">
                 <a href="javascript:;">
-                    <p class="hs_link">@if($v->ID_Photo == '')<img src="/images/empty.jpg">@else<img alt="{{$v->username}}" src="{{$v->ID_Photo}}">@endif</p>
+                    <p class="hs_link">@if($v->headimg == '')<img src="/images/empty.jpg">@else<img alt="{{$v->username}}" src="{{$v->headimg}}">@endif</p>
                     <p><span class="ly_name">{{$v->username}}</span><a href="javascript:;" style="padding-left:180px"  onclick="consult($(this))" data-uid="{{$v->id}}" data-phone="{{$v->mobile}}">咨询</a></p>
                     <p style="padding-top:3px">已帮助：<span class="cf60">{{$v->help_count}}人</span><span style="padding-left:10px;padding-right:10px">|</span>好评数：<span class="cf60">{{$v->help_count}}条</span></p>
 					<p style="padding-top:3px">{{$v->introduce}}</p>
